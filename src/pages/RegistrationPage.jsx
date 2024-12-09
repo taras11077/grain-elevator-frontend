@@ -1,32 +1,23 @@
-// import React from 'react';
-// import RegisterForm from '../components/Auth/RegisterForm';
-
-// const RegisterPage = () => {
-//   return (
-//     <div>
-//       <h1>Реєстрація</h1>
-//       <RegisterForm />
-//     </div>
-//   );
-// };
-
-// export default RegisterPage;
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom'
 import RegistrationForm from '../components/Auth/RegistrationForm';
 
 const Registration = () => {
+	const navigate = useNavigate();
 	const [isModalOpen, setIsModalOpen] = useState(true);
+
+	useEffect(() => {
+		setIsModalOpen(true);
+	}, []);
 
 	  const closeModal = () => {
 		setIsModalOpen(false);
 	  };
-	  
+
 	  const handleCancel = () => {
 		setIsModalOpen(false);
-		return <Navigate to="/" />;
+		navigate('/');
 	  };
 
 	return (

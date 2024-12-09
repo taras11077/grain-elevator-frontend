@@ -23,7 +23,7 @@ const router = createBrowserRouter([
 
 		  {
 			path: '/input-invoices',
-			element: <InputInvoice />
+			element: <PrivateRoute> <InputInvoice /> </PrivateRoute>
 		  },
 		   {
 			path: '/output-invoices',
@@ -36,7 +36,11 @@ const router = createBrowserRouter([
 		  {
 			path: '/login',
 			element: <Login />
-		  }
+		  },
+		   {
+			path: "*",
+			element: <h1>Page not found</h1>
+		   }
 	  ]
 	},
   ]);

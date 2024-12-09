@@ -1,20 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { fetchUserData } from './asyncThunks/authThunk'
+import { RouterProvider } from 'react-router-dom';
 import router from './routes'
-import { getToken } from './utils/tokenHelperFunctions'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
-if (getToken()) {
-	store.dispatch(fetchUserData());
-}
 
 root.render(
   <React.StrictMode>

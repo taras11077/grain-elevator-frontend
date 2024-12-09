@@ -17,20 +17,23 @@ const Header = () => {
 			{/* <NavLink className='nav-link' to="/home">Home</NavLink> */}
 
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Laboratory') && (
-        		<NavLink className="nav-link" to="/input-invoices">InputInvoice</NavLink>
+        		<NavLink className="nav-link" to="/input-invoices">Прибуткові накладні</NavLink>
       		)}
 
-			{token && (
-        		<NavLink className="nav-link" to="/output-invoices">OutputInvoice</NavLink>
+			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Accountant') && (
+        		<NavLink className="nav-link" to="/output-invoices">Видаткові накладні</NavLink>
       		)}
 
-			{!token ?  <NavLink className='nav-link' to="/login">Login</NavLink> : (
-				<>
+			{(userData.role === 'Admin' || userData.role === 'HR') && (
+        		<NavLink id='login-registration-link' className='nav-link' to="/registration">Співробітники</NavLink>
+      		)}
+
+			{(token) && (
+				<div>
 					Користувач: {userData.name}
-					<button onClick={logoutHandler}>Logout</button>
-				 </>
+					<button onClick={logoutHandler}>Вихід</button>
+				</div>			
 			 )}
-			<NavLink id='login-registration-link' className='nav-link' to="/registration">Registration</NavLink>
 		</div>
 	);
 }

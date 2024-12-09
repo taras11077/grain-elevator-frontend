@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from "antd";
+import { NavLink } from 'react-router-dom'
 
 const Home = () => {
 	const {token, userData} = useSelector(state => state.auth);
@@ -12,19 +13,23 @@ const Home = () => {
       </Typography.Title>
 
 		{!token ?  
-			<Typography.Text>
-				Для початку роботи авторізуйтесь в системі.
-			</Typography.Text> 
+			<div>
+				<Typography.Text>
+					Для початку роботи авторізуйтесь в системі.
+				</Typography.Text> 
+				<NavLink className='nav-link' to="/login">Вхід</NavLink>
+			</div>
+			
 			:
-			<>
-			<Typography.Title level={3} style={{ color: "#1890ff" }}>
-				Вітаю, {userData.name}!
-			</Typography.Title>
-			<Typography.Title level={4} style={{ color: "#1890ff" }}>
-				{/* Нехай твоя кава буде міцною, а день продуктивним! */}
-				Дякую за наполегливу роботу. Нехай буде ще один успішний день!
-			</Typography.Title>
-			</>
+			<div>
+				<Typography.Title level={3} style={{ color: "#1890ff" }}>
+					Вітаю, {userData.name}!
+				</Typography.Title>
+				<Typography.Title level={4} style={{ color: "#1890ff" }}>
+					{/* Нехай твоя кава буде міцною, а день продуктивним! */}
+					Дякую за наполегливу роботу. Нехай буде ще один успішний день!
+				</Typography.Title>
+			</div>
 			
 			
 		}

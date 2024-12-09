@@ -7,7 +7,7 @@ const OutputInvoicesList = () => {
     useEffect(() => {
         const fetchInvoices = async () => {
             try {
-                const response = await api.get('/api/output-invoice');
+                const response = await api.get('/output-invoice');
                 setOutputInvoices(response.data);
             } catch (error) {
                 console.error("Ошибка при загрузке накладных:", error);

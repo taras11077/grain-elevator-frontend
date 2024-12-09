@@ -29,7 +29,7 @@ const InputInvoicePage = () => {
 
 	const fetchInvoices = async (params) => {
 		try {
-			const response = await api.get('/api/input-invoice/search',{ params });
+			const response = await api.get('/input-invoice/search',{ params });
 			setInputInvoices(response.data);
 			setPagination((prev) =>({
                 ...prev,

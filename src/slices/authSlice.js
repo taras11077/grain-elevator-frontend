@@ -31,21 +31,6 @@ export const authSlice = createSlice({
 				state.loading = false;
 				state.error = action.payload;
 			})
-
-			.addCase(fetchUserData.pending, (state, action) => {
-				state.loading = true;
-			})
-			.addCase(fetchUserData.fulfilled, (state, action) => {
-				state.token = action.payload.token;
-				state.userData = action.payload.user;
-				state.loading = false;
-			})
-			.addCase(fetchUserData.rejected, (state, action) => {
-				state.loading = false;
-				state.error = action.payload;
-				state.token = null;
-				state.userData = {};
-			})
 	}
 });
 

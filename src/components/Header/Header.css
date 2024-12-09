@@ -26,10 +26,11 @@
 
 button{
 	width: 100px;
-	background-color: rgb(19, 150, 19);
+	background-color: rgb(19, 150, 148);
 	color: white;
 	font-size: 0.9em;
 	border: none;
 	border-radius: 5px;
 	padding: 5px;
+	margin-left: 15px;
 }
