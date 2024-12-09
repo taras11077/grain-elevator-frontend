@@ -1,16 +1,16 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../api';
-import {getToken, removeToken, setToken} from '../utils/helperFunctions'; 
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import api from '../api/axios'
+import { getToken, removeToken, setToken } from '../utils/tokenHelperFunctions'
 
 export const login = createAsyncThunk('auth/login', async (payload) => {
-	const response = await api.post("/login", payload);
+	const response = await api.post("/api/auth/login", payload);
 	setToken(response.data.token);
 	return response.data;
 });
 
 
 export const registration = createAsyncThunk('auth/login', async (payload) => {
-	const response = await api.post("/register", payload);
+	const response = await api.post("/api/auth//register", payload);
 	return response.data;
 });
 

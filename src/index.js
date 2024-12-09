@@ -3,15 +3,24 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter} from 'react-router-dom'
+import { Provider } from 'react-redux';
+import { store } from './app/store';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { fetchUserData } from './asyncThunks/authThunk'
+import router from './routes'
+import { getToken } from './utils/tokenHelperFunctions'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+if (getToken()) {
+	store.dispatch(fetchUserData());
+}
+
 root.render(
   <React.StrictMode>
-		<BrowserRouter>
-			<App />
-		</BrowserRouter>
+		<Provider store={store}>
+			<RouterProvider router={router} />
+		</Provider>
    </React.StrictMode>
 );
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchUserData, login, logout } from './authThunk'
+import { fetchUserData, login, logout } from '../asyncThunks/authThunk'
 
 const initialState = {
 	token: null,
