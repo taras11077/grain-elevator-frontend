@@ -23,11 +23,19 @@ const router = createBrowserRouter([
 
 		  {
 			path: '/input-invoices',
-			element: <PrivateRoute> <InputInvoice /> </PrivateRoute>
+			element:
+				<PrivateRoute allowedRoles={['Laboratory', 'Admin', 'CEO']}>
+					<InputInvoice />
+				</PrivateRoute>
+			  
 		  },
 		   {
 			path: '/output-invoices',
-			element: <OutputInvoice />
+			element:
+			<PrivateRoute allowedRoles={['Accountant', 'Admin', 'CEO']}>
+				<OutputInvoice />
+			</PrivateRoute>
+
 		  },
 		  {
 			path: '/registration',
@@ -40,7 +48,11 @@ const router = createBrowserRouter([
 		   {
 			path: "*",
 			element: <h1>Page not found</h1>
-		   }
+		   },
+		   {
+			path:"/forbidden",
+			element: <Forbidden />
+		   },
 	  ]
 	},
   ]);

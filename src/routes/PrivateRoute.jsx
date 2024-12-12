@@ -2,17 +2,36 @@ import React from 'react';
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
-const PrivateRoute = ({children}) => {
-	const{token, loading} = useSelector(state => state.auth);
+// const PrivateRoute = ({children}) => {
+// 	const{token, loading} = useSelector(state => state.auth);
 
-	if(loading) {
-		return 'Loading...';
+// 	if(loading) {
+// 		return 'Loading...';
+// 	}
+
+// 	return (
+// 		token ? children : <Navigate to="/" />
+// 	);
+// }
+
+const PrivateRoute = ({ children, allowedRoles }) => {
+	const { token, userData, loading } = useSelector((state) => state.auth);
+  
+	if (loading) {
+	  return 'Loading...';
+	}
+  
+	if (!token) {
+	  return <Navigate to="/" />;
 	}
 
-	return (
-		token ? children : <Navigate to="/" />
-	);
-}
+	const userRole = userData?.role;
 
-
-export default PrivateRoute;
+	if (allowedRoles && !allowedRoles.includes(userRole)) {
+	  return <Navigate to="/forbidden" />;
+	}
+  
+	return children;
+  };
+  
+  export default PrivateRoute;
