@@ -19,13 +19,15 @@ const InputInvoiceFilterFields = ({ filters, onFilterChange }) => {
                         placeholder="Дата прибуття"
                         name="arrivalDate"
                         style={{ width: '100%' }}
-                        value={filters.arrivalDate ? dayjs(filters.arrivalDate) : null}
-    					onChange={(date, dateString) =>
-        					onFilterChange({
-            					target: { name: 'arrivalDate', value: date?.toISOString() || '' },
-       						 })
-						} 
-                    />
+						value={filters.arrivalDate ? dayjs(filters.arrivalDate, 'YYYY-MM-DD') : null} // збереження внутрішнього формату для фільтрації
+						format="DD-MM-YYYY" //показуємо користувачеві дружній формат
+						onChange={(date) => {
+							const isoDate = date ? dayjs(date).format('YYYY-MM-DD') : ''; // формат для фільтрації
+							onFilterChange({
+								target: { name: 'arrivalDate', value: isoDate }, // надсилання ISO-формату на сервер
+							});
+						}}
+					/>
                 </Col>
 				<Col span={8}>
                     <Input

@@ -4,7 +4,7 @@ import api from '../api/axios'
 import InputInvoiceFilterFields from '../components/InputInvoice/InputInvoiceFilterFields'
 import InputInvoiceForm from '../components/InputInvoice/InputInvoiceForm'
 import './InputInvoicePage.css'
-
+import dayjs from 'dayjs';
 
 const InputInvoicePage = () => {
 	const { Title } = Typography;
@@ -75,10 +75,10 @@ const InputInvoicePage = () => {
     const handleFormSubmit = async (formData) => {
         try {
             if (selectedInvoice) {
-                await api.put(`/api/input-invoice/${selectedInvoice.id}`, formData);
+                await api.put(`/input-invoice/${selectedInvoice.id}`, formData);
                 alert('Накладну оновлено.');
             } else {
-                await api.post('/api/input-invoice', formData);
+                await api.post('/input-invoice', formData);
                 alert('Накладну створено.');
             }
             fetchInvoices();
@@ -113,7 +113,7 @@ const InputInvoicePage = () => {
             key: 'invoiceNumber',
         },
         {
-            title: 'Дата',
+            title: 'Дата прибуття',
             dataIndex: 'arrivalDate',
             key: 'arrivalDate',
         },
@@ -158,6 +158,11 @@ const InputInvoicePage = () => {
 		  },
     ];
 
+	const formattedInvoices = inputInvoices.map((invoice) => ({
+		...invoice,
+		arrivalDate: dayjs(invoice.arrivalDate).format('DD-MM-YYYY'),
+	}));
+
     return (
         <div className="container">
            <Title level={2} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
@@ -171,7 +176,7 @@ const InputInvoicePage = () => {
             </Button>
 
             <Table 
-				dataSource={inputInvoices} 
+				dataSource={formattedInvoices} 
 				columns={columns} 
 				rowKey="id"
 				pagination={{

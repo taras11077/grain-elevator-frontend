@@ -6,8 +6,14 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import { RouterProvider } from 'react-router-dom';
 import router from './routes'
+import { fetchUserData } from './asyncThunks/authThunk'
+import { getToken } from './utils/tokenHelperFunctions'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+if (getToken()) {
+	store.dispatch(fetchUserData());
+}
 
 root.render(
   <React.StrictMode>
