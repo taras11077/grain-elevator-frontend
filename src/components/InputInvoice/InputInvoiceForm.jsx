@@ -1,8 +1,8 @@
-import React from 'react';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import { Input, Button } from 'antd';
-import dayjs from 'dayjs';
+import { Button, Input } from 'antd'
+import dayjs from 'dayjs'
+import { Field, Form, Formik } from 'formik'
+import React from 'react'
+import * as Yup from 'yup'
 
 const InputInvoiceSchema = Yup.object().shape({
     invoiceNumber: Yup.string().required('Обов’язкове поле'),
@@ -40,7 +40,7 @@ const InputInvoiceForm = ({ initialData, onSubmit, onCancel }) => {
 							name="arrivalDate" 
 							type="date"
 							as={Input}
-							value={values.arrivalDate ? dayjs(values.arrivalDate).format('DD-MM-YYYY') : ''}
+							value={values.arrivalDate ? dayjs(values.arrivalDate).format('YYYY-MM-DD') : ''}
 						 />
                         {errors.arrivalDate && touched.arrivalDate && <div>{errors.arrivalDate}</div>}
                     </div>
