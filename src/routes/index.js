@@ -1,11 +1,14 @@
-import InputInvoice from '../pages/InputInvoicePage';
-import OutputInvoice from '../pages/OutputInvoicePage';
-import Registration from '../pages/RegistrationPage';
-import Login from '../pages/LoginPage';
-import Home from '../pages/Home';
-import { createBrowserRouter } from 'react-router-dom';
-import App from '../App';
+import { createBrowserRouter } from 'react-router-dom'
+import App from '../App'
+import Home from '../pages/Home'
+import InputInvoice from '../pages/InputInvoicePage'
+import Login from '../pages/LoginPage'
+import OutputInvoice from '../pages/OutputInvoicePage'
+import Registration from '../pages/RegistrationPage'
 import PrivateRoute from './PrivateRoute'
+import NotFoundPage from '../pages/NotFoundPage';
+import Forbidden from '../pages/Forbidden'
+
 
 const router = createBrowserRouter([
 	{
@@ -47,7 +50,7 @@ const router = createBrowserRouter([
 		  },
 		   {
 			path: "*",
-			element: <h1>Page not found</h1>
+			element: <NotFoundPage />
 		   },
 		   {
 			path:"/forbidden",
