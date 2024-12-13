@@ -92,10 +92,14 @@ const InputInvoicePage = () => {
       title: 'Дії',
       key: 'actions',
       render: (_, record) => (
-        <div>
-          <Button type="link" onClick={() => handleOpenModal(record)}>Редагувати</Button>
-          <Button type="link" danger onClick={() => handleDeleteInvoice(record)}>Видалити</Button>
-        </div>
+		!record.isFinalized ? (
+			<div>
+				<Button type="link" onClick={() => handleOpenModal(record)}>Редагувати</Button>
+				<Button type="link" danger onClick={() => handleDeleteInvoice(record)}>Видалити</Button>
+			</div>
+		) : (
+			<div>Створено лабораторну карточку</div>
+		)
       ),
     },
   ];
@@ -135,7 +139,6 @@ const InputInvoicePage = () => {
 			dispatch(setSort({ sortField, sortOrder })); // оновлення стану сортування
 			dispatch(fetchInvoices()); // виконання нового запиту
 		}}
-
       />
 
       <Modal

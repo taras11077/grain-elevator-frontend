@@ -1,13 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from '../App'
+import Forbidden from '../pages/Forbidden'
 import Home from '../pages/Home'
 import InputInvoice from '../pages/InputInvoicePage'
 import Login from '../pages/LoginPage'
+import NotFoundPage from '../pages/NotFoundPage'
 import OutputInvoice from '../pages/OutputInvoicePage'
 import Registration from '../pages/RegistrationPage'
 import PrivateRoute from './PrivateRoute'
-import NotFoundPage from '../pages/NotFoundPage';
-import Forbidden from '../pages/Forbidden'
 
 
 const router = createBrowserRouter([
@@ -58,6 +58,17 @@ const router = createBrowserRouter([
 		   },
 	  ]
 	},
-  ]);
+  ],
+  {
+    future: {
+      v7_startTransition: true, // опція для `startTransition`
+      v7_relativeSplatPath: true, // опція для зміни відносних маршрутів
+      v7_fetcherPersist: true, // опція для поведінки fetchers
+      v7_normalizeFormMethod: true, // опція для нормалізації методів форм
+      v7_partialHydration: true, // опція для часткової гідратації
+      v7_skipActionErrorRevalidation: true, // опція для обробки помилок дій
+    },
+  }
+);
 
   export default router;

@@ -10,7 +10,6 @@ const InputInvoiceItem = ({ invoices, selectedInvoiceId, onSelect }) => {
             dataIndex: 'arrivalDate', 
             key: 'arrivalDate', 
 			render: (date) => dayjs(date).isValid() ? dayjs(date).format('DD-MM-YYYY') : 'дату не визначено'
-			//sorter: (a, b) => dayjs(a.arrivalDate, 'DD-MM-YYYY').unix() - dayjs(b.arrivalDate, 'DD-MM-YYYY').unix(),
         },
         { title: 'Транспорт', dataIndex: 'vehicleNumber', key: 'vehicleNumber', sorter: true },
         { title: 'Вага', dataIndex: 'physicalWeight', key: 'physicalWeight', sorter: true},
