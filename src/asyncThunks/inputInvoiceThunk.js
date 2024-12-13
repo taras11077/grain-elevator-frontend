@@ -5,6 +5,7 @@ export const fetchInvoices = createAsyncThunk(
 	'inputInvoice/fetchInvoices',
 	async (params, { getState }) => {
 	  const { filters, pagination } = getState().inputInvoice;
+
 	  const response = await api.get('/input-invoice/search', {
 		params: {
 		  ...filters,

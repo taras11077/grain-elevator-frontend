@@ -14,15 +14,23 @@ const InputInvoiceSchema = Yup.object().shape({
 });
 
 const InputInvoiceForm = ({ initialData, onSubmit, onCancel }) => {
+	const preparedInitialData = {
+		...initialData,
+		arrivalDate: initialData?.arrivalDate 
+		  ? dayjs(initialData.arrivalDate, 'DD-MM-YYYY').format('YYYY-MM-DD') 
+		  : '',
+	  };
+
+
     return (
         <Formik
             initialValues={{
-                invoiceNumber: initialData?.invoiceNumber || '',
-                arrivalDate: initialData?.arrivalDate || '',
-                vehicleNumber: initialData?.vehicleNumber || '',
-                physicalWeight: initialData?.physicalWeight || '',
-                supplierTitle: initialData?.supplierTitle || '',
-                productTitle: initialData?.productTitle || '',
+                invoiceNumber: preparedInitialData?.invoiceNumber || '',
+                arrivalDate: preparedInitialData?.arrivalDate || '',
+                vehicleNumber: preparedInitialData?.vehicleNumber || '',
+                physicalWeight: preparedInitialData?.physicalWeight || '',
+                supplierTitle: preparedInitialData?.supplierTitle || '',
+                productTitle: preparedInitialData?.productTitle || '',
             }}
             validationSchema={InputInvoiceSchema}
             onSubmit={onSubmit}

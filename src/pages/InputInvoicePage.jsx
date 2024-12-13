@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button, Table, Typography, Modal, message } from 'antd';
-import dayjs from 'dayjs';
+import { Button, Modal, Table, Typography, message } from 'antd'
+import dayjs from 'dayjs'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { createInvoice, deleteInvoice, fetchInvoices, updateInvoice, } from '../asyncThunks/inputInvoiceThunk'
 import InputInvoiceFilterFields from '../components/InputInvoice/InputInvoiceFilterFields'
 import InputInvoiceForm from '../components/InputInvoice/InputInvoiceForm'
+import { setPagination, setFilters, setSelectedInvoice, toggleModal } from '../slices/inputInvoiceSlice'
 import './InputInvoicePage.css'
-import { fetchInvoices,  createInvoice,  updateInvoice,  deleteInvoice,} from '../asyncThunks/inputInvoiceThunk';
-import {  setFilters,  setPagination,  setSelectedInvoice,  toggleModal,} from '../slices/inputInvoiceSlice';
 
 
 const InputInvoicePage = () => {
@@ -25,8 +25,12 @@ const InputInvoicePage = () => {
     dispatch(fetchInvoices());
   }, [filters, pagination.current, pagination.pageSize]);
 
-  const handleTableChange = (pagination) => {
-    dispatch(setPagination({ current: pagination.current, pageSize: pagination.pageSize }));
+
+  const handleTableChange = (page, pageSize) => {
+	dispatch(setPagination({ 
+	  current: page, 
+	  pageSize 
+	}));
   };
 
   const handleFilterChange = (e) => {
