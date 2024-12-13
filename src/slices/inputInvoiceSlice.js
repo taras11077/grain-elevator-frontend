@@ -16,6 +16,10 @@ const initialState = {
     pageSize: 10,
     total: 0,
   },
+  sort: {
+    sortField: 'arrivalDate', // поле для сортування за замовчуванням
+    sortOrder: 'asc', // порядок сортування за замовчуванням
+  },
   filters: {
     id: '',
     invoiceNumber: '',
@@ -42,6 +46,9 @@ const inputInvoiceSlice = createSlice({
     setPagination(state, action) {
       state.pagination = { ...state.pagination, ...action.payload };
     },
+	setSort: (state, action) => {
+		state.sort = action.payload;
+	  },
     setSelectedInvoice(state, action) {
       state.selectedInvoice = action.payload;
     },
@@ -84,6 +91,7 @@ const inputInvoiceSlice = createSlice({
 export const {
   setFilters,
   setPagination,
+  setSort,
   setSelectedInvoice,
   toggleModal,
 } = inputInvoiceSlice.actions;

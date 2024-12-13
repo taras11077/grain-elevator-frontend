@@ -4,13 +4,15 @@ import api from '../api/axios'
 export const fetchInvoices = createAsyncThunk(
 	'inputInvoice/fetchInvoices',
 	async (params, { getState }) => {
-	  const { filters, pagination } = getState().inputInvoice;
+	  const { filters, pagination, sort  } = getState().inputInvoice;
 
 	  const response = await api.get('/input-invoice/search', {
 		params: {
 		  ...filters,
 		  page: pagination.current,
 		  size: pagination.pageSize,
+		  sortField: sort.sortField, // поле сортування
+          sortOrder: sort.sortOrder,// порядок сортування
 		},
 	  });
   

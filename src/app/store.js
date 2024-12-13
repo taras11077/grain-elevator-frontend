@@ -8,5 +8,6 @@ export const store = configureStore({
 		auth: authReducer,
 		roles: roleReducer,
 		inputInvoice: inputInvoiceReducer,
+		
 	}
 });

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createInvoice, deleteInvoice, fetchInvoices, updateInvoice, } from '../asyncThunks/inputInvoiceThunk'
 import InputInvoiceFilterFields from '../components/InputInvoice/InputInvoiceFilterFields'
 import InputInvoiceForm from '../components/InputInvoice/InputInvoiceForm'
-import { setPagination, setFilters, setSelectedInvoice, toggleModal } from '../slices/inputInvoiceSlice'
+import { setPagination, setSort, setFilters, setSelectedInvoice, toggleModal } from '../slices/inputInvoiceSlice'
 import './InputInvoicePage.css'
 
 
@@ -76,13 +76,18 @@ const InputInvoicePage = () => {
   };
 
   const columns = [
-    { title: '№', dataIndex: 'invoiceNumber', key: 'invoiceNumber' },
-    { title: 'Дата прибуття', dataIndex: 'arrivalDate', key: 'arrivalDate' },
-    { title: 'Номер транспортного засобу', dataIndex: 'vehicleNumber', key: 'vehicleNumber' },
-    { title: 'Фізична вага', dataIndex: 'physicalWeight', key: 'physicalWeight' },
-    { title: 'Продукція', dataIndex: 'productTitle', key: 'productTitle' },
-    { title: 'Постачальник', dataIndex: 'supplierTitle', key: 'supplierTitle' },
-    { title: 'Автор документу', dataIndex: 'createdByName', key: 'createdByName' },
+    { title: '№', dataIndex: 'invoiceNumber', key: 'invoiceNumber', sorter: true  },
+    { 
+		title: 'Дата прибуття', 
+		dataIndex: 'arrivalDate',
+		 key: 'arrivalDate',
+		sorter: (a, b) => dayjs(a.arrivalDate, 'DD-MM-YYYY').unix() - dayjs(b.arrivalDate, 'DD-MM-YYYY').unix()
+	 },
+    { title: 'Номер транспортного засобу', dataIndex: 'vehicleNumber', key: 'vehicleNumber', sorter: true  },
+    { title: 'Фізична вага', dataIndex: 'physicalWeight', key: 'physicalWeight', sorter: true  },
+    { title: 'Продукція', dataIndex: 'productTitle', key: 'productTitle', sorter: true  },
+    { title: 'Постачальник', dataIndex: 'supplierTitle', key: 'supplierTitle', sorter: true  },
+    { title: 'Автор документу', dataIndex: 'createdByName', key: 'createdByName', sorter: true  },
     {
       title: 'Дії',
       key: 'actions',
@@ -120,9 +125,17 @@ const InputInvoicePage = () => {
           current: pagination.current,
           pageSize: pagination.pageSize,
           total: pagination.total,
-          onChange: handleTableChange,
+        //   onChange: handleTableChange,
         }}
         loading={loading}
+
+		onChange={(pagination, filters, sorter) => {
+			const sortField = sorter.field; // стовпець для сортування
+			const sortOrder = sorter.order === 'ascend' ? 'asc' : 'desc'; // напрямок сортування
+			dispatch(setSort({ sortField, sortOrder })); // оновлення стану сортування
+			dispatch(fetchInvoices()); // виконання нового запиту
+		}}
+
       />
 
       <Modal

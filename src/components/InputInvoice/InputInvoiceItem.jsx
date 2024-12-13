@@ -4,17 +4,18 @@ import dayjs from 'dayjs';
 
 const InputInvoiceItem = ({ invoices, selectedInvoiceId, onSelect }) => {
     const columns = [
-        { title: 'Номер накладної', dataIndex: 'invoiceNumber', key: 'invoiceNumber' },
+        { title: 'Номер накладної', dataIndex: 'invoiceNumber', key: 'invoiceNumber', sorter: true },
 		{ 
             title: 'Дата прибуття', 
             dataIndex: 'arrivalDate', 
             key: 'arrivalDate', 
 			render: (date) => dayjs(date).isValid() ? dayjs(date).format('DD-MM-YYYY') : 'дату не визначено'
+			//sorter: (a, b) => dayjs(a.arrivalDate, 'DD-MM-YYYY').unix() - dayjs(b.arrivalDate, 'DD-MM-YYYY').unix(),
         },
-        { title: 'Транспорт', dataIndex: 'vehicleNumber', key: 'vehicleNumber' },
-        { title: 'Вага', dataIndex: 'physicalWeight', key: 'physicalWeight' },
-        { title: 'Продукція', dataIndex: 'productTitle', key: 'productTitle' },
-        { title: 'Постачальник', dataIndex: 'supplierTitle', key: 'supplierTitle' },
+        { title: 'Транспорт', dataIndex: 'vehicleNumber', key: 'vehicleNumber', sorter: true },
+        { title: 'Вага', dataIndex: 'physicalWeight', key: 'physicalWeight', sorter: true},
+        { title: 'Продукція', dataIndex: 'productTitle', key: 'productTitle', sorter: true },
+        { title: 'Постачальник', dataIndex: 'supplierTitle', key: 'supplierTitle', sorter: true },
         { title: 'Створено', dataIndex: 'createdByName', key: 'createdByName' },
     ];
 
