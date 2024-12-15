@@ -20,6 +20,10 @@ const Header = () => {
         		<NavLink className="nav-link" to="/input-invoices">Прибуткові накладні</NavLink>
       		)}
 
+			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Laboratory') && (
+        		<NavLink className="nav-link" to="/laboratory-cards">Лабораторні карточки</NavLink>
+      		)}
+
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Accountant') && (
         		<NavLink className="nav-link" to="/output-invoices">Видаткові накладні</NavLink>
       		)}

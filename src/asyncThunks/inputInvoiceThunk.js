@@ -32,9 +32,22 @@ export const fetchInvoices = createAsyncThunk(
   
   export const updateInvoice = createAsyncThunk(
 	'inputInvoice/updateInvoice',
-	async ({ id, formData }) => {
-	  await api.put(`/input-invoice/${id}`, formData);
-	}
+	// async ({ id, formData }) => {
+	//   await api.put(`/input-invoice/${id}`, formData);
+	// }
+
+	async ({ id, updates }, { rejectWithValue }) => {
+		try {
+		  const response = await api.put(`/input-invoice/${id}`, updates);
+		  return response.data; // успішний результат
+		} catch (error) {
+		  if (error.response && error.response.data) {
+			//повернення помилки, щоб обробити її в catch або rejected case
+			return rejectWithValue(error.response.data);
+		  }
+		  throw error; // для інших випадків
+		}
+	  }
   );
   
   export const deleteInvoice = createAsyncThunk(
