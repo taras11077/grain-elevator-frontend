@@ -52,6 +52,9 @@ const inputInvoiceSlice = createSlice({
     setSelectedInvoice(state, action) {
       state.selectedInvoice = action.payload;
     },
+	clearSelectedInvoice: (state) => {
+		state.selectedInvoice = null;
+	  },
     toggleModal(state, action) {
       state.isModalOpen = action.payload;
     },
@@ -93,6 +96,7 @@ export const {
   setPagination,
   setSort,
   setSelectedInvoice,
+  clearSelectedInvoice,
   toggleModal,
 } = inputInvoiceSlice.actions;
 

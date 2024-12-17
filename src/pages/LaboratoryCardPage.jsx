@@ -51,16 +51,8 @@ const LaboratoryCardPage = () => {
   
 	const handleFormSubmit = async (formData) => {
 	  try {
-		const cleanedData = {
-            labCardNumber: formData.labCardNumber,
-            weedImpurity: formData.weedImpurity,
-            moisture: formData.moisture,
-            grainImpurity: formData.grainImpurity,
-            specialNotes: formData.specialNotes,
-        };
-
 		if (selectedCard) {
-			const resultAction = await dispatch(updateLaboratoryCard({ id: selectedCard.id, updates: cleanedData }));
+			const resultAction = await dispatch(updateLaboratoryCard({ id: selectedCard.id, updates: formData }));
 			// якщо запит виконано успішно
 			if (updateLaboratoryCard.fulfilled.match(resultAction)) {
 					message.success('Лабораторну карточку оновлено.');
@@ -87,8 +79,17 @@ const LaboratoryCardPage = () => {
   
 	const handleDeleteCard = async (record) => {
 	  try {
-		await dispatch(deleteLaboratoryCard(record.id));
-		message.success('Лабораторну карточку успішно видалено!');
+		const resultAction = await dispatch(deleteLaboratoryCard(record.id));
+		
+		if (deleteLaboratoryCard.fulfilled.match(resultAction)) {
+				message.success('Лабораторну карточку успішно видалено!');
+		} else if (resultAction.payload && resultAction.payload.message) {
+				//якщо запит виконано з помилкою, показуємо повідомлення від сервера
+				const errorMessage = resultAction.payload?.message || 'Не вдалося видалити Лабораторну карточку..';
+				message.error(errorMessage);
+		} else {
+				message.error('Сталася помилка. Лабораторну карточку не видалено');
+	  }
 	  } catch (error) {
 		console.error('Помилка під час видалення Лабораторної карточки:', error);
 		message.error('Не вдалося видалити Лабораторну карточку.');
@@ -101,12 +102,12 @@ const LaboratoryCardPage = () => {
 
 		  // якщо запит виконано успішно
 		  if (updateLaboratoryCard.fulfilled.match(resultAction)) {
-			message.success('Допуск до виробництва оновлено.');
-			dispatch(fetchLaboratoryCards()); // оновлення списку карточок
+				message.success('Допуск до виробництва оновлено.');
+				dispatch(fetchLaboratoryCards()); // оновлення списку карточок
 		  } else if (resultAction.payload && resultAction.payload.message) {
-			//якщо запит виконано з помилкою, показуємо повідомлення від сервера
-			const errorMessage = resultAction.payload?.message || 'Не вдалося оновити допуск до виробництва.';
-			message.error(errorMessage);
+				//якщо запит виконано з помилкою, показуємо повідомлення від сервера
+				const errorMessage = resultAction.payload?.message || 'Не вдалося оновити допуск до виробництва.';
+				message.error(errorMessage);
 		  } else {
 			message.error('Сталася невідома помилка.');
 		  }
@@ -125,7 +126,7 @@ const LaboratoryCardPage = () => {
   
 		<LaboratoryCardFilterFields filters={filters} onFilterChange={handleFilterChange} />
   
-		<Button type="primary" onClick={() => handleOpenModal(null)} style={{ margin: 30 }}>
+		<Button type="primary" onClick={() => handleOpenModal(null)} style={{ margin: 30, width: '10%' }}>
 		  Створити лабораторну карточку
 		</Button>
   

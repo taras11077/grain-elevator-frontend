@@ -32,9 +32,6 @@ export const fetchInvoices = createAsyncThunk(
   
   export const updateInvoice = createAsyncThunk(
 	'inputInvoice/updateInvoice',
-	// async ({ id, formData }) => {
-	//   await api.put(`/input-invoice/${id}`, formData);
-	// }
 
 	async ({ id, updates }, { rejectWithValue }) => {
 		try {

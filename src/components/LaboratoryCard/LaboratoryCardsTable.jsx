@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button, Table, Checkbox } from 'antd'
+import { Modal, Button, Table, Checkbox, message } from 'antd'
 import dayjs from 'dayjs';
 import { setSort } from '../../slices/laboratoryCardSlice'
 import { fetchLaboratoryCards } from '../../asyncThunks/laboratoryCardThunk'
 import { useDispatch } from 'react-redux'
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const LaboratoryCardsTable = ({
 	laboratoryCards,
@@ -15,6 +16,24 @@ const LaboratoryCardsTable = ({
 	handleProductionChange,
   }) => {
 	const dispatch = useDispatch();
+
+	const showDeleteConfirm = (record) => {
+		Modal.confirm({
+		  title: 'Ви впевнені, що хочете видалити цю Лабораторну карточку?',
+		  icon: <ExclamationCircleOutlined />,
+		  content: `Номер карточки: ${record.labCardNumber}`,
+		  okText: 'Так, видалити',
+		  okType: 'danger',
+		  cancelText: 'Скасувати',
+		  onOk() {
+			handleDeleteCard(record);
+		  },
+		  onCancel() {
+			console.log('Скасовано користувачем');
+		  },
+		});
+	  };
+
 	const columns = [
 	  { title: '№', dataIndex: 'labCardNumber', key: 'labCardNumber', sorter: true },
 	  {
@@ -55,10 +74,10 @@ const LaboratoryCardsTable = ({
 		  !record.isFinalized ? (
 			<div>
 			  <Button type="link" onClick={() => handleOpenModal(record)}>
-				Редагувати
+					Редагувати
 			  </Button>
-			  <Button type="link" danger onClick={() => handleDeleteCard(record)}>
-				Видалити
+			  <Button type="link" danger onClick={() => showDeleteConfirm(record)}>
+					Видалити
 			  </Button>
 			</div>
 		  ) : (
