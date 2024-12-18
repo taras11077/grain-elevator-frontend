@@ -3,32 +3,52 @@ import api from '../api/axios'
 
 // Fetch Laboratory Cards
 export const fetchLaboratoryCards = createAsyncThunk(
-  'laboratoryCards/fetchLaboratoryCards',
-  async (_, { getState }) => {
-    const { pagination, filters, sort } = getState().laboratoryCards;
-    const params = {
-      page: pagination.current,
-      size: pagination.pageSize,
-      ...filters,
-      sortField: sort?.sortField,
-      sortOrder: sort?.sortOrder,
-    };
-    const response = await api.get('/laboratory-card/search', { params });
-    return {
-      data: response.data,
-      total: parseInt(response.headers['x-total-count'], 10) || 0,
-    };
-  }
-);
+	'laboratoryCards/fetchLaboratoryCards',
+	async (_, { getState, rejectWithValue }) => {
+	  const { pagination, filters, sort } = getState().laboratoryCards;
+  
+	  const params = {
+		...filters,
+		page: pagination.current,
+		size: pagination.pageSize,
+		sortField: sort.sortField, // поле сортування
+		sortOrder: sort.sortOrder,// порядок сортування
+	  }
+  
+	  try {
+		const response = await api.get('/laboratory-card/search',{params });
+		return {
+		  data: response.data,
+		  total: response.headers['x-total-count']
+			? parseInt(response.headers['x-total-count'], 10)
+			: 0,
+		};
+	  } catch (error) {
+		if (error.response && error.response.data) {
+		  return rejectWithValue(error.response.data);
+		}
+		return rejectWithValue(error.message || 'Невідома помилка');
+	  }
+	}
+  );
 
 // Create Laboratory Card
 export const createLaboratoryCard = createAsyncThunk(
-  'laboratoryCards/createLaboratoryCard',
-  async (payload) => {
-    const response = await api.post('/laboratory-card', payload);
-    return response.data;
-  }
-);
+	'laboratoryCards/createLaboratoryCard',
+	async (payload, { rejectWithValue }) => {
+	  try {
+		const response = await api.post('/laboratory-card', payload); 
+		return response.data; 
+	  } catch (error) {
+		if (error.response && error.response.data) {
+		  // якщо сервер повертає помилку, передаємо її
+		  return rejectWithValue(error.response.data);
+		}
+		// якщо це інший тип помилки, повертаємо узагальнене повідомлення
+		return rejectWithValue(error.message || 'Не вдалося створити лабораторну карточку.');
+	  }
+	}
+  );
 
 // Update Laboratory Card
 export const updateLaboratoryCard = createAsyncThunk(
@@ -36,13 +56,12 @@ export const updateLaboratoryCard = createAsyncThunk(
   async ({ id, updates }, { rejectWithValue }) => {
     try {
       const response = await api.put(`/laboratory-card/${id}`, updates);
-      return response.data; // успішний результат
+      return response.data;
     } catch (error) {
       if (error.response && error.response.data) {
-        //повернення помилки, щоб обробити її в catch або rejected case
         return rejectWithValue(error.response.data);
       }
-      throw error; // для інших випадків
+      throw error; 
     }
   }
 );

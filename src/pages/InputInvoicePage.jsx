@@ -21,9 +21,14 @@ const InputInvoicePage = () => {
   const dispatch = useDispatch();
 
   // Стан із Redux
-  const { invoices, loading, pagination, filters, isModalOpen, selectedInvoice } = useSelector(
-    (state) => state.inputInvoice
-  );
+  const { 
+	invoices,
+	loading, 
+	 pagination, 
+	 filters, 
+	 isModalOpen, 
+	 selectedInvoice,
+	 } = useSelector( (state) => state.inputInvoice );
 
   // Локальний стан для вибору рядка таблиці
   const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);

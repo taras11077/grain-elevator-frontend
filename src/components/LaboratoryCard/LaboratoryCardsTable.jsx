@@ -10,7 +10,7 @@ const LaboratoryCardsTable = ({
 	laboratoryCards,
 	loading,
 	pagination,
-	handleTableChange,
+	onTableChange,
 	handleOpenModal,
 	handleDeleteCard,
 	handleProductionChange,
@@ -51,12 +51,7 @@ const LaboratoryCardsTable = ({
 	  { title: 'Вологість', dataIndex: 'moisture', key: 'moisture', sorter: true },
 	  { title: 'Зернова домішка', dataIndex: 'grainImpurity', key: 'grainImpurity', sorter: true },
 	  { title: 'Особливі примітки', dataIndex: 'specialNotes', key: 'specialNotes', sorter: true },
-	  
-	  {
-		title: 'Допуск до виробництва',
-		dataIndex: 'isProduction',
-		key: 'isProduction',
-		sorter: true,
+	  {	title: 'Допуск до виробництва', dataIndex: 'isProduction', key: 'isProduction',	sorter: true,
 		render: (isProduction, record) => (
 		  <Checkbox
 			checked={isProduction}
@@ -64,7 +59,6 @@ const LaboratoryCardsTable = ({
 		  />
 		),
 	  },
-
 	  { title: 'Автор документу', dataIndex: 'createdByName', key: 'createdByName', sorter: true },
 
 	  {
@@ -92,20 +86,14 @@ const LaboratoryCardsTable = ({
 		columns={columns}
 		dataSource={laboratoryCards}
 		rowKey="id"
+		loading={loading}
 		pagination={{
 		  current: pagination.current,
 		  pageSize: pagination.pageSize,
 		  total: pagination.total,
-		  onChange: handleTableChange,
 		}}
-		loading={loading}
 
-		onChange={(pagination, filters, sorter) => {
-			const sortField = sorter.field; // стовпець для сортування
-			const sortOrder = sorter.order === 'ascend' ? 'asc' : 'desc'; // напрямок сортування
-			dispatch(setSort({ sortField, sortOrder })); // оновлення стану сортування
-			dispatch(fetchLaboratoryCards()); // виконання нового запиту
-		}}
+		onChange={onTableChange}
 	  />
 	);
   };

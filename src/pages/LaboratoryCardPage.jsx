@@ -1,7 +1,12 @@
 import { Button, Modal, Typography, message } from 'antd'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createLaboratoryCard, deleteLaboratoryCard, fetchLaboratoryCards, updateLaboratoryCard, } from '../asyncThunks/laboratoryCardThunk'
+import {
+	createLaboratoryCard,
+	deleteLaboratoryCard,
+	fetchLaboratoryCards,
+	updateLaboratoryCard,
+} from '../asyncThunks/laboratoryCardThunk'
 import LaboratoryCardFilterFields from '../components/LaboratoryCard/LaboratoryCardFilterFields'
 import LaboratoryCardForm from '../components/LaboratoryCard/LaboratoryCardForm'
 import LaboratoryCardsTable from '../components/LaboratoryCard/LaboratoryCardsTable'
@@ -13,6 +18,7 @@ import './InputInvoicePage.css'
 const LaboratoryCardPage = () => {
 	const { Title } = Typography;
 	const dispatch = useDispatch();
+
 	const {
 	  laboratoryCards,
 	  loading,
@@ -25,18 +31,18 @@ const LaboratoryCardPage = () => {
 	useEffect(() => {
 	  dispatch(fetchLaboratoryCards());
 	}, [filters, pagination.current, pagination.pageSize]);
+
+	const handleFilterChange = (e) => {
+		const { name, value } = e.target;
+		dispatch(setFilters({ [name]: value }));
+	  };
   
-	const handleTableChange = (pagination, _, sorter) => {
+	const handleTableChange = (pagination, _,  sorter) => {
 	  const sortField = sorter?.field || null;
 	  const sortOrder = sorter?.order === 'ascend' ? 'asc' : 'desc';
 	  dispatch(setSort({ sortField, sortOrder }));
 	  dispatch(setPagination({ current: pagination.current, pageSize: pagination.pageSize }));
 	  dispatch(fetchLaboratoryCards());
-	};
-  
-	const handleFilterChange = (e) => {
-	  const { name, value } = e.target;
-	  dispatch(setFilters({ [name]: value }));
 	};
   
 	const handleOpenModal = (card = null) => {
@@ -51,26 +57,39 @@ const LaboratoryCardPage = () => {
   
 	const handleFormSubmit = async (formData) => {
 	  try {
+		let success = false;
+
 		if (selectedCard) {
 			const resultAction = await dispatch(updateLaboratoryCard({ id: selectedCard.id, updates: formData }));
 			// якщо запит виконано успішно
 			if (updateLaboratoryCard.fulfilled.match(resultAction)) {
 					message.success('Лабораторну карточку оновлено.');
-					dispatch(fetchLaboratoryCards()); // оновлення списку карточок
+					success = true; 
 			} else if (resultAction.payload && resultAction.payload.message) {
 					//якщо запит виконано з помилкою, показуємо повідомлення від сервера
 					const errorMessage = resultAction.payload?.message || 'Не вдалося оновити Лабораторну карточку.';
 					message.error(errorMessage);
 			} else {
-					message.error('Сталася помилка. Лабораторну карточку не оновлено.');
+					message.error('Сталася невідома помилка. Лабораторну карточку не оновлено.');
 			}	
 		} else {
-		  await dispatch(createLaboratoryCard(formData));
-		  message.success('Лабораторну карточку створено.');
-		}
-
-		dispatch(fetchLaboratoryCards());
-		handleCloseModal();
+		  	const resultAction = await dispatch(createLaboratoryCard(formData));
+			// якщо запит виконано успішно
+			if (createLaboratoryCard.fulfilled.match(resultAction)) {
+					message.success('Лабораторну карточку створено.');
+					success = true; 
+			} else if (resultAction.payload && resultAction.payload.message) {
+					//якщо запит виконано з помилкою, показуємо повідомлення від сервера
+					const errorMessage = resultAction.payload?.message || 'Не вдалося створити Лабораторну карточку.';
+					message.error(errorMessage);
+			} else {
+					message.error('Сталася помилка. Лабораторну карточку не створено.');
+				}
+			}
+			if (success) {
+				dispatch(fetchLaboratoryCards());
+				handleCloseModal();
+			  }
 	  } catch (error) {
 		console.error('Помилка під час збереження Лабораторної карточки:', error);
 		message.error('Помилка збереження.');
@@ -88,7 +107,7 @@ const LaboratoryCardPage = () => {
 				const errorMessage = resultAction.payload?.message || 'Не вдалося видалити Лабораторну карточку..';
 				message.error(errorMessage);
 		} else {
-				message.error('Сталася помилка. Лабораторну карточку не видалено');
+				message.error('Сталася невідома помилка. Лабораторну карточку не видалено');
 	  }
 	  } catch (error) {
 		console.error('Помилка під час видалення Лабораторної карточки:', error);
@@ -134,7 +153,7 @@ const LaboratoryCardPage = () => {
         laboratoryCards={laboratoryCards}
         loading={loading}
         pagination={pagination}
-        handleTableChange={handleTableChange}
+        onTableChange={handleTableChange}
         handleOpenModal={handleOpenModal}
         handleDeleteCard={handleDeleteCard}
         handleProductionChange={handleProductionChange}
