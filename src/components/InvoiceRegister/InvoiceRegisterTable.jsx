@@ -1,32 +1,28 @@
 import React from 'react';
 import { Modal, Button, Table, Checkbox, message } from 'antd'
 import dayjs from 'dayjs';
-import { setSort } from '../../slices/laboratoryCardSlice'
-import { fetchLaboratoryCards } from '../../asyncThunks/laboratoryCardThunk'
 import { useDispatch } from 'react-redux'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
-const LaboratoryCardsTable = ({
-	laboratoryCards,
+const InvoiceRegisterTable = ({
+	invoiceRegisters,
 	loading,
 	pagination,
 	onTableChange,
 	handleOpenModal,
-	handleDeleteCard,
-	handleProductionChange,
+	handleDeleteRegister,
   }) => {
-	const dispatch = useDispatch();
 
 	const showDeleteConfirm = (record) => {
 		Modal.confirm({
-		  title: 'Ви впевнені, що хочете видалити цю Лабораторну карточку?',
+		  title: 'Ви впевнені, що хочете видалити цей Реєстр?',
 		  icon: <ExclamationCircleOutlined />,
-		  content: `Номер карточки: ${record.labCardNumber}`,
-		  okText: 'Так',
+		  content: `Номер реєстру: ${record.registerNumber}`,
+		  okText: 'Так, видалити',
 		  okType: 'danger',
 		  cancelText: 'Скасувати',
 		  onOk() {
-			handleDeleteCard(record);
+			handleDeleteRegister(record);
 		  },
 		  onCancel() {
 			console.log('Скасовано користувачем');
@@ -35,7 +31,7 @@ const LaboratoryCardsTable = ({
 	  };
 
 	const columns = [
-	  { title: '№', dataIndex: 'labCardNumber', key: 'labCardNumber', sorter: true },
+	  { title: '№', dataIndex: 'registerNumber', key: 'registerNumber', sorter: true },
 	  {
 		title: 'Дата прибуття',
 		dataIndex: 'arrivalDate',
@@ -43,22 +39,12 @@ const LaboratoryCardsTable = ({
 		render: (date) => (dayjs(date).isValid() ? dayjs(date).format('DD-MM-YYYY') : 'дату не визначено'),
 		sorter: true,
 	  },
-	  { title: 'Номер накладної', dataIndex: 'invoiceNumber', key: 'invoiceNumber', sorter: true },
-	  { title: 'Вага', dataIndex: 'physicalWeight', key: 'physicalWeight', sorter: true },
 	  { title: 'Продукція', dataIndex: 'productTitle', key: 'productTitle', sorter: true },
 	  { title: 'Постачальник', dataIndex: 'supplierTitle', key: 'supplierTitle', sorter: true },
-	  { title: 'Сміттева домішка', dataIndex: 'weedImpurity', key: 'weedImpurity', sorter: true },
-	  { title: 'Вологість', dataIndex: 'moisture', key: 'moisture', sorter: true },
-	  { title: 'Зернова домішка', dataIndex: 'grainImpurity', key: 'grainImpurity', sorter: true },
-	  { title: 'Особливі примітки', dataIndex: 'specialNotes', key: 'specialNotes', sorter: true },
-	  {	title: 'Допуск до виробництва', dataIndex: 'isProduction', key: 'isProduction',	sorter: true,
-		render: (isProduction, record) => (
-		  <Checkbox
-			checked={isProduction}
-			onChange={(e) => handleProductionChange(record.id, e.target.checked)}
-		  />
-		),
-	  },
+	  { title: 'Вага', dataIndex: 'physicalWeightReg', key: 'physicalWeighReg', sorter: true },
+	  { title: 'Відходи', dataIndex: 'shrinkageReg', key: 'shrinkageReg', sorter: true },
+	  { title: 'Усушка', dataIndex: 'wasteReg', key: 'wasteReg', sorter: true },
+	  { title: 'Залікова вага', dataIndex: 'accWeightReg', key: 'accWeightReg', sorter: true },
 	  { title: 'Автор документу', dataIndex: 'createdByName', key: 'createdByName', sorter: true },
 
 	  {
@@ -75,7 +61,7 @@ const LaboratoryCardsTable = ({
 			  </Button>
 			</div>
 		  ) : (
-			<div>Додано в Реєстр</div>
+			<div>Обчислено в Акті виконаних робіт</div>
 		  )
 		),
 	  },
@@ -84,7 +70,7 @@ const LaboratoryCardsTable = ({
 	return (
 	  <Table
 		columns={columns}
-		dataSource={laboratoryCards}
+		dataSource={invoiceRegisters}
 		rowKey="id"
 		loading={loading}
 		pagination={{
@@ -98,6 +84,6 @@ const LaboratoryCardsTable = ({
 	);
   };
   
-  export default LaboratoryCardsTable;
+  export default InvoiceRegisterTable;
   
 

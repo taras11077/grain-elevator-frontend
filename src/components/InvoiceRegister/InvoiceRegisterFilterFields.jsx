@@ -3,25 +3,25 @@ import dayjs from 'dayjs'
 import React from 'react'
 
 
-const InputInvoiceFilterFields = ({ filters, onFilterChange }) => {
+const InvoiceRegisterFilterFields = ({ filters, onFilterChange }) => {
     return (
         <div className="filter-fields">
             <Row gutter={[16, 16]}>
                 <Col span={8}>
                     <Input
-                        placeholder="Номер накладної"
-                        name="invoiceNumber"
-                        value={filters.invoiceNumber || ''}
+                        placeholder="Номер реєстра"
+                        name="registerNumber"
+                        value={filters.registerNumber || ''}
                         onChange={onFilterChange}
                     />
                 </Col>
-				<Col span={8}>
+                <Col span={8}>
                     <DatePicker
                         placeholder="Дата прибуття"
                         name="arrivalDate"
                         style={{ width: '100%' }}
 						value={filters.arrivalDate ? dayjs(filters.arrivalDate, 'YYYY-MM-DD') : null} // збереження внутрішнього формату для фільтрації
-						format="DD-MM-YYYY" //показуємо користувачеві дружній формат
+						format="DD-MM-YYYY" //вивід користувачеві дружній формат
 						onChange={(date) => {
 							const isoDate = date ? dayjs(date).format('YYYY-MM-DD') : ''; // формат для фільтрації
 							onFilterChange({
@@ -30,7 +30,7 @@ const InputInvoiceFilterFields = ({ filters, onFilterChange }) => {
 						}}
 					/>
                 </Col>
-               
+				
             </Row>
             <Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
                 <Col span={8}>
@@ -54,23 +54,22 @@ const InputInvoiceFilterFields = ({ filters, onFilterChange }) => {
 			<Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
 				<Col span={8}>
                     <Input
-                        placeholder="Номер транспортного засобу"
-                        name="vehicleNumber"
-                        value={filters.vehicleNumber || ''}
-                        onChange={onFilterChange}
-                    />
-                </Col>
-				<Col span={8}>
-                    <Input
                         placeholder="Физична вага"
-                        name="physicalWeight"
+                        name="physicalWeightReg"
                         value={filters.physicalWeight || ''}
                         onChange={onFilterChange}
 
                     />
                 </Col> 
+               	<Col span={8}>
+                    <Input
+                        placeholder="Залікова вага"
+                        name="accWeightReg"
+                        value={filters.accWeightReg || ''}
+                        onChange={onFilterChange}
+                    />
+                </Col>
             </Row>
-
 
 			<Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
                 <Col span={8}>
@@ -86,4 +85,4 @@ const InputInvoiceFilterFields = ({ filters, onFilterChange }) => {
     );
 };
 
-export default InputInvoiceFilterFields;
+export default InvoiceRegisterFilterFields;
