@@ -49,9 +49,9 @@ const LaboratoryCardsTable = ({
 	  { title: 'Постачальник', dataIndex: 'supplierTitle', key: 'supplierTitle', sorter: true },
 	  { title: 'Сміттева домішка', dataIndex: 'weedImpurity', key: 'weedImpurity', sorter: true },
 	  { title: 'Вологість', dataIndex: 'moisture', key: 'moisture', sorter: true },
-	  { title: 'Зернова домішка', dataIndex: 'grainImpurity', key: 'grainImpurity', sorter: true },
-	  { title: 'Особливі примітки', dataIndex: 'specialNotes', key: 'specialNotes', sorter: true },
-	  {	title: 'Допуск до виробництва', dataIndex: 'isProduction', key: 'isProduction',	sorter: true,
+	  { title: 'Зернова домішка', dataIndex: 'grainImpurity', key: 'grainImpurity' },
+	  { title: 'Особливі примітки', dataIndex: 'specialNotes', key: 'specialNotes' },
+	  {	title: 'Допуск до виробництва', dataIndex: 'isProduction', key: 'isProduction',
 		render: (isProduction, record) => (
 		  <Checkbox
 			checked={isProduction}

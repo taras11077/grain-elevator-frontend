@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 import {
-  fetchRegisters,
-  createRegister,
-  updateRegister,
-  deleteRegister,
-} from '../asyncThunks/invoiceRegisterThunk';
+	createRegister,
+	deleteRegister,
+	fetchRegisters,
+	updateRegister,
+} from '../asyncThunks/invoiceRegisterThunk'
 
 const initialState = {
   registers: [],
@@ -12,9 +12,10 @@ const initialState = {
   filters: {
 	registerNumber: '',
 	arrivalDate: '',
-	supplierTitle: '',
 	productTitle: '',
+	supplierTitle: '',
 	physicalWeightReg: '',
+	accWeightReg: '',
 	createdByName: '',
 	page: 1,
 	size: 10,

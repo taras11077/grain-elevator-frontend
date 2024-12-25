@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import api from '../api/axios'
 
+
 // Fetch Register
 export const fetchRegisters = createAsyncThunk(
 	'registers/fetchRegisters',
@@ -41,13 +42,17 @@ export const createRegister = createAsyncThunk(
 		return response.data; // Успішна відповідь
 	  } catch (error) {
 		if (error.response) {
-		  // Обробка помилки на рівні сервера
 		  const { status, data } = error.response;
   
+		  // Обробка конкретних помилок
 		  if (status === 401) {
 			return rejectWithValue({ message: data.message || 'Ви не авторизовані.', status });
 		  }
+		  if (status === 400) {
+			return rejectWithValue({ message: data.message || 'Невірні дані форми.', status });
+		  }
   
+		  // Загальна помилка
 		  return rejectWithValue({
 			message: data.message || 'Сталася помилка під час створення Реєстру.',
 			status,
@@ -59,6 +64,7 @@ export const createRegister = createAsyncThunk(
 	  }
 	}
   );
+  
   
 
 // Update Register

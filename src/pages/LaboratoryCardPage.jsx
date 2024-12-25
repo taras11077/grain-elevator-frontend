@@ -14,7 +14,6 @@ import LaboratoryCardsTable from '../components/LaboratoryCard/LaboratoryCardsTa
 import { setFilters, setPagination, setSelectedCard, setSort, toggleModal } from '../slices/laboratoryCardSlice'
 import './InputInvoicePage.css'
 
-
 const LaboratoryCardPage = () => {
 	const { Title } = Typography;
 	const dispatch = useDispatch();
@@ -145,7 +144,18 @@ const LaboratoryCardPage = () => {
   
 		<LaboratoryCardFilterFields filters={filters} onFilterChange={handleFilterChange} />
   
-		<Button type="primary" onClick={() => handleOpenModal(null)} style={{ margin: 30, width: '10%' }}>
+		<Button 
+			type="primary" 
+			onClick={() => handleOpenModal(null)} 
+			style={{
+				margin: 30,
+				width: '20%',
+				maxWidth: '250px',
+				overflow: 'hidden',
+				textOverflow: 'ellipsis',
+				whiteSpace: 'nowrap',
+			}}
+		>
 		  Створити лабораторну карточку
 		</Button>
   

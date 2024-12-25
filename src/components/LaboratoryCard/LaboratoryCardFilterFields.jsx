@@ -9,9 +9,9 @@ const LaboratoryCardFilterFields = ({ filters, onFilterChange }) => {
             <Row gutter={[16, 16]}>
                 <Col span={8}>
                     <Input
-                        placeholder="Номер накладної"
-                        name="invoiceNumber"
-                        value={filters.invoiceNumber || ''}
+                        placeholder="Номер лабораторної карточки"
+                        name="labCardNumber"
+                        value={filters.labCardNumber || ''}
                         onChange={onFilterChange}
                     />
                 </Col>
@@ -30,15 +30,6 @@ const LaboratoryCardFilterFields = ({ filters, onFilterChange }) => {
 						}}
 					/>
                 </Col>
-				<Col span={8}>
-                    <Input
-                        placeholder="Физична вага"
-                        name="physicalWeight"
-                        value={filters.physicalWeight || ''}
-                        onChange={onFilterChange}
-
-                    />
-                </Col> 
             </Row>
             <Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
                 <Col span={8}>
@@ -59,7 +50,25 @@ const LaboratoryCardFilterFields = ({ filters, onFilterChange }) => {
                 </Col>
             </Row>
 
+			<Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
+				<Col span={8}>
+                    <Input
+                        placeholder="Физична вага"
+                        name="physicalWeight"
+                        value={filters.physicalWeight || ''}
+                        onChange={onFilterChange}
 
+                    />
+                </Col> 
+				<Col span={8}>
+                    <Input
+                        placeholder="Особливі замітки"
+                        name="SpecialNotes"
+                        value={filters.SpecialNotes || ''}
+                        onChange={onFilterChange}
+                    />
+                </Col>
+            </Row>
 
 			<Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
                 <Col span={8}>
@@ -78,26 +87,10 @@ const LaboratoryCardFilterFields = ({ filters, onFilterChange }) => {
                         onChange={onFilterChange}
                     />
                 </Col>
-
-				<Col span={8}>
-                    <Input
-                        placeholder="Зернова домішка"
-                        name="grainImpurity"
-                        value={filters.grainImpurity || ''}
-                        onChange={onFilterChange}
-                    />
-                </Col>
             </Row>
 
 			<Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
-               				<Col span={8}>
-                    <Input
-                        placeholder="Особливі замітки"
-                        name="SpecialNotes"
-                        value={filters.SpecialNotes || ''}
-                        onChange={onFilterChange}
-                    />
-                </Col>
+               
 
                 <Col span={8}>
                     <Input

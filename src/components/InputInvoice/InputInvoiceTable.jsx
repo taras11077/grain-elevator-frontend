@@ -23,7 +23,7 @@ const InputInvoiceTable = ({
 		title: 'Ви впевнені, що хочете видалити цю Прибуткову накладну?',
 		icon: <ExclamationCircleOutlined />,
 		content: `Номер накладної: ${record.invoiceNumber}`,
-		okText: 'Так, видалити',
+		okText: 'Так',
 		okType: 'danger',
 		cancelText: 'Скасувати',
 		onOk() {

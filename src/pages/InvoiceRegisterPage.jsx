@@ -3,16 +3,17 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
-	fetchRegisters,
 	createRegister,
-	updateRegister,
 	deleteRegister,
-  } from '../asyncThunks/invoiceRegisterThunk';
+	fetchRegisters,
+	updateRegister,
+} from '../asyncThunks/invoiceRegisterThunk'
 import InvoiceRegisterFilterFields from '../components/InvoiceRegister/InvoiceRegisterFilterFields'
 import InvoiceRegisterForm from '../components/InvoiceRegister/InvoiceRegisterForm'
 import InvoiceRegisterTable from '../components/InvoiceRegister/InvoiceRegisterTable'
 import { setFilters, setPagination, setSelectedRegister, setSort, toggleModal } from '../slices/invoiceRegisterSlice'
 import './InputInvoicePage.css'
+
 
 const InvoiceRegisterPage = () => {
 	const { Title } = Typography;
@@ -69,28 +70,31 @@ const InvoiceRegisterPage = () => {
   
 	// Додавання чи оновлення Реєстра
 	const handleFormSubmit = async (formData) => {
-		console.log("Form submitted with data:", formData);
-	  try {
-		if (selectedRegister) {
-		  const resultAction = await dispatch(updateRegister({ id: selectedRegister.id, updates: formData }));
-		  if (updateRegister.fulfilled.match(resultAction)) {
-			message.success('Реєстр оновлено.');
+		try {
+		  if (selectedRegister) {
+			const resultAction = await dispatch(updateRegister({ id: selectedRegister.id, updates: formData })).unwrap();
+			message.success(`Реєстр з ID ${resultAction.id} успішно оновлено.`);
 			dispatch(fetchRegisters());
 		  } else {
-			const errorMessage = resultAction.payload?.message || 'Не вдалося оновити Реєстр.';
-			message.error(errorMessage);
+			const resultAction = await dispatch(createRegister(formData)).unwrap();
+			message.success(`Реєстр з ID ${resultAction.id} успішно створено.`);
+			dispatch(fetchRegisters());
 		  }
-		} else {
-		  await dispatch(createRegister(formData));
-		  dispatch(fetchRegisters());
-		  message.success('Реєстр створено.');
+		  handleCloseModal();
+		} catch (error) {
+		  if (error.status === 401) {
+			message.error(error.message || 'Ви не авторизовані.');
+		  } else if (error.status === 400) {
+			message.error(error.message || 'Помилка: невірні дані форми.');
+		  } else if (error.status === 500) {
+			message.error(error.message || 'Внутрішня помилка сервера. Спробуйте пізніше.');
+		  } else {
+			message.error(error.message || 'Сталася помилка.');
+		  }
+		  console.error('Помилка обробки форми:', error);
 		}
-		handleCloseModal();
-	  } catch (error) {
-		console.error('Помилка збереження:', error);
-		message.error('Помилка збереження.');
-	  }
-	};
+	  };
+	  
   
 	// Видалення Реєстра
 	const handleDeleteRegister = async (record) => {
@@ -134,7 +138,7 @@ const InvoiceRegisterPage = () => {
   
 	return (
 	  <div className="container">
-		<Title level={2} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
+		<Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
 		  Добові реєстри 
 		</Title>
 		<Title level={4} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
@@ -149,7 +153,14 @@ const InvoiceRegisterPage = () => {
 			type="primary"
 			disabled={!selectedRegisterId}
 			onClick={handleAddToCompletionReport}
-			style={{ margin: 30, width: '10%' }}
+			style={{
+				margin: 30,
+				width: '20%',
+				maxWidth: '250px',
+				overflow: 'hidden',
+				textOverflow: 'ellipsis',
+				whiteSpace: 'nowrap',
+			}}
 		  >
 			Додати в Акт виконаних робіт
 		  </Button>
@@ -157,7 +168,14 @@ const InvoiceRegisterPage = () => {
 		  <Button
 			type="primary"
 			onClick={() => handleOpenModal(null)}
-			style={{ margin: 30, width: '10%' }}
+			style={{
+				margin: 30,
+				width: '20%',
+				maxWidth: '250px',
+				overflow: 'hidden',
+				textOverflow: 'ellipsis',
+				whiteSpace: 'nowrap',
+			}}
 		  >
 			Створити Реєстр
 		  </Button>

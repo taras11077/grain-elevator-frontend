@@ -3,7 +3,6 @@ import dayjs from 'dayjs'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 
-
 const getValidationSchema = (isEditing) =>
     Yup.object().shape({
       registerNumber: Yup.string().required('Обов’язкове поле'),

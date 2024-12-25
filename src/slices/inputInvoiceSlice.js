@@ -6,7 +6,6 @@ import {
   deleteInvoice,
 } from '../asyncThunks/inputInvoiceThunk';
 
-
 const initialState = {
   invoices: [],
   loading: false,

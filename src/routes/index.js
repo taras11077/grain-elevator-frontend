@@ -7,6 +7,7 @@ import LaboratoryCard from '../pages/LaboratoryCardPage'
 import InvoiceRegister from '../pages/InvoiceRegisterPage'
 import Login from '../pages/LoginPage'
 import NotFoundPage from '../pages/NotFoundPage'
+import Warehouse from '../pages/WarehousePage'
 import OutputInvoice from '../pages/OutputInvoicePage'
 import Registration from '../pages/RegistrationPage'
 import PrivateRoute from './PrivateRoute'
@@ -42,12 +43,19 @@ const router = createBrowserRouter([
 				</PrivateRoute>
 			  
 		  },
-
 		  {
 			path: '/register',
 			element:
 				<PrivateRoute allowedRoles={['Technologist', 'Admin', 'CEO']}>
 					<InvoiceRegister />
+				</PrivateRoute>
+			  
+		  },
+		  {
+			path: '/warehouse',
+			element:
+				<PrivateRoute allowedRoles={['Accountant', 'Admin', 'CEO']}>
+					<Warehouse />
 				</PrivateRoute>
 			  
 		  },

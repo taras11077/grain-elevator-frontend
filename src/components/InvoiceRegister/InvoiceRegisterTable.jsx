@@ -1,8 +1,8 @@
-import React from 'react';
-import { Modal, Button, Table, Checkbox, message } from 'antd'
-import dayjs from 'dayjs';
-import { useDispatch } from 'react-redux'
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { Button, Modal, Table } from 'antd'
+import dayjs from 'dayjs'
+import React from 'react'
+
 
 const InvoiceRegisterTable = ({
 	invoiceRegisters,
@@ -18,7 +18,7 @@ const InvoiceRegisterTable = ({
 		  title: 'Ви впевнені, що хочете видалити цей Реєстр?',
 		  icon: <ExclamationCircleOutlined />,
 		  content: `Номер реєстру: ${record.registerNumber}`,
-		  okText: 'Так, видалити',
+		  okText: 'Так',
 		  okType: 'danger',
 		  cancelText: 'Скасувати',
 		  onOk() {
@@ -41,12 +41,12 @@ const InvoiceRegisterTable = ({
 	  },
 	  { title: 'Продукція', dataIndex: 'productTitle', key: 'productTitle', sorter: true },
 	  { title: 'Постачальник', dataIndex: 'supplierTitle', key: 'supplierTitle', sorter: true },
-	  { title: 'Вага', dataIndex: 'physicalWeightReg', key: 'physicalWeighReg', sorter: true },
-	  { title: 'Відходи', dataIndex: 'shrinkageReg', key: 'shrinkageReg', sorter: true },
-	  { title: 'Усушка', dataIndex: 'wasteReg', key: 'wasteReg', sorter: true },
+	  { title: 'Физична Вага', dataIndex: 'physicalWeightReg', key: 'physicalWeighReg', sorter: true },
+	  { title: 'Усушка', dataIndex: 'shrinkageReg', key: 'shrinkageReg', sorter: true },
+	  { title: 'Відходи', dataIndex: 'wasteReg', key: 'wasteReg', sorter: true },
 	  { title: 'Залікова вага', dataIndex: 'accWeightReg', key: 'accWeightReg', sorter: true },
 	  { title: 'Автор документу', dataIndex: 'createdByName', key: 'createdByName', sorter: true },
-
+	  
 	  {
 		title: 'Дії',
 		key: 'actions',

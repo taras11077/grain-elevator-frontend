@@ -128,7 +128,15 @@ const InputInvoicePage = () => {
           type="primary"
           disabled={!selectedInvoiceId}
           onClick={handleAddToLabCard}
-          style={{ margin: 30, width: '10%' }}
+          style={{
+			margin: 30,
+			width: '20%',
+			maxWidth: '250px',
+			overflow: 'hidden',
+			textOverflow: 'ellipsis',
+			whiteSpace: 'nowrap',
+		  }}
+
         >
           Додати в лабораторну карточку
         </Button>
@@ -136,7 +144,14 @@ const InputInvoicePage = () => {
         <Button
           type="primary"
           onClick={() => handleOpenModal(null)}
-          style={{ margin: 30, width: '10%' }}
+			style={{
+				margin: 30,
+				width: '20%',
+				maxWidth: '250px',
+				overflow: 'hidden',
+				textOverflow: 'ellipsis',
+				whiteSpace: 'nowrap',
+			  }}
         >
           Створити прибуткову накладну
         </Button>
