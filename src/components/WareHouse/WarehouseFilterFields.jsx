@@ -1,7 +1,5 @@
-import { Col, DatePicker, Input, Row } from 'antd'
-import dayjs from 'dayjs'
+import { Col, Input, Row } from 'antd'
 import React from 'react'
-
 
 const WarehouseFilterFields = ({ filters, onFilterChange }) => {
     return (
@@ -25,9 +23,17 @@ const WarehouseFilterFields = ({ filters, onFilterChange }) => {
                 </Col>
 				<Col span={8}>
                     <Input
-                        placeholder="Автор документу"
-                        name="createdByName"
-                        value={filters.createdByName || ''}
+                        placeholder="Категорія продукції"
+                        name="productCategory"
+                        value={filters.productCategory || ''}
+                        onChange={onFilterChange}
+                    />
+                </Col>
+				<Col span={8}>
+                    <Input
+                        placeholder="Автор"
+                        name="modifiedById"
+                        value={filters.modifyByName || ''}
                         onChange={onFilterChange}
                     />
                 </Col>
