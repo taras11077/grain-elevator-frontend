@@ -35,7 +35,6 @@ const preparedInitialData = {
 		}}
 		validationSchema={getValidationSchema(isEditing)}
 		onSubmit={(values) => {
-		  console.log('Submitting form:', values);
 		  onSubmit(values);
 		}}
     >
@@ -46,7 +45,6 @@ const preparedInitialData = {
 						<Field name="registerNumber" as={Input} />
 						{errors.registerNumber && touched.registerNumber && <div>{errors.registerNumber}</div>}
 					</div>
-
 
 					{!isEditing && (
 						<div>

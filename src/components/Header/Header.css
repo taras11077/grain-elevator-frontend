@@ -26,7 +26,8 @@
 
 button{
 	width: 100px;
-	background-color: rgb(19, 150, 148);
+	max-width: 60px;
+	background-color: rgb(51, 105, 190);
 	color: white;
 	font-size: 0.9em;
 	border: none;

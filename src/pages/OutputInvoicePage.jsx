@@ -146,6 +146,7 @@ const OutputInvoicePage = () => {
             initialData={selectedInvoice}
             onSubmit={handleFormSubmit}
             onCancel={handleCloseModal}
+			isEditing={!!selectedInvoice} 
           />
         </Modal>
 

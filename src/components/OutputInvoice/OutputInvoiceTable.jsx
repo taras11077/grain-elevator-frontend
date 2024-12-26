@@ -1,8 +1,8 @@
-import React from 'react';
-import dayjs from 'dayjs';
-import { Modal, Button, Checkbox, Table } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { Button, Modal, Table } from 'antd'
+import dayjs from 'dayjs'
+import React from 'react'
+
 
 const OutputInvoiceTable = ({
   outputInvoices,
@@ -35,7 +35,8 @@ const OutputInvoiceTable = ({
       title: 'Дата відвантаження',
       dataIndex: 'shipmentDate',
       key: 'shipmentDate',
-      sorter: (a, b) => dayjs(a.arrivalDate, 'DD-MM-YYYY').unix() - dayjs(b.arrivalDate, 'DD-MM-YYYY').unix(),
+      render: (date) => (dayjs(date).isValid() ? dayjs(date).format('DD-MM-YYYY') : 'дату не визначено'),
+	  sorter: true,
     },
     { title: 'Номер транспортного засобу', dataIndex: 'vehicleNumber', key: 'vehicleNumber', sorter: true },
 	{ title: 'Продукція', dataIndex: 'productTitle', key: 'productTitle', sorter: true },

@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import api from '../api/axios'
 
-
 // Fetch Output-invoices
 export const fetchInvoices = createAsyncThunk(
 	'outputInvoice/fetchInvoices',

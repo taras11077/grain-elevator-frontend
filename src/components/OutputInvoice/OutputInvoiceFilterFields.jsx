@@ -2,7 +2,6 @@ import { Col, DatePicker, Input, Row } from 'antd'
 import dayjs from 'dayjs'
 import React from 'react'
 
-
 const InputInvoiceFilterFields = ({ filters, onFilterChange }) => {
     return (
         <div className="filter-fields">
@@ -17,21 +16,33 @@ const InputInvoiceFilterFields = ({ filters, onFilterChange }) => {
                 </Col>
 				<Col span={8}>
                     <DatePicker
-                        placeholder="Дата прибуття"
-                        name="arrivalDate"
+                        placeholder="Дата відвантаження"
+                        name="shipmentDate"
                         style={{ width: '100%' }}
-						value={filters.arrivalDate ? dayjs(filters.arrivalDate, 'YYYY-MM-DD') : null} // збереження внутрішнього формату для фільтрації
+						value={filters.shipmentDate ? dayjs(filters.shipmentDate, 'YYYY-MM-DD') : null} // збереження внутрішнього формату для фільтрації
 						format="DD-MM-YYYY" //показуємо користувачеві дружній формат
 						onChange={(date) => {
 							const isoDate = date ? dayjs(date).format('YYYY-MM-DD') : ''; // формат для фільтрації
 							onFilterChange({
-								target: { name: 'arrivalDate', value: isoDate }, // надсилання ISO-формату на сервер
+								target: { name: 'shipmentDate', value: isoDate }, // надсилання ISO-формату на сервер
 							});
 						}}
 					/>
-                </Col>
-               
+                </Col>               
             </Row>
+
+			<Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
+				<Col span={8}>
+                    <Input
+                        placeholder="Номер транспортного засобу"
+                        name="vehicleNumber"
+                        value={filters.vehicleNumber || ''}
+                        onChange={onFilterChange}
+                    />
+                </Col>
+            </Row>
+
+
             <Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
                 <Col span={8}>
                     <Input
@@ -54,17 +65,17 @@ const InputInvoiceFilterFields = ({ filters, onFilterChange }) => {
 			<Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
 				<Col span={8}>
                     <Input
-                        placeholder="Номер транспортного засобу"
-                        name="vehicleNumber"
-                        value={filters.vehicleNumber || ''}
+                        placeholder="Категорія продукції"
+                        name="productCategory"
+                        value={filters.productCategory || ''}
                         onChange={onFilterChange}
                     />
                 </Col>
 				<Col span={8}>
                     <Input
-                        placeholder="Физична вага"
-                        name="physicalWeight"
-                        value={filters.physicalWeight || ''}
+                        placeholder="Вага"
+                        name="productWeight"
+                        value={filters.productWeight || ''}
                         onChange={onFilterChange}
 
                     />

@@ -71,7 +71,6 @@ const invoiceRegisterSlice = createSlice({
 		state.isModalOpen = false;
 	  })
 
-	  
 	  // Update Register
 	  .addCase(updateRegister.fulfilled, (state, action) => {
 		state.loading = false;
