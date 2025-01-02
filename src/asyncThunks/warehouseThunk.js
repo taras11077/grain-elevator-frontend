@@ -3,9 +3,9 @@ import api from '../api/axios'
 
 // Fetch warehouse-units
 export const fetchWarehouseUnits = createAsyncThunk(
-	' warehouseUnit/fetchUnits',
+	' warehouse/fetchWarehouseUnits',
 	async (_, { getState, rejectWithValue }) => {
-		const { filters, pagination, sort  } = getState().outputInvoices;
+		const { filters, pagination, sort  } = getState().warehouse;
 
 		const params = {
 			...filters,
@@ -59,7 +59,7 @@ export const fetchWarehouseUnits = createAsyncThunk(
 		}
   
 		// Для всіх інших помилок
-		return rejectWithValue({ message: error.message || 'Невідома помилка.', status: 500 });
+		return rejectWithValue({ message: error.message || 'Невідома помилка.', status: error.status || 500, });
 	  }
 	}
   );
@@ -97,17 +97,21 @@ export const fetchWarehouseUnits = createAsyncThunk(
 	'warehouseUnit/deleteUnite',
   async (id, { rejectWithValue }) => {
     try {
-      await api.patch(`/warehouse-unit/${id}/soft-remove`);
-      return id;
-    } catch (error) {
+		const response = await api.patch(`/warehouse-unit/${id}/soft-remove`);
+		return response.data;
+	} catch (error) {
 		if (error.response) {
-		  // Обробка помилки на рівні сервера
 		  const { status, data } = error.response;
   
+		  // Обробка конкретних помилок
 		  if (status === 401) {
 			return rejectWithValue({ message: data.message || 'Ви не авторизовані.', status });
 		  }
+		  if (status === 400) {
+			return rejectWithValue({ message: data.message || 'Невірні дані форми.', status });
+		  }
   
+		  // Загальна помилка
 		  return rejectWithValue({
 			message: data.message || 'Сталася помилка під час видалення Складського юніта.',
 			status,
@@ -115,7 +119,7 @@ export const fetchWarehouseUnits = createAsyncThunk(
 		}
   
 		// Для всіх інших помилок
-		return rejectWithValue({ message: error.message || 'Невідома помилка.', status: 500 });
+		return rejectWithValue({ message: error.message || 'Невідома помилка.', status: error.status || 500, });
 	  }
 	}
   );

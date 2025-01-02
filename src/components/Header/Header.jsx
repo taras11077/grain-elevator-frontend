@@ -21,7 +21,7 @@ const Header = () => {
       		)}
 
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Laboratory') && (
-        		<NavLink className="nav-link" to="/laboratory-cards">Лабораторні карточки</NavLink>
+        		<NavLink className="nav-link" to="/laboratory-cards">Лабораторні картки</NavLink>
       		)}
 
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Technologist') && (

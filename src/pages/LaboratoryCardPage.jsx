@@ -139,7 +139,7 @@ const LaboratoryCardPage = () => {
 	return (
 	  <div className="container">
 		<Title level={2} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
-		  Лабораторні карточки
+		  Лабораторні картки
 		</Title>
   
 		<LaboratoryCardFilterFields filters={filters} onFilterChange={handleFilterChange} />
@@ -156,7 +156,7 @@ const LaboratoryCardPage = () => {
 				whiteSpace: 'nowrap',
 			}}
 		>
-		  Створити лабораторну карточку
+		  Створити лабораторну картку
 		</Button>
   
 		<LaboratoryCardsTable

@@ -8,12 +8,10 @@ import {
 
 const initialState = {
 	warehouseUnits: [],
-  pagination: { current: 1, pageSize: 10, total: 0 },
-  filters: {
+  	pagination: { current: 1, pageSize: 10, total: 0 },
+  	filters: {
 	supplierTitle: '',
 	productTitle: '',
-	productCategory: '',
-	modifyByName: '',
 	page: 1,
 	size: 10,
   },
@@ -52,6 +50,7 @@ const warehouseSlice = createSlice({
 	  // Fetch warehouse-units
 	  .addCase(fetchWarehouseUnits.pending, (state) => {
 		state.loading = true;
+		state.error = null;
 	  })
 	  .addCase(fetchWarehouseUnits.fulfilled, (state, action) => {
 		state.warehouseUnits = action.payload.data;

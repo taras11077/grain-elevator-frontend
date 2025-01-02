@@ -11,8 +11,16 @@ import {
 import OutputInvoiceFilterFields from '../components/OutputInvoice/OutputInvoiceFilterFields'
 import OutputInvoiceForm from '../components/OutputInvoice/OutputInvoiceForm'
 import OutputInvoiceTable from '../components/OutputInvoice/OutputInvoiceTable'
-import { setFilters, setPagination, setSelectedInvoice, setSort, toggleModal } from '../slices/outputInvoiceSlice'
+import {
+	setFilters,
+	setPagination,
+	setSelectedInvoice,
+	setSort,
+	toggleModal
+} from '../slices/outputInvoiceSlice'
 import './InputInvoicePage.css'
+
+
 
 const OutputInvoicePage = () => {
   const { Title } = Typography;
@@ -24,18 +32,42 @@ const OutputInvoicePage = () => {
   const { 
 	outputInvoices,
 	loading, 
-	 pagination, 
-	 filters, 
-	 isModalOpen, 
-	 selectedInvoice,
-	 } = useSelector( (state) => state.outputInvoices );
+	pagination, 
+	filters, 
+	isModalOpen, 
+	selectedInvoice,
+	 } = useSelector((state) => state.outputInvoices );
 
   // Локальний стан для вибору рядка таблиці
-  const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
+ const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
 
+   // Визначення режиму редагування та початкові дані
+  const isEditing = location.state?.isEditing ?? !!selectedInvoice; 
+  const isFromWarehouse = location.state?.isFromWarehouse || false;
+  const initialData = isEditing
+	? selectedInvoice
+	: location.state?.initialData || {};
+
+  // Завантаження накладних
   useEffect(() => {
     dispatch(fetchInvoices());
   }, [filters, pagination.current, pagination.pageSize]);
+
+	// Відкриття модального вікна при переході зі сторінки WarehousePage
+	useEffect(() => {
+		if (location.state) {
+		dispatch(
+			setSelectedInvoice({
+				supplierTitle: location.state.supplierTitle,
+				productTitle: location.state.productTitle,
+				productCategory: location.state.productCategory,
+				productWeight: location.state.productWeight,
+			})
+		);
+		dispatch(toggleModal(true)); // Відкриваємо модальне вікно
+		}
+	}, [location.state, dispatch]);
+
 
   // Обробка фільтрів
   const handleFilterChange = (e) => {
@@ -67,7 +99,7 @@ const OutputInvoicePage = () => {
   // Додавання чи оновлення накладної
   const handleFormSubmit = async (formData) => {
     try {
-      if (selectedInvoice) {
+      if (isEditing) {
         const resultAction = await dispatch(updateInvoice({ id: selectedInvoice.id, updates: formData }));
         if (updateInvoice.fulfilled.match(resultAction)) {
           message.success('Видаткову накладну оновлено.');
@@ -79,6 +111,7 @@ const OutputInvoicePage = () => {
       } else {
         await dispatch(createInvoice(formData));
         message.success('Видаткову накладну створено.');
+		dispatch(fetchInvoices());
       }
       handleCloseModal();
     } catch (error) {
@@ -98,7 +131,6 @@ const OutputInvoicePage = () => {
       message.error('Не вдалося видалити Видаткову накладну.');
     }
   };
-
 
 
   return (
@@ -121,7 +153,7 @@ const OutputInvoicePage = () => {
 				whiteSpace: 'nowrap',
 			}}
 		>
-			Створити видаткову накладну
+			Створити Видаткову накладну
 		</Button>
 
       <OutputInvoiceTable
@@ -136,20 +168,20 @@ const OutputInvoicePage = () => {
       />
 
         <Modal
-          title={selectedInvoice ? 'Редагувати накладну' : 'Створити накладну'}
+          title={isEditing  ? 'Редагувати Видаткову накладну' : 'Створити Видаткову накладну'}
           open={isModalOpen}
           onCancel={handleCloseModal}
           footer={null}
         >
           <OutputInvoiceForm
-            key={selectedInvoice ? selectedInvoice.id : 'new'}
-            initialData={selectedInvoice}
-            onSubmit={handleFormSubmit}
-            onCancel={handleCloseModal}
-			isEditing={!!selectedInvoice} 
+            key={isEditing  ? selectedInvoice.id : 'new'}
+            initialData={initialData}
+  			onSubmit={handleFormSubmit}
+  			onCancel={handleCloseModal}
+  			isEditing={isEditing}
+    		isFromWarehouse={isFromWarehouse}	
           />
         </Modal>
-
     </div>
   );
 }

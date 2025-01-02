@@ -23,14 +23,6 @@ const WarehouseFilterFields = ({ filters, onFilterChange }) => {
                 </Col>
 				<Col span={8}>
                     <Input
-                        placeholder="Категорія продукції"
-                        name="productCategory"
-                        value={filters.productCategory || ''}
-                        onChange={onFilterChange}
-                    />
-                </Col>
-				<Col span={8}>
-                    <Input
                         placeholder="Автор"
                         name="modifiedById"
                         value={filters.modifyByName || ''}

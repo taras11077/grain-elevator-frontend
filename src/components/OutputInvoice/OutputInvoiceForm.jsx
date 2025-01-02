@@ -4,17 +4,18 @@ import { Field, Form, Formik } from 'formik'
 import React from 'react'
 import * as Yup from 'yup'
 
-const OutputInvoiceSchema = (isEditing) => Yup.object().shape({
+const OutputInvoiceSchema = (isEditing , isFromWarehouse) => Yup.object().shape({
     invoiceNumber: Yup.string().required('Обов’язкове поле'),
     shipmentDate: Yup.date().required('Обов’язкове поле'),
     vehicleNumber: Yup.string().required('Обов’язкове поле'),
-    supplierTitle: isEditing ? Yup.mixed().notRequired() : Yup.string().required('Обов’язкове поле'),
-    productTitle: isEditing ? Yup.mixed().notRequired() : Yup.string().required('Обов’язкове поле'),
-	productCategory: isEditing ? Yup.mixed().notRequired() : Yup.string().required('Обов’язкове поле'),
-	productWeight: isEditing ? Yup.mixed().notRequired() : Yup.number().required('Обов’язкове поле').positive('Має бути додатнім'),
+    supplierTitle: isEditing || isFromWarehouse ? Yup.mixed().notRequired() : Yup.string().required('Обов’язкове поле'),
+    productTitle: isEditing || isFromWarehouse ? Yup.mixed().notRequired() : Yup.string().required('Обов’язкове поле'),
+	productCategory: isEditing || isFromWarehouse ? Yup.mixed().notRequired() : Yup.string().required('Обов’язкове поле'),
+	productWeight: isEditing || isFromWarehouse ? Yup.mixed().notRequired() : Yup.number().required('Обов’язкове поле').positive('Має бути додатнім'),
 });
 
-const OutputInvoiceForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
+const OutputInvoiceForm = ({ initialData = {}, onSubmit, onCancel, isEditing, isFromWarehouse  }) => {
+
 	const preparedInitialData = {
 		...initialData,
 		shipmentDate: initialData?.shipmentDate 
@@ -33,7 +34,7 @@ const OutputInvoiceForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 				productCategory: preparedInitialData?.productCategory || '',
                 productWeight: preparedInitialData?.productWeight || '', 
             }}
-            validationSchema={OutputInvoiceSchema}
+            validationSchema={OutputInvoiceSchema(isEditing, isFromWarehouse)}
             onSubmit={onSubmit}
         >
             {({ errors, touched, values }) => (
@@ -59,34 +60,30 @@ const OutputInvoiceForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                         {errors.vehicleNumber && touched.vehicleNumber && <div>{errors.vehicleNumber}</div>}
                     </div>
 
-					{!isEditing && (
-						<div>
-							<label>Постачальник:</label>
-							<Field name="supplierTitle" as={Input} />
-							{errors.supplier && touched.supplier && <div>{errors.supplierTitle}</div>}
-						</div>
-					)}
-					{!isEditing && (
-						<div>
-							<label>Продукція:</label>
-							<Field name="productTitle" as={Input} />
-							{errors.product && touched.product && <div>{errors.productTitle}</div>}
-						</div>
-					)}
-					{!isEditing && (
-						<div>
-							<label>Категорія продукції:</label>
-							<Field name="productCategory" as={Input} />
-							{errors.productCategory && touched.productCategory && <div>{errors.productCategory}</div>}
-						</div>
-					)}
-					{!isEditing && (
-						<div>
-							<label>Вага:</label>
-							<Field name="productWeight" type="number" as={Input} />
-							{errors.productWeight && touched.productWeight && <div>{errors.productWeight}</div>}
-						</div>
-					)}
+					<div>
+						<label>Постачальник:</label>
+						<Field name="supplierTitle" as={Input} disabled={isEditing || isFromWarehouse}/>
+						{errors.supplier && touched.supplier && <div>{errors.supplierTitle}</div>}
+					</div>
+
+					<div>
+						<label>Продукція:</label>
+						<Field name="productTitle" as={Input} disabled={isEditing || isFromWarehouse}/>
+						{errors.product && touched.product && <div>{errors.productTitle}</div>}
+					</div>
+
+					<div>
+						<label>Категорія продукції:</label>
+						<Field name="productCategory" as={Input} disabled={isEditing || isFromWarehouse}/>
+						{errors.productCategory && touched.productCategory && <div>{errors.productCategory}</div>}
+					</div>
+			
+					<div>
+						<label>Вага:</label>
+						<Field name="productWeight" type="number" as={Input} />
+						{errors.productWeight && touched.productWeight && <div>{errors.productWeight}</div>}
+					</div>
+					
                     <div style={{ marginTop: '16px' }}>
                         <Button type="primary" htmlType="submit" style={{ marginRight: '8px' }}>
                             Зберегти

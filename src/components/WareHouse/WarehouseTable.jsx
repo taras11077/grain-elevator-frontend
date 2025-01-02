@@ -1,61 +1,77 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { Button, Modal, Table } from 'antd'
-import dayjs from 'dayjs'
-import React from 'react'
+import React from 'react';
+import { Table, Collapse, Button, Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+const { Panel } = Collapse;
 
 const WarehouseTable = ({
- warehouseUnits,
+  warehouseUnits,
   loading,
   pagination,
   onTableChange,
-  onEdit,
   onDelete,
+  onNavigateToOutputInvoice,
 }) => {
-	const showDeleteConfirm = (record) => {
-	  Modal.confirm({
-		title: 'Ви впевнені, що хочете видалити цей Складський юніт?',
-		icon: <ExclamationCircleOutlined />,
-		content: `Постачальник: ${record.supplierTitle} Продукція: ${record.productTitle}`,
-		okText: 'Так',
-		okType: 'danger',
-		cancelText: 'Скасувати',
-		onOk() {
-			onDelete(record);
-		},
-		onCancel() {
-		  console.log('Скасовано користувачем');
-		},
-	  });
-	};
+  const showDeleteConfirm = (record) => {
+    Modal.confirm({
+      title: 'Ви впевнені, що хочете видалити цей Складський юніт?',
+      icon: <ExclamationCircleOutlined />,
+      content: `Постачальник: ${record.supplierTitle} Продукція: ${record.productTitle}`,
+      okText: 'Так',
+      okType: 'danger',
+      cancelText: 'Скасувати',
+      onOk() {
+        onDelete(record);
+      },
+    });
+  };
 
-	const columns = [
-	{ title: 'Постачальник', dataIndex: 'supplierTitle', key: 'supplierTitle', sorter: true },
-	{ title: 'Продукція', dataIndex: 'productTitle', key: 'productTitle', sorter: true },
-	{ title: 'Категорія продукції', dataIndex: 'productCategory', key: 'productCategory', sorter: true }, 
-	{ title: 'Вага', dataIndex: 'productWeight', key: 'productWeight', sorter: true }, 
-	{ title: 'Автор', dataIndex: 'modifiedById', key: 'modifiedById', sorter: true },
+  const expandedRowRender = (record) => (
+    <Collapse>
+      <Panel header="Категорії продукції" key="1">
+        <Table
+          dataSource={record.productCategories}
+          columns={[
+            { title: 'Категорія', dataIndex: 'title', key: 'title' },
+            { title: 'Кількість', dataIndex: 'value', key: 'value' },
+            {
+              key: 'actions',
+              render: (_, productCategory) => (
+                <Button
+                  type="link"
+				  onClick={() =>
+					onNavigateToOutputInvoice(record, productCategory, false, true) // `isEditing=false` та `isFromWarehouse=true`
+				  }
+                >
+                  Відвантажити
+                </Button>
+              ),
+            },
+          ]}
+          rowKey="id"
+          pagination={false}
+        />
+      </Panel>
+    </Collapse>
+  );
+
+  const columns = [
+    { title: 'Постачальник', dataIndex: 'supplierTitle', key: 'supplierTitle', sorter: true },
+    { title: 'Продукція', dataIndex: 'productTitle', key: 'productTitle', sorter: true },
+    { title: 'Автор', dataIndex: 'createdByName', key: 'createdByName', sorter: true },
     {
-      title: 'Дії',
       key: 'actions',
-      render: (_, record) =>
-        !record.isFinalized ? (
-          <div>
-            <Button type="link" onClick={() => onEdit(record)}>
-              Редагувати
-            </Button>
-			<Button type="link" danger onClick={() => showDeleteConfirm(record)}>
-              Видалити
-            </Button>
-          </div>
-        ) : (
-          <div>Створено Видаткову накладну</div>
-        ),
+      render: (_, record) => (
+        <Button type="link" danger onClick={() => showDeleteConfirm(record)}>
+          Видалити
+        </Button>
+      ),
     },
   ];
 
   return (
     <Table
-      rowSelection={null }
+      rowSelection={null}
       dataSource={warehouseUnits}
       columns={columns}
       rowKey="id"
@@ -66,9 +82,9 @@ const WarehouseTable = ({
         total: pagination.total,
       }}
       onChange={onTableChange}
+      expandable={{ expandedRowRender }}
     />
   );
 };
 
 export default WarehouseTable;
-
