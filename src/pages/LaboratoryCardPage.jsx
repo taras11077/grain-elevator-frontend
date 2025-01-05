@@ -170,7 +170,7 @@ const LaboratoryCardPage = () => {
       />
   
 		<Modal
-		  title={selectedCard ? 'Редагувати лабораторну карточку' : 'Створити лабораторну карточку'}
+		  title={selectedCard ? 'Редагувати лабораторну картку' : 'Створити лабораторну картку'}
 		  open={isModalOpen}
 		  onCancel={handleCloseModal}
 		  footer={null}

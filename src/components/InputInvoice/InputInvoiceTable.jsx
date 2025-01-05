@@ -35,8 +35,6 @@ const InputInvoiceTable = ({
 	  });
 	};
 
-
-
   // Колонки для стандартного сценарію
   const standardColumns = [
     { title: '№', dataIndex: 'invoiceNumber', key: 'invoiceNumber', sorter: true },

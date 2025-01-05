@@ -11,9 +11,14 @@ import {
 import InvoiceRegisterFilterFields from '../components/InvoiceRegister/InvoiceRegisterFilterFields'
 import InvoiceRegisterForm from '../components/InvoiceRegister/InvoiceRegisterForm'
 import InvoiceRegisterTable from '../components/InvoiceRegister/InvoiceRegisterTable'
-import { setFilters, setPagination, setSelectedRegister, setSort, toggleModal } from '../slices/invoiceRegisterSlice'
+import { 
+	setFilters, 
+	setPagination, 
+	setSelectedRegister, 
+	setSort, 
+	toggleModal } from '../slices/invoiceRegisterSlice'
+import { setSelectedRegisterIds } from "../slices/completionReportSlice";
 import './InputInvoicePage.css'
-
 
 const InvoiceRegisterPage = () => {
 	const { Title } = Typography;
@@ -31,12 +36,14 @@ const InvoiceRegisterPage = () => {
 		selectedRegister,
 		} = useSelector( (state) => state.registers );
   
-	// Локальний стан для вибору рядка таблиці
-	const [selectedRegisterId, setSelectedRegisterId] = useState(null);
+	const { 
+		selectedRegisterIds 
+	} = useSelector( (state) => state.reports );
   
    // Перевіряємо, чи сторінка викликана від Акта виконаних робіт
    const isForCompletionReport = location.state?.isForCompletionReport || false;
   
+   // Завантаження Реєстрів
 	useEffect(() => {
 	  dispatch(fetchRegisters());
 	}, [filters, pagination.current, pagination.pageSize]);
@@ -68,18 +75,17 @@ const InvoiceRegisterPage = () => {
 	  dispatch(setSelectedRegister(null));
 	};
   
-	// Додавання чи оновлення Реєстра
+	// Обробка форми для створення/оновлення реєстру
 	const handleFormSubmit = async (formData) => {
 		try {
 		  if (selectedRegister) {
 			const resultAction = await dispatch(updateRegister({ id: selectedRegister.id, updates: formData })).unwrap();
 			message.success(`Реєстр з ID ${resultAction.id} успішно оновлено.`);
-			dispatch(fetchRegisters());
 		  } else {
 			const resultAction = await dispatch(createRegister(formData)).unwrap();
 			message.success(`Реєстр з ID ${resultAction.id} успішно створено.`);
-			dispatch(fetchRegisters());
 		  }
+		  dispatch(fetchRegisters());
 		  handleCloseModal();
 		} catch (error) {
 		  if (error.status === 401) {
@@ -93,13 +99,11 @@ const InvoiceRegisterPage = () => {
 		  }
 		  console.error('Помилка обробки форми:', error);
 		}
-	  };
+	};
 	  
-  
 	// Видалення Реєстра
 	const handleDeleteRegister = async (record) => {
 		let deletedId = null;
-
 	  try {
 		deletedId = await dispatch(deleteRegister(record.id)).unwrap();
 		message.success(`Реєстр з ID ${deletedId} успішно видалено.`);
@@ -124,17 +128,15 @@ const InvoiceRegisterPage = () => {
 	  }
 	};
   
-	// Вибір Реєстру для Акта виконаних робіт
+	// Вибір Реєстрів для Акта виконаних робіт
 	const handleAddToCompletionReport = () => {
-	  const selectedRegister = registers.find((reg) => reg.id === selectedRegisterId);
-	  if (selectedRegister) {
-		  dispatch(setSelectedRegister(selectedRegister)); // Зберігаємо вибір у Redux
-		  navigate(-1); // Повертаємося назад
-		} else {
-		  message.warning('Будь ласка, оберіть Реєстр!');
-		}
-  };
-  
+		if (selectedRegisterIds.length > 0) {
+			navigate(-1,);
+			message.success(`Обрано ${selectedRegisterIds.length} Реєстрів.`);
+		  } else {
+			message.warning("Будь ласка, оберіть хоча б один Реєстр!");
+		  }
+	};
   
 	return (
 	  <div className="container">
@@ -151,7 +153,7 @@ const InvoiceRegisterPage = () => {
 		{isForCompletionReport ? (
 		  <Button
 			type="primary"
-			disabled={!selectedRegisterId}
+			disabled={selectedRegisterIds.length === 0}
 			onClick={handleAddToCompletionReport}
 			style={{
 				margin: 30,
@@ -187,8 +189,8 @@ const InvoiceRegisterPage = () => {
 		   pagination={pagination}
 		   onTableChange={handleTableChange}
 		   isForCompletionReport={isForCompletionReport} // Передаємо контекст
-		   selectedRowKeys={selectedRegisterId ? [selectedRegisterId] : []} // Стан вибору
-		   onRowSelect={(selectedKeys) => setSelectedRegisterId(selectedKeys[0])} // Оновлення стану
+		   selectedRowKeys={selectedRegisterIds} // Стан вибору
+		   onRowSelect={(selectedKeys) => dispatch(setSelectedRegisterIds(selectedKeys))} // Оновлення стану
 		   handleOpenModal={isForCompletionReport ? undefined : handleOpenModal}
 		   handleDeleteRegister={isForCompletionReport ? undefined : handleDeleteRegister}
 		/>

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Table, Collapse, Button, Modal } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { Button, Collapse, Modal, Table } from 'antd'
+import React from 'react'
 
 const { Panel } = Collapse;
 

@@ -1,10 +1,8 @@
-import React from 'react';
-import { Modal, Button, Table, Checkbox, message } from 'antd'
-import dayjs from 'dayjs';
-import { setSort } from '../../slices/laboratoryCardSlice'
-import { fetchLaboratoryCards } from '../../asyncThunks/laboratoryCardThunk'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { Button, Checkbox, Modal, Table } from 'antd'
+import dayjs from 'dayjs'
+import React from 'react'
 import { useDispatch } from 'react-redux'
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const LaboratoryCardsTable = ({
 	laboratoryCards,
@@ -19,7 +17,7 @@ const LaboratoryCardsTable = ({
 
 	const showDeleteConfirm = (record) => {
 		Modal.confirm({
-		  title: 'Ви впевнені, що хочете видалити цю Лабораторну карточку?',
+		  title: 'Ви впевнені, що хочете видалити цю Лабораторну картку?',
 		  icon: <ExclamationCircleOutlined />,
 		  content: `Номер карточки: ${record.labCardNumber}`,
 		  okText: 'Так',

@@ -1,7 +1,15 @@
-import { Button, Input } from 'antd'
+import { Button, Input, Select } from 'antd';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
+
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSuppliers } from '../../asyncThunks/supplierThunk';
+import { fetchProducts } from '../../asyncThunks/productThunk';
+
+
+const { Option } = Select;
 
 const getValidationSchema = (isEditing) =>
     Yup.object().shape({
@@ -14,8 +22,21 @@ const getValidationSchema = (isEditing) =>
     });
 
 const InvoiceRegisterForm = ({ initialData, onSubmit, onCancel , isEditing }) => {
+	const dispatch = useDispatch();
 
-const preparedInitialData = {
+  	const { suppliers, loading: suppliersLoading } = useSelector((state) => state.suppliers);
+  	const { products, loading: productsLoading } = useSelector((state) => state.products);
+
+	useEffect(() => {
+		dispatch(fetchSuppliers());
+		dispatch(fetchProducts());
+	}, [dispatch]);
+
+	if (suppliersLoading || productsLoading) {
+		return <div>Завантаження...</div>;
+	}
+
+	const preparedInitialData = {
 		...initialData,
 		arrivalDate: initialData?.arrivalDate 
 		  ? dayjs(initialData.arrivalDate, 'DD-MM-YYYY').format('YYYY-MM-DD') 
@@ -38,7 +59,7 @@ const preparedInitialData = {
 		  onSubmit(values);
 		}}
     >
- 			{({ errors, touched, values }) => (
+ 			{({ errors, touched, values, setFieldValue }) => (
 				<Form>
 					<div>
 						<label>Номер Реєстра:</label>
@@ -59,18 +80,48 @@ const preparedInitialData = {
 						</div>
 					)}
 					{!isEditing && (
+						<>
 						<div>
 							<label>Постачальник:</label>
-							<Field name="supplierTitle" as={Input} />
+						</div>
+						<div>
+							{/* <Field name="supplierTitle" as={Input} > */}
+							<Select
+								value={values.supplierTitle}
+								onChange={(value) => setFieldValue('supplierTitle', value)}
+								style={{ width: '100%' }} 
+								>
+								{suppliers.map((supplier) => (
+									<Option key={supplier.id} value={supplier.title}>
+										{supplier.title}
+									</Option>
+								))}
+							</Select>
 							{errors.supplier && touched.supplier && <div>{errors.supplierTitle}</div>}
 						</div>
+						</>
 					)}
 					{!isEditing && (
-						<div>
-							<label>Продукція:</label>
-							<Field name="productTitle" as={Input} />
-							{errors.product && touched.product && <div>{errors.productTitle}</div>}
-						</div>
+						<>
+							<div>
+								<label>Продукція:</label>
+							</div>
+							<div>
+								<Select
+									value={values.productTitle}
+									onChange={(value) => setFieldValue('productTitle', value)}
+									style={{ width: '100%' }} 
+									>
+									{products.map((product) => (
+										<Option key={product.id} value={product.title}>
+										{product.title}
+										</Option>
+									))}
+								</Select>
+								{/* <Field name="productTitle" as={Input} disabled={isEditing || isFromWarehouse}/> */}
+								{errors.product && touched.product && <div>{errors.productTitle}</div>}
+							</div>
+						</>
 					)}
 
 					<div>

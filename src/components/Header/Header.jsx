@@ -28,6 +28,13 @@ const Header = () => {
         		<NavLink className="nav-link" to="/register">Реєстри</NavLink>
       		)}
 
+			{(userData.role === 'Admin' || 
+					userData.role === 'CEO' || 
+					userData.role === 'Technologist' || 
+					userData.role === 'Accountant') && (
+        		<NavLink className="nav-link" to="/completion-report">Акти виконаних робіт</NavLink>
+      		)}
+
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Accountant') && (
         		<NavLink className="nav-link" to="/warehouse">Склад</NavLink>
       		)}
@@ -42,7 +49,7 @@ const Header = () => {
 
 			{(token) && (
 				<div>
-					Користувач: {userData.name}
+					{userData.name}
 					<button onClick={logoutHandler}>Вихід</button>
 				</div>			
 			 )}

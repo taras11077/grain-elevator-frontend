@@ -31,7 +31,7 @@ const InputInvoicePage = () => {
 	 } = useSelector( (state) => state.inputInvoice );
 
   // Локальний стан для вибору рядка таблиці
-  const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
+ const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
 
  // Перевіряємо, чи сторінка викликана від лабораторної карти
  const isForLabCard = location.state?.isForLabCard || false;
@@ -130,7 +130,7 @@ const InputInvoicePage = () => {
           onClick={handleAddToLabCard}
           style={{
 			margin: 30,
-			width: '20%',
+			width: '25%',
 			maxWidth: '250px',
 			overflow: 'hidden',
 			textOverflow: 'ellipsis',

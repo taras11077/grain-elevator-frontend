@@ -1,8 +1,16 @@
-import { Button, Input } from 'antd'
+import { Button, Input, Select } from 'antd';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs'
 import { Field, Form, Formik } from 'formik'
 import React from 'react'
 import * as Yup from 'yup'
+
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSuppliers } from '../../asyncThunks/supplierThunk';
+import { fetchProducts } from '../../asyncThunks/productThunk';
+import { fetchProductCategories } from '../../asyncThunks/productCategoryThunk';
+
+const { Option } = Select;
 
 const OutputInvoiceSchema = (isEditing , isFromWarehouse) => Yup.object().shape({
     invoiceNumber: Yup.string().required('Обов’язкове поле'),
@@ -15,7 +23,21 @@ const OutputInvoiceSchema = (isEditing , isFromWarehouse) => Yup.object().shape(
 });
 
 const OutputInvoiceForm = ({ initialData = {}, onSubmit, onCancel, isEditing, isFromWarehouse  }) => {
+	const dispatch = useDispatch();
+	const { suppliers, loading: suppliersLoading } = useSelector((state) => state.suppliers);
+  	const { products, loading: productsLoading } = useSelector((state) => state.products);
+	const { productCategories, loading: productCategoriesLoading } = useSelector((state) => state.productCategories);
 
+	useEffect(() => {
+		dispatch(fetchSuppliers());
+		dispatch(fetchProducts());
+		dispatch(fetchProductCategories());
+	}, [dispatch]);
+
+	if (suppliersLoading || productsLoading || productCategoriesLoading) {
+		return <div>Завантаження...</div>;
+	}
+  
 	const preparedInitialData = {
 		...initialData,
 		shipmentDate: initialData?.shipmentDate 
@@ -37,7 +59,7 @@ const OutputInvoiceForm = ({ initialData = {}, onSubmit, onCancel, isEditing, is
             validationSchema={OutputInvoiceSchema(isEditing, isFromWarehouse)}
             onSubmit={onSubmit}
         >
-            {({ errors, touched, values }) => (
+            {({ errors, touched, values, setFieldValue }) => (
                 <Form>
                     <div>
                         <label>Номер накладної:</label>
@@ -62,19 +84,61 @@ const OutputInvoiceForm = ({ initialData = {}, onSubmit, onCancel, isEditing, is
 
 					<div>
 						<label>Постачальник:</label>
-						<Field name="supplierTitle" as={Input} disabled={isEditing || isFromWarehouse}/>
+					</div>
+					<div>
+						{/* <Field name="supplierTitle" as={Input} disabled={isEditing || isFromWarehouse}/> */}
+						<Select
+							value={values.supplierTitle}
+							onChange={(value) => setFieldValue('supplierTitle', value)}
+							disabled={isEditing || isFromWarehouse}
+							style={{ width: '100%' }} 
+							>
+							{suppliers.map((supplier) => (
+								<Option key={supplier.id} value={supplier.title}>
+									{supplier.title}
+								</Option>
+							))}
+						</Select>
 						{errors.supplier && touched.supplier && <div>{errors.supplierTitle}</div>}
 					</div>
-
+							
 					<div>
 						<label>Продукція:</label>
-						<Field name="productTitle" as={Input} disabled={isEditing || isFromWarehouse}/>
+					</div>
+					<div>
+						<Select
+							value={values.productTitle}
+							onChange={(value) => setFieldValue('productTitle', value)}
+							disabled={isEditing || isFromWarehouse}
+							style={{ width: '100%' }} 
+							>
+							{products.map((product) => (
+								<Option key={product.id} value={product.title}>
+								{product.title}
+								</Option>
+							))}
+						</Select>
+						{/* <Field name="productTitle" as={Input} disabled={isEditing || isFromWarehouse}/> */}
 						{errors.product && touched.product && <div>{errors.productTitle}</div>}
 					</div>
 
 					<div>
 						<label>Категорія продукції:</label>
-						<Field name="productCategory" as={Input} disabled={isEditing || isFromWarehouse}/>
+					</div>
+					<div>
+						<Select
+							value={values.productCategory}
+							onChange={(value) => setFieldValue('productCategory', value)}
+							disabled={isEditing || isFromWarehouse}
+							style={{ width: '100%' }} 
+							>
+							{productCategories?.map((category) => (
+								<Option key={category.id} value={category.title}>
+								{category.title}
+								</Option>
+							))}
+            			</Select>
+						{/* <Field name="productCategory" as={Input} disabled={isEditing || isFromWarehouse}/> */}
 						{errors.productCategory && touched.productCategory && <div>{errors.productCategory}</div>}
 					</div>
 			

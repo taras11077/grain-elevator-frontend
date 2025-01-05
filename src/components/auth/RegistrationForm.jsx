@@ -100,7 +100,7 @@ const RegistrationForm = ({ closeModal }) => {
           <Input.Password />
         </Form.Item>
 
-        {/* Выбор роли */}
+        {/* Вибір роли */}
         <Form.Item
           name="roleId"
           label="Роль:"

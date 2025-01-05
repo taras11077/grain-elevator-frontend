@@ -11,6 +11,9 @@ const InvoiceRegisterTable = ({
 	onTableChange,
 	handleOpenModal,
 	handleDeleteRegister,
+	isForCompletionReport = false,
+	selectedRowKeys = [],
+	onRowSelect = () => {},
   }) => {
 
 	const showDeleteConfirm = (record) => {
@@ -51,24 +54,35 @@ const InvoiceRegisterTable = ({
 		title: 'Дії',
 		key: 'actions',
 		render: (_, record) => (
-		  !record.isFinalized ? (
-			<div>
-			  <Button type="link" onClick={() => handleOpenModal(record)}>
-					Редагувати
-			  </Button>
-			  <Button type="link" danger onClick={() => showDeleteConfirm(record)}>
-					Видалити
-			  </Button>
-			</div>
-		  ) : (
-			<div>Обчислено в Акті виконаних робіт</div>
-		  )
+			isForCompletionReport ? null : (
+				!record.isFinalized ? (
+					<div>
+					<Button type="link" onClick={() => handleOpenModal(record)}>
+							Редагувати
+					</Button>
+					<Button type="link" danger onClick={() => showDeleteConfirm(record)}>
+							Видалити
+					</Button>
+					</div>
+				) : (
+					<div>Обчислено в Акті виконаних робіт</div>
+				)
+			)
 		),
 	  },
 	];
   
 	return (
 	  <Table
+	  rowSelection={
+        isForCompletionReport
+          ? {
+              type: 'checkbox',
+              selectedRowKeys,
+              onChange: onRowSelect,
+            }
+          : null
+      }
 		columns={columns}
 		dataSource={invoiceRegisters}
 		rowKey="id"

@@ -73,7 +73,7 @@ const LaboratoryCardForm = ({ initialData, onSubmit, onCancel }) => {
           )}
 
           <div>
-            <label>Номер лабораторної карточки:</label>
+            <label>Номер лабораторної картки:</label>
             <Field name="LabCardNumber" as={Input} />
             {errors.labCardNumber && touched.labCardNumber && <div>{errors.labCardNumber}</div>}
           </div>

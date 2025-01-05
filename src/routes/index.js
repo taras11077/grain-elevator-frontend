@@ -2,15 +2,17 @@ import { createBrowserRouter } from 'react-router-dom'
 import App from '../App'
 import Forbidden from '../pages/Forbidden'
 import Home from '../pages/Home'
+import Login from '../pages/LoginPage'
+import NotFoundPage from '../pages/NotFoundPage'
+import Registration from '../pages/RegistrationPage'
+import PrivateRoute from './PrivateRoute'
 import InputInvoice from '../pages/InputInvoicePage'
 import LaboratoryCard from '../pages/LaboratoryCardPage'
 import InvoiceRegister from '../pages/InvoiceRegisterPage'
-import Login from '../pages/LoginPage'
-import NotFoundPage from '../pages/NotFoundPage'
+import CompletionReport from '../pages/CompletionReportPage'
 import Warehouse from '../pages/WarehousePage'
 import OutputInvoice from '../pages/OutputInvoicePage'
-import Registration from '../pages/RegistrationPage'
-import PrivateRoute from './PrivateRoute'
+
 
 
 const router = createBrowserRouter([
@@ -51,6 +53,15 @@ const router = createBrowserRouter([
 				</PrivateRoute>
 			  
 		  },
+		  {
+			path: '/completion-report',
+			element:
+				<PrivateRoute allowedRoles={['Technologist', 'Accountant', 'Admin', 'CEO']}>
+					<CompletionReport />
+				</PrivateRoute>
+			  
+		  },
+
 		  {
 			path: '/warehouse',
 			element:
