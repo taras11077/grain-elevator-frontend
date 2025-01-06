@@ -60,7 +60,7 @@ const InvoiceRegisterForm = ({ initialData, onSubmit, onCancel , isEditing }) =>
 		}}
     >
  			{({ errors, touched, values, setFieldValue }) => (
-				<Form>
+				  <Form style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}>
 					<div>
 						<label>Номер Реєстра:</label>
 						<Field name="registerNumber" as={Input} />

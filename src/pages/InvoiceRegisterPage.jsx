@@ -36,9 +36,7 @@ const InvoiceRegisterPage = () => {
 		selectedRegister,
 		} = useSelector( (state) => state.registers );
   
-	const { 
-		selectedRegisterIds 
-	} = useSelector( (state) => state.reports );
+	const { selectedRegisterIds	} = useSelector( (state) => state.reports );
   
    // Перевіряємо, чи сторінка викликана від Акта виконаних робіт
    const isForCompletionReport = location.state?.isForCompletionReport || false;
@@ -137,14 +135,14 @@ const InvoiceRegisterPage = () => {
 			message.warning("Будь ласка, оберіть хоча б один Реєстр!");
 		  }
 	};
-  
+
 	return (
 	  <div className="container">
 		<Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
-		  Добові реєстри 
+		  	Добові реєстри 
 		</Title>
 		<Title level={4} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
-		  прибуткових накладних з визначенням якості вхідної продукції за кожною накладною.
+		  	прибуткових накладних з визначенням якості вхідної продукції за кожною накладною.
 		</Title>
   
 		<InvoiceRegisterFilterFields filters={filters} onFilterChange={handleFilterChange} />

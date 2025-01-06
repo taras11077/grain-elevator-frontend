@@ -1,7 +1,7 @@
 import { Button, Modal, Typography, message } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
 	createTechnologicalOperation,
 	deleteTechnologicalOperation,
@@ -12,12 +12,14 @@ import TechnologicalOperationFilterFields from '../components/TechnologicalOpera
 import TechnologicalOperationForm from '../components/TechnologicalOperation/TechnologicalOperationForm'
 import TechnologicalOperationTable from '../components/TechnologicalOperation/TechnologicalOperationTable'
 import { setFilters, setPagination, setSelectedOperation, setSort, toggleModal } from '../slices/technologicalOperationSlice'
+import { setSelectedOperationIds } from "../slices/completionReportSlice";
 import './InputInvoicePage.css'
 
 const TechnologicalOperationPage = () => {
 	const { Title } = Typography;
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	 // Стан із Redux
 	 const { 
@@ -29,11 +31,12 @@ const TechnologicalOperationPage = () => {
 		selectedOperation, 
 	  } = useSelector((state) => state.technologicalOperations);
 
-	  // Локальний стан для вибору рядка таблиці
-    const [selectedTechnologicalOperationId, setSelectedOperationId] = useState(null);
+	const { selectedOperationIds = [] } = useSelector((state) => state.reports || {});
+
+	 // Перевіряємо, чи сторінка викликана від Акта виконаних робіт
+	 const isForCompletionReport = location.state?.isForCompletionReport || false;
   
 	// Завантаження Технологичних операцій
-
 	useEffect(() => {
 		dispatch(fetchTechnologicalOperations());
 	  }, [dispatch, filters, pagination.current, pagination.pageSize]);
@@ -43,7 +46,6 @@ const TechnologicalOperationPage = () => {
 		const { name, value } = e.target;
 		dispatch(setFilters({ [name]: value }));
 	};
-
 
 	// Обробка змін у таблиці (пагінація, сортування)
 	const handleTableChange = (pagination, _, sorter) => {
@@ -111,65 +113,92 @@ const TechnologicalOperationPage = () => {
 			console.error('Помилка:', error);
 		};
 
+		// Вибір Технологичних операцій для Акта виконаних робіт
+			const handleAddToCompletionReport = () => {
+				if (selectedOperationIds.length > 0) {
+					navigate(-1,);
+					message.success(`Обрано ${selectedOperationIds.length} Технологичних операцій.`);
+				  } else {
+					message.warning("Будь ласка, оберіть хоча б одну Технологичну операцію!");
+				  }
+			};
+
+			console.log('selectedOperationIds для сервера:', selectedOperationIds);
 
 	  return (
 		<div className="container">
-		  <Title 
-			level={1} 
-			style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}
-			>
-		  	Технологичні операції 
-		</Title>
+		  	<Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
+		  		Технологичні операції 
+			</Title>
 
-		<Title 
-			level={4} 
-			style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}
-			>
-			з доробки продукції, доступні на наявному обладнанні підприємства.
-		</Title>
+			<Title level={4} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
+				з доробки продукції, доступні на наявному обладнанні підприємства.
+			</Title>
 	
-		  <TechnologicalOperationFilterFields filters={filters} onFilterChange={handleFilterChange} />
-	
-		  <Button 
+			<TechnologicalOperationFilterFields filters={filters} onFilterChange={handleFilterChange} />
+		
+{/* Кнопка дії залежно від контексту */}
+		{isForCompletionReport ? (
+		  <Button
+			type="primary"
+			disabled={selectedOperationIds.length === 0}
+			onClick={handleAddToCompletionReport}
+			style={{
+				margin: 30,
+				width: '20%',
+				maxWidth: '250px',
+				overflow: 'hidden',
+				textOverflow: 'ellipsis',
+				whiteSpace: 'nowrap',
+			}}
+		  >
+			Додати в Акт виконаних робіт
+		  </Button>
+		) : (
+			<Button 
 			type="primary" 
 			onClick={() => handleOpenModal(null)} 
 			style={{
-			  margin: 30,
-			  width: '20%',
-			  maxWidth: '250px',
-			  overflow: 'hidden',
-			  textOverflow: 'ellipsis',
-			  whiteSpace: 'nowrap',
+				margin: 30,
+				width: '20%',
+				maxWidth: '250px',
+				overflow: 'hidden',
+				textOverflow: 'ellipsis',
+				whiteSpace: 'nowrap',
 			}}
-		  >
+			>
 			Створити технологичну операцію
-		  </Button>
-	
-		  <TechnologicalOperationTable
-			technologicalOperations={technologicalOperations}
-			loading={loading}
-			pagination={pagination}
-			onTableChange={handleTableChange}
-			selectedRowKeys={selectedTechnologicalOperationId ? [selectedTechnologicalOperationId] : []} 
-			onRowSelect={(selectedKeys) => setSelectedOperationId(selectedKeys[0])}
-			handleOpenModal={handleOpenModal}
-			handleDeleteTechnologicalOperation={handleDeleteTechnologicalOperation}
-		  />
-	
-		  <Modal
-			title={selectedOperation ? 'Редагувати Технологичну операцію' : 'Технологична операція'}
-			open={isModalOpen}
-			onCancel={handleCloseModal}
-			footer={null}
-		  >
-			<TechnologicalOperationForm
-			  key={selectedOperation ? selectedOperation.id : 'new'}
-			  initialData={selectedOperation || {}}
-			  onSubmit={handleFormSubmit}
-			  onCancel={handleCloseModal}
-			  isEditing={!!selectedOperation}
+			</Button>
+		)}
+			<TechnologicalOperationTable
+				technologicalOperations={technologicalOperations}
+				loading={loading}
+				pagination={pagination}
+				onTableChange={handleTableChange}
+				isForCompletionReport={isForCompletionReport} // Передаємо контекст
+				//selectedRowKeys={selectedOperationIds ? [selectedOperationIds] : []}
+				selectedRowKeys={selectedOperationIds}
+				onRowSelect={(selectedKeys) => dispatch(setSelectedOperationIds(selectedKeys))} // Оновлення стану
+				handleOpenModal={isForCompletionReport ? undefined : handleOpenModal}
+				handleDeleteTechnologicalOperation={isForCompletionReport ? undefined : handleDeleteTechnologicalOperation}
 			/>
-		  </Modal>
+
+		{!isForCompletionReport && (
+			<Modal
+				title={selectedOperation ? 'Редагувати Технологичну операцію' : 'Створити Технологичну операцію'}
+				open={isModalOpen}
+				onCancel={handleCloseModal}
+				footer={null}
+			>
+				<TechnologicalOperationForm
+				key={selectedOperation ? selectedOperation.id : 'new'}
+				initialData={selectedOperation || {}}
+				onSubmit={handleFormSubmit}
+				onCancel={handleCloseModal}
+				isEditing={!!selectedOperation}
+				/>
+			</Modal>
+		)}
 		</div>
 	  );
 	};

@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import api from '../api/axios'
 
-
 // Fetch technological-operation
 export const fetchTechnologicalOperations = createAsyncThunk(
 	'technologicalOperations/fetchTechnologicalOperations',

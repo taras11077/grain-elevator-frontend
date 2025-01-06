@@ -22,6 +22,7 @@ const initialState = {
   },
   selectedReport: null,
   selectedRegisterIds: [],
+  selectedOperationIds: [],
   isModalOpen: false,
   loading: false,
   error: null,
@@ -46,12 +47,18 @@ const completionReportSlice = createSlice({
 	clearSelectedReport: (state) => {
 		state.selectedReport = null;
 	  },
-	  setSelectedRegisterIds(state, action) {
+	setSelectedRegisterIds(state, action) {
 		state.selectedRegisterIds = action.payload;
-	  },
-	  clearSelectedRegisterIds(state) {
+	},
+	clearSelectedRegisterIds(state) {
 		state.selectedRegisterIds = [];
-	  },
+	},
+	setSelectedOperationIds(state, action) {
+		state.selectedOperationIds = action.payload;
+	},
+	clearSelectedOperationIds(state) {
+		state.selectedOperationIds = [];
+	},
 	toggleModal(state, action) {
 	  state.isModalOpen = action.payload;
 	},
@@ -97,6 +104,8 @@ export const {
   clearSelectedReport,
   setSelectedRegisterIds,
   clearSelectedRegisterIds,
+  setSelectedOperationIds,
+  clearSelectedOperationIds,
   toggleModal,
 } = completionReportSlice.actions;
 

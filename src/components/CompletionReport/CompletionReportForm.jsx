@@ -1,12 +1,13 @@
-import { Button, Input } from 'antd';
-import dayjs from 'dayjs';
-import { Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect } from 'react';
-import { clearSelectedRegisterIds } from '../../slices/completionReportSlice';
-import { fetchRegisters } from '../../asyncThunks/invoiceRegisterThunk';
+import { Button, Input } from 'antd'
+import dayjs from 'dayjs'
+import { Field, Form, Formik } from 'formik'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import * as Yup from 'yup'
+import { fetchRegisters } from '../../asyncThunks/invoiceRegisterThunk'
+import { fetchTechnologicalOperations } from '../../asyncThunks/technologicalOperationThunk'
+import { clearSelectedOperationIds, clearSelectedRegisterIds } from '../../slices/completionReportSlice'
 
 const getValidationSchema = (isEditing) =>
   Yup.object().shape({
@@ -21,53 +22,66 @@ const CompletionReportForm = ({ initialData, onSubmit, onCancel, isEditing }) =>
   const { selectedRegisterIds } = useSelector((state) => state.reports);
   const { registers } = useSelector((state) => state.registers || {});
 
+  const { selectedOperationIds } = useSelector((state) => state.reports);
+  const { technologicalOperations } = useSelector((state) => state.technologicalOperations || {});
+
   const preparedInitialData = {
     ...initialData,
     reportDate: initialData?.reportDate
       ? dayjs(initialData.reportDate, 'DD-MM-YYYY').format('YYYY-MM-DD')
       : '',
     invoiceRegisters: initialData?.invoiceRegisters || [],
+	technologicalOperations: initialData?.technologicalOperations || [],
   };
 
-  // Синхронізація реєстрів для Formik
+  // Синхронізація Реєстрів для Formik
   const selectedRegisters = selectedRegisterIds?.length
     ? registers.filter((register) => selectedRegisterIds.includes(register.id))
     : preparedInitialData.invoiceRegisters;
 
+	// Синхронізація Операцій для Formik
+	const selectedOperations = selectedOperationIds?.length
+	? technologicalOperations.filter((operation) => selectedOperationIds.includes(operation.id))
+	: preparedInitialData.technologicalOperations;
+
   useEffect(() => {
     dispatch(fetchRegisters());
+	dispatch(fetchTechnologicalOperations());
   }, [dispatch]);
+
+  console.log('selectedOperationIds для CompletionReportForm:', selectedOperationIds); 
 
   return (
     <Formik
       initialValues={{
         reportNumber: preparedInitialData?.reportNumber || '',
         reportDate: preparedInitialData?.reportDate || '',
-        invoiceRegisters: selectedRegisters, // Передаємо вибрані реєстри
+        invoiceRegisters: selectedRegisters, // Передаємо вибрані Реєстри
+		technologicalOperations: selectedOperations, // Передаємо вибрані Технологічні операції
       }}
       validationSchema={getValidationSchema(isEditing)}
       onSubmit={(values, { resetForm }) => {
         const payload = {
           ...values,
           invoiceRegisterIds: values.invoiceRegisters.map((register) => register.id),
+		  technologicalOperationIds: values.technologicalOperations.map((operation) => operation.id),
         };
         console.log('Payload для сервера:', payload); 
         onSubmit(payload); // Надсилаємо форму з ID
 
         resetForm();
         dispatch(clearSelectedRegisterIds());
+		dispatch(clearSelectedOperationIds());
       }}
     >
       {({ errors, touched, values, resetForm }) => (
-        <Form>
+        <Form style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
  			{!isEditing && (
 				<Button
-				onClick={() =>
-					navigate('/register', { state: { isForCompletionReport: true } })
-				}
-				style={{ margin: '20px' }}
+				style={{ margin: '30px' }}
+					onClick={() => navigate('/register', { state: { isForCompletionReport: true } })}
 				>
-				Вибрати Реєстри
+					Вибрати Реєстри
 				</Button>
 			)}
 
@@ -88,6 +102,31 @@ const CompletionReportForm = ({ initialData, onSubmit, onCancel, isEditing }) =>
 				</div>
 		  	)}
 
+			{!isEditing && (
+				<Button
+					style={{ margin: '30px' }}
+					onClick={() => navigate('/technological-operation', { state: { isForCompletionReport: true } })}
+				>
+					Вибрати операції
+				</Button>
+			)}
+
+			{!isEditing && (
+				<div>
+					<label>Обрані Технологичні операції:</label>
+					{values.technologicalOperations && values.technologicalOperations.length > 0 ? (
+					<ul>
+						{values.technologicalOperations.map((operation) => (
+						<li key={operation.id}>
+							{operation.title}
+						</li>
+						))}
+					</ul>
+					) : (
+					<p>Технологичні операції не вибрано.</p>
+					)}
+				</div>
+		  	)}
 
           <div>
             <label htmlFor="reportNumber">Номер Акта:</label>

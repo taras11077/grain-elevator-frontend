@@ -3,7 +3,7 @@ import {
 	createTechnologicalOperation,
 	deleteTechnologicalOperation,
 	fetchTechnologicalOperations,
-	updateTechnologicalOperation
+	updateTechnologicalOperation,
 } from '../asyncThunks/technologicalOperationThunk'
 
 const initialState = {
@@ -54,8 +54,9 @@ const technologicalOperationSlice = createSlice({
 			state.error = null;
 		})
 		.addCase(fetchTechnologicalOperations.fulfilled, (state, action) => {
+			state.technologicalOperations = action.payload.data || [];
+			state.pagination.total = action.payload.total;
 			state.loading = false;
-			state.technologicalOperations = action.payload;
 		})
 		.addCase(fetchTechnologicalOperations.rejected, (state, action) => {
 			state.loading = false;
@@ -84,15 +85,7 @@ const technologicalOperationSlice = createSlice({
 		// Delete Operation
 		.addCase(deleteTechnologicalOperation.fulfilled, (state, action) => {
 			const deletedId = action.meta.arg; // отримання ID з deleteTechnologicalOperation
-
-			 // Перетворення Proxy-об'єкта на масив
-			const technologicalOperationsArray = Array.isArray(state.technologicalOperations)
-			? state.technologicalOperations
-			: state.technologicalOperations.toJSON
-			? state.technologicalOperations.toJSON()
-			: [];
-
-			state.technologicalOperations = technologicalOperationsArray.filter((technologicalOperation) => technologicalOperation.id !== deletedId);// видалення зі списку
+			state.technologicalOperations = state.technologicalOperations.filter((technologicalOperation) => technologicalOperation.id !== deletedId);// видалення зі списку
 			state.pagination.total -= 1;// оновлення загальної кількості
 		});
 	},

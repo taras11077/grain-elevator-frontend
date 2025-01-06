@@ -64,8 +64,6 @@ const CompletionReportTable = ({
       dataIndex: 'reportDate',
       key: 'reportDate',
 	  sorter: (a, b) => dayjs(a.reportDate, 'DD-MM-YYYY').unix() - dayjs(b.reportDate, 'DD-MM-YYYY').unix(),
-    //   render: (date) => (dayjs(date).isValid() ? dayjs(date).format('DD-MM-YYYY') : 'дату не визначено'),
-    //   sorter: true,
     },
     { title: 'Постачальник', dataIndex: 'supplierTitle', key: 'supplierTitle', sorter: true },
     { title: 'Продукція', dataIndex: 'productTitle', key: 'productTitle', sorter: true },
@@ -107,9 +105,13 @@ const CompletionReportTable = ({
             <Button type="link" danger onClick={() => showDeleteConfirm(record)}>
               Видалити
             </Button>
-			<Button type="link" onClick={() => showDeleteConfirm(record)}>
-              Сформувати рахунок
-            </Button>
+
+			{record.totalCost === 0 || record.totalCost === null ? (
+				<Button type="link" onClick={() => showDeleteConfirm(record)}>
+					Сформувати рахунок
+				</Button>
+				) : null}
+
           </div>
         ) : (
           <div>Сформований рахунок на оплату</div>

@@ -3,7 +3,6 @@ import { Button, Modal, Table } from 'antd'
 import dayjs from 'dayjs'
 import React from 'react'
 
-
 const InvoiceRegisterTable = ({
 	invoiceRegisters,
 	loading,
@@ -74,30 +73,28 @@ const InvoiceRegisterTable = ({
   
 	return (
 	  <Table
-	  rowSelection={
-        isForCompletionReport
-          ? {
-              type: 'checkbox',
-              selectedRowKeys,
-              onChange: onRowSelect,
-            }
-          : null
-      }
-		columns={columns}
-		dataSource={invoiceRegisters}
-		rowKey="id"
-		loading={loading}
-		pagination={{
-		  current: pagination.current,
-		  pageSize: pagination.pageSize,
-		  total: pagination.total,
-		}}
+		rowSelection={
+			isForCompletionReport
+			? {
+				type: 'checkbox',
+				selectedRowKeys,
+				onChange: onRowSelect,
+				}
+			: null
+		}
+			columns={columns}
+			dataSource={invoiceRegisters}
+			rowKey="id"
+			loading={loading}
+			pagination={{
+			current: pagination.current,
+			pageSize: pagination.pageSize,
+			total: pagination.total,
+			}}
 
-		onChange={onTableChange}
+			onChange={onTableChange}
 	  />
 	);
   };
   
   export default InvoiceRegisterTable;
-  
-

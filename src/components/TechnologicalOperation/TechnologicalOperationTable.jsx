@@ -56,25 +56,26 @@ const TechnologicalOperationTable = ({
 	
 	return (
 		<Table
-		dataSource={Array.isArray(technologicalOperations?.data) ? technologicalOperations?.data : []}
-		columns={columns}
-		rowKey="id"
-		loading={loading}
-		pagination={{
-		  current: pagination.current,
-		  pageSize: pagination.pageSize,
-		  total: pagination.total,
-		}}
-		rowSelection={
-		  isForCompletionReport
-			? {
-				type: 'checkbox',
-				selectedRowKeys,
-				onChange: onRowSelect,
-			  }
-			: null
-		}
-		onChange={onTableChange}
+			rowSelection={
+				isForCompletionReport
+				? {
+					type: 'checkbox',
+					selectedRowKeys,
+					onChange: onRowSelect,
+					}
+				: null
+			}
+			columns={columns}
+			dataSource={technologicalOperations}
+			rowKey="id"
+			loading={loading}
+			pagination={{
+			current: pagination.current,
+			pageSize: pagination.pageSize,
+			total: pagination.total,
+			}}
+			
+			onChange={onTableChange}
 	  />
 	);
    };

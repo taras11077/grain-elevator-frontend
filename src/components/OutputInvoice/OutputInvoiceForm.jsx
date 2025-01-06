@@ -86,7 +86,6 @@ const OutputInvoiceForm = ({ initialData = {}, onSubmit, onCancel, isEditing, is
 						<label>Постачальник:</label>
 					</div>
 					<div>
-						{/* <Field name="supplierTitle" as={Input} disabled={isEditing || isFromWarehouse}/> */}
 						<Select
 							value={values.supplierTitle}
 							onChange={(value) => setFieldValue('supplierTitle', value)}
@@ -118,7 +117,6 @@ const OutputInvoiceForm = ({ initialData = {}, onSubmit, onCancel, isEditing, is
 								</Option>
 							))}
 						</Select>
-						{/* <Field name="productTitle" as={Input} disabled={isEditing || isFromWarehouse}/> */}
 						{errors.product && touched.product && <div>{errors.productTitle}</div>}
 					</div>
 
@@ -138,7 +136,6 @@ const OutputInvoiceForm = ({ initialData = {}, onSubmit, onCancel, isEditing, is
 								</Option>
 							))}
             			</Select>
-						{/* <Field name="productCategory" as={Input} disabled={isEditing || isFromWarehouse}/> */}
 						{errors.productCategory && touched.productCategory && <div>{errors.productCategory}</div>}
 					</div>
 			

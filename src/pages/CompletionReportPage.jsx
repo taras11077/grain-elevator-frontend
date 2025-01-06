@@ -14,7 +14,6 @@ import CompletionReportTable from '../components/CompletionReport/CompletionRepo
 import { setFilters, setPagination, setSelectedReport, setSort, toggleModal } from '../slices/completionReportSlice';
 import './InputInvoicePage.css';
 
-
 const CompletionReportPage = () => {
 	const { Title } = Typography;
 	const dispatch = useDispatch();
