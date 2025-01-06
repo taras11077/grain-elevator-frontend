@@ -12,8 +12,7 @@ import InvoiceRegister from '../pages/InvoiceRegisterPage'
 import CompletionReport from '../pages/CompletionReportPage'
 import Warehouse from '../pages/WarehousePage'
 import OutputInvoice from '../pages/OutputInvoicePage'
-
-
+import TechnologicalOperation from '../pages/TechnologicalOperationPage'
 
 const router = createBrowserRouter([
 	{
@@ -42,24 +41,30 @@ const router = createBrowserRouter([
 			element:
 				<PrivateRoute allowedRoles={['Laboratory', 'Admin', 'CEO']}>
 					<LaboratoryCard />
-				</PrivateRoute>
-			  
+				</PrivateRoute>		  
 		  },
 		  {
 			path: '/register',
 			element:
 				<PrivateRoute allowedRoles={['Technologist', 'Admin', 'CEO']}>
 					<InvoiceRegister />
-				</PrivateRoute>
-			  
+				</PrivateRoute>			  
 		  },
+
+		  {
+			path: '/technological-operation',
+			element:
+				<PrivateRoute allowedRoles={['Technologist', 'Accountant', 'Admin', 'CEO']}>
+					<TechnologicalOperation />
+				</PrivateRoute>
+		  },
+
 		  {
 			path: '/completion-report',
 			element:
 				<PrivateRoute allowedRoles={['Technologist', 'Accountant', 'Admin', 'CEO']}>
 					<CompletionReport />
-				</PrivateRoute>
-			  
+				</PrivateRoute>  
 		  },
 
 		  {
@@ -67,8 +72,7 @@ const router = createBrowserRouter([
 			element:
 				<PrivateRoute allowedRoles={['Accountant', 'Admin', 'CEO']}>
 					<Warehouse />
-				</PrivateRoute>
-			  
+				</PrivateRoute>			  
 		  },
 		   {
 			path: '/output-invoices',
@@ -76,7 +80,6 @@ const router = createBrowserRouter([
 			<PrivateRoute allowedRoles={['Accountant', 'Admin', 'CEO']}>
 				<OutputInvoice />
 			</PrivateRoute>
-
 		  },
 		  {
 			path: '/registration',

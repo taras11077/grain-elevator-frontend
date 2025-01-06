@@ -32,6 +32,13 @@ const Header = () => {
 					userData.role === 'CEO' || 
 					userData.role === 'Technologist' || 
 					userData.role === 'Accountant') && (
+        		<NavLink className="nav-link" to="/technological-operation">Технологичні операції</NavLink>
+      		)}
+
+			{(userData.role === 'Admin' || 
+					userData.role === 'CEO' || 
+					userData.role === 'Technologist' || 
+					userData.role === 'Accountant') && (
         		<NavLink className="nav-link" to="/completion-report">Акти виконаних робіт</NavLink>
       		)}
 

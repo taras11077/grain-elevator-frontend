@@ -144,7 +144,7 @@ const InvoiceRegisterPage = () => {
 		  Добові реєстри 
 		</Title>
 		<Title level={4} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
-		  прибуткових накладних з визначенням якості по кожній накладній.
+		  прибуткових накладних з визначенням якості вхідної продукції за кожною накладною.
 		</Title>
   
 		<InvoiceRegisterFilterFields filters={filters} onFilterChange={handleFilterChange} />

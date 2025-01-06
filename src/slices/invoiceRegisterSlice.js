@@ -76,7 +76,7 @@ const invoiceRegisterSlice = createSlice({
 		state.loading = false;
 		state.error = null; //успішне оновлення, помилок немає
 
-			//пошук картки та її оновлення
+			//пошук Реєстра та його оновлення
 		const index = state.registers.findIndex((reg) => reg.id === action.payload.id);
 		if (index !== -1) {
 		  state.registers[index] = { ...state.registers[index], ...action.payload };

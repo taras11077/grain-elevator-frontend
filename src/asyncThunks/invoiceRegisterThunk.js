@@ -82,7 +82,6 @@ export const updateRegister = createAsyncThunk(
 		  if (status === 401) {
 			return rejectWithValue({ message: data.message || 'Ви не авторизовані.', status });
 		  }
-  
 		  return rejectWithValue({
 			message: data.message || 'Сталася помилка під час оновлення Реєстру.',
 			status,

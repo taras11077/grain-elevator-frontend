@@ -10,6 +10,7 @@ import warehouseReducer from '../slices/warehouseSlice';
 import supplierReducer from '../slices/supplierSlice';
 import productReducer from '../slices/productSlice';
 import productCategoryReducer from '../slices/productCategorySlice';
+import technologicalOperationReducer from '../slices/technologicalOperationSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -24,5 +25,6 @@ export const store = configureStore({
 		suppliers: supplierReducer,
 		products: productReducer,
 		productCategories: productCategoryReducer,
+		technologicalOperations: technologicalOperationReducer,
 	}
 });

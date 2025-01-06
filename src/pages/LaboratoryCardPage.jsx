@@ -138,8 +138,18 @@ const LaboratoryCardPage = () => {
   
 	return (
 	  <div className="container">
-		<Title level={2} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
-		  Лабораторні картки
+		<Title 
+			level={1} 
+			style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}
+			>
+		  	 Лабораторні картки 
+		</Title>
+
+		<Title 
+			level={4} 
+			style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}
+			>
+			аналізу якості середньозваженого зразка окремої партії продукції в рамках однієї прибуткової накладної.
 		</Title>
   
 		<LaboratoryCardFilterFields filters={filters} onFilterChange={handleFilterChange} />

@@ -42,7 +42,6 @@ export const fetchCompletionReports = createAsyncThunk(
 	} catch (error) {
 		if (error.response) {
 		  const { status, data } = error.response;
-  
 		  // Обробка конкретних помилок
 		  if (status === 401) {
 			return rejectWithValue({ message: data.message || 'Ви не авторизовані.', status });
@@ -50,14 +49,12 @@ export const fetchCompletionReports = createAsyncThunk(
 		  if (status === 400) {
 			return rejectWithValue({ message: data.message || 'Невірні дані форми.', status });
 		  }
-  
 		  // Загальна помилка
 		  return rejectWithValue({
 			message: data.message || 'Сталася помилка під час створення Акта виконаних робіт.',
 			status,
 		  });
 		}
-  
 		// Для всіх інших помилок
 		return rejectWithValue({ message: error.message || 'Невідома помилка.', status: error.status || 500, });
 	  }
@@ -114,14 +111,12 @@ export const fetchCompletionReports = createAsyncThunk(
 		  if (status === 400) {
 			return rejectWithValue({ message: data.message || 'Невірні дані форми.', status });
 		  }
-  
 		  // Загальна помилка
 		  return rejectWithValue({
 			message: data.message || 'Сталася помилка під час видалення Складського юніта.',
 			status,
 		  });
 		}
-  
 		// Для всіх інших помилок
 		return rejectWithValue({ message: error.message || 'Невідома помилка.', status: error.status || 500, });
 	  }
