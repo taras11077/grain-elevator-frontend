@@ -162,7 +162,7 @@ const InvoiceRegisterPage = () => {
 				whiteSpace: 'nowrap',
 			}}
 		  >
-			Додати в Акт виконаних робіт
+			Додати до Акту виконаних робіт
 		  </Button>
 		) : (
 		  <Button

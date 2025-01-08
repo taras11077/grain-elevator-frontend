@@ -11,6 +11,7 @@ import supplierReducer from '../slices/supplierSlice';
 import productReducer from '../slices/productSlice';
 import productCategoryReducer from '../slices/productCategorySlice';
 import technologicalOperationReducer from '../slices/technologicalOperationSlice';
+import priceListReducer from '../slices/priceListSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -26,5 +27,6 @@ export const store = configureStore({
 		products: productReducer,
 		productCategories: productCategoryReducer,
 		technologicalOperations: technologicalOperationReducer,
+		priceLists: priceListReducer,
 	}
 });

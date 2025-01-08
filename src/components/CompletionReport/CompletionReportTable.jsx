@@ -10,6 +10,7 @@ const CompletionReportTable = ({
   onTableChange,
   handleOpenModal,
   handleDeleteReport,
+  handleFinancialSettlement,
 }) => {
   const showDeleteConfirm = (record) => {
     Modal.confirm({
@@ -107,7 +108,7 @@ const CompletionReportTable = ({
             </Button>
 
 			{record.totalCost === 0 || record.totalCost === null ? (
-				<Button type="link" onClick={() => showDeleteConfirm(record)}>
+				<Button type="link" onClick={() => handleFinancialSettlement(record)}>
 					Сформувати рахунок
 				</Button>
 				) : null}

@@ -13,6 +13,7 @@ import CompletionReport from '../pages/CompletionReportPage'
 import Warehouse from '../pages/WarehousePage'
 import OutputInvoice from '../pages/OutputInvoicePage'
 import TechnologicalOperation from '../pages/TechnologicalOperationPage'
+import PriceList from '../pages/PriceListPage'
 
 const router = createBrowserRouter([
 	{
@@ -64,6 +65,14 @@ const router = createBrowserRouter([
 			element:
 				<PrivateRoute allowedRoles={['Technologist', 'Accountant', 'Admin', 'CEO']}>
 					<CompletionReport />
+				</PrivateRoute>  
+		  },
+
+		  {
+			path: '/price-list',
+			element:
+				<PrivateRoute allowedRoles={['Accountant', 'Admin', 'CEO']}>
+					<PriceList />
 				</PrivateRoute>  
 		  },
 

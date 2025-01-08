@@ -2,11 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import api from '../api/axios'
 
 
-// Fetch completion-reports
-export const fetchCompletionReports = createAsyncThunk(
-	'completionReport/fetchCompletionReports',
+// Fetch price-lists
+export const fetchPriceLists = createAsyncThunk(
+	'priceList/fetchPriceLists',
 	async (_, { getState, rejectWithValue }) => {
-		const { filters, pagination, sort  } = getState().reports;
+		const { filters, pagination, sort  } = getState().priceLists;
 		const params = {
 			...filters,
 			page: pagination.current,
@@ -16,7 +16,7 @@ export const fetchCompletionReports = createAsyncThunk(
 		  }
 
 	  try {
-		const response = await api.get('completion-report/search',{params });
+		const response = await api.get('price-list/search',{params });
 		return {
 			data: response.data,
 			total: response.headers['x-total-count']
@@ -32,12 +32,12 @@ export const fetchCompletionReports = createAsyncThunk(
 	  }
 	);
 
-  // Create  completion-report
-  export const createCompletionReport = createAsyncThunk(
-	'completionReport/createCompletionReport',
+  // Create  price-list
+  export const createPriceList = createAsyncThunk(
+	'priceList/createPriceList',
 	async (formData, { rejectWithValue }) => {
 	  try {
-		const response = await api.post('/completion-report', formData);
+		const response = await api.post('/price-list', formData);
 		return response.data; // успішний результат
 	} catch (error) {
 		if (error.response) {
@@ -61,13 +61,13 @@ export const fetchCompletionReports = createAsyncThunk(
 	}
   );
   
-  // Update completion-report
-  export const updateCompletionReport = createAsyncThunk(
-	'completionReport/updateCompletionReport',
+  // Update price-list
+  export const updatePriceList = createAsyncThunk(
+	'priceList/updatePriceList',
 
 	async ({ id, updates }, { rejectWithValue }) => {
 		try {
-		  const response = await api.put(`/completion-report/${id}`, updates);
+		  const response = await api.put(`/price-list/${id}`, updates);
 		  return response.data; // Успішна відповідь
 		} catch (error) {
 		  if (error.response) {
@@ -92,42 +92,13 @@ export const fetchCompletionReports = createAsyncThunk(
 		}
 	  }
 	);
-
- // Calculate completion-report
- export const calculateCompletionReport = createAsyncThunk(
-	'completionReport/calculateCompletionReport',
-	async ({ id, updates }, { rejectWithValue }) => {
-		try {
-			const response = await api.put(`/completion-report/${id}/cost-calculate?priceListId=${updates.priceListId}`);
-		  return response.data; // Успішна відповідь
-		} catch (error) {
-		  if (error.response) {
-			// Обробка помилки на рівні сервера
-			const { status, data } = error.response;
-			if (status === 400) {
-				return rejectWithValue({ message: data.message, status });
-			  }
-			if (status === 401) {
-			  return rejectWithValue({ message: data.message || 'Ви не авторизовані.', status });
-			}
-			return rejectWithValue({
-			  message: data.message || 'Сталася помилка під час розрахунку Акта виконаних робіт.',
-			  status,
-			});
-		  }
-		  // Для всіх інших помилок
-		  return rejectWithValue({ message: error.message || 'Невідома помилка.', status: 500 });
-		}
-	  }
-	);
-
   
-  // Delete completion-report
-  export const deleteCompletionReport = createAsyncThunk(
-	'completionReport/deleteCompletionReport',
+  // Delete price-list
+  export const deletePriceList = createAsyncThunk(
+	'priceList/deletePriceList',
   async (id, { rejectWithValue }) => {
     try {
-		const response = await api.patch(`/completion-report/${id}/soft-remove`);
+		const response = await api.patch(`/price-list/${id}/soft-remove`);
 		return response.data;
 	} catch (error) {
 		if (error.response) {

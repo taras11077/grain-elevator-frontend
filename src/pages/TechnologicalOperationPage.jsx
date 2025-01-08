@@ -123,8 +123,6 @@ const TechnologicalOperationPage = () => {
 				  }
 			};
 
-			console.log('selectedOperationIds для сервера:', selectedOperationIds);
-
 	  return (
 		<div className="container">
 		  	<Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
@@ -152,7 +150,7 @@ const TechnologicalOperationPage = () => {
 				whiteSpace: 'nowrap',
 			}}
 		  >
-			Додати в Акт виконаних робіт
+			Додати до Акту виконаних робіт
 		  </Button>
 		) : (
 			<Button 

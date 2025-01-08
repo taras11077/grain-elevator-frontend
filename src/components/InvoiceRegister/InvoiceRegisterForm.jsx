@@ -85,7 +85,6 @@ const InvoiceRegisterForm = ({ initialData, onSubmit, onCancel , isEditing }) =>
 							<label>Постачальник:</label>
 						</div>
 						<div>
-							{/* <Field name="supplierTitle" as={Input} > */}
 							<Select
 								value={values.supplierTitle}
 								onChange={(value) => setFieldValue('supplierTitle', value)}
@@ -118,7 +117,6 @@ const InvoiceRegisterForm = ({ initialData, onSubmit, onCancel , isEditing }) =>
 										</Option>
 									))}
 								</Select>
-								{/* <Field name="productTitle" as={Input} disabled={isEditing || isFromWarehouse}/> */}
 								{errors.product && touched.product && <div>{errors.productTitle}</div>}
 							</div>
 						</>

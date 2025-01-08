@@ -116,9 +116,13 @@ const InputInvoicePage = () => {
 
   return (
     <div className="container">
-      <Title level={2} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
-        Прибуткові накладні
-      </Title>
+	  <Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
+	  		Прибуткові накладні 
+		</Title>
+
+		<Title level={4} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
+			на однорідну партію продукції, поставлену окремим транспортним засобом.
+		</Title>
 
       <InputInvoiceFilterFields filters={filters} onFilterChange={handleFilterChange} />
 

@@ -49,15 +49,13 @@ const CompletionReportForm = ({ initialData, onSubmit, onCancel, isEditing }) =>
 	dispatch(fetchTechnologicalOperations());
   }, [dispatch]);
 
-  console.log('selectedOperationIds для CompletionReportForm:', selectedOperationIds); 
-
   return (
     <Formik
       initialValues={{
         reportNumber: preparedInitialData?.reportNumber || '',
         reportDate: preparedInitialData?.reportDate || '',
         invoiceRegisters: selectedRegisters, // Передаємо вибрані Реєстри
-		technologicalOperations: selectedOperations, // Передаємо вибрані Технологічні операції
+		technologicalOperations: selectedOperations || '', // Передаємо вибрані Технологічні операції
       }}
       validationSchema={getValidationSchema(isEditing)}
       onSubmit={(values, { resetForm }) => {
@@ -66,7 +64,6 @@ const CompletionReportForm = ({ initialData, onSubmit, onCancel, isEditing }) =>
           invoiceRegisterIds: values.invoiceRegisters.map((register) => register.id),
 		  technologicalOperationIds: values.technologicalOperations.map((operation) => operation.id),
         };
-        console.log('Payload для сервера:', payload); 
         onSubmit(payload); // Надсилаємо форму з ID
 
         resetForm();

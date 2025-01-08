@@ -7,9 +7,11 @@ import {
 	deleteCompletionReport,
 	fetchCompletionReports,
 	updateCompletionReport,
+	calculateCompletionReport,
 } from '../asyncThunks/completionReportThunk';
 import CompletionReportFilterFields from '../components/CompletionReport/CompletionReportFilterFields';
 import CompletionReportForm from '../components/CompletionReport/CompletionReportForm';
+import FinanceCompletionReportForm from '../components/CompletionReport/FinanceCompletionReportForm';
 import CompletionReportTable from '../components/CompletionReport/CompletionReportTable';
 import { setFilters, setPagination, setSelectedReport, setSort, toggleModal } from '../slices/completionReportSlice';
 import './InputInvoicePage.css';
@@ -32,6 +34,10 @@ const CompletionReportPage = () => {
   
 	// Локальний стан для вибору рядка таблиці
 	const [selectedReportId, setSelectedReportId] = useState(null);
+
+	// Локальний стан для фінансового модального вікна
+	const [isFinancialModalOpen, setFinancialModalOpen] = useState(false);
+	const [selectedFinancialReport, setSelectedFinancialReport] = useState(null);
 
 	// Завантаження Актів виконаних робіт
 	useEffect(() => {
@@ -58,12 +64,22 @@ const CompletionReportPage = () => {
 	  dispatch(setSelectedReport(report));
 	  dispatch(toggleModal(true));
 	};
-  
 	// Закрити модальне вікно
 	const handleCloseModal = () => {
-	  dispatch(toggleModal(false));
-	  dispatch(setSelectedReport(null));
-	};
+		dispatch(toggleModal(false));
+		dispatch(setSelectedReport(null));
+	  };
+
+	// Відкрити модальне вікно для фінансового розрахунку Акта виконаних робіт
+	const handleFinancialSettlement = (report = null) => {
+		setSelectedFinancialReport(report);
+		setFinancialModalOpen(true);
+	  };
+	  
+	  const handleCloseFinancialModal = () => {
+		setFinancialModalOpen(false);
+		setSelectedFinancialReport(null);
+	  };
   
 	// Додавання чи оновлення Акта виконаних робіт
 	const handleFormSubmit = async (formData) => {
@@ -81,6 +97,35 @@ const CompletionReportPage = () => {
 			handleError(error);
 	    };
 	};
+
+	// Фінансовий розрахунок Акта виконаних робіт
+	const handleFinancialFormSubmit = async (formData) => {
+	if (!selectedFinancialReport) {
+	  message.error("Будь ласка, оберіть Акт виконаних робіт для розрахунку.");
+	  return;
+	}
+	
+	try {
+	  const resultAction = await dispatch(
+		calculateCompletionReport({ id: selectedFinancialReport.id, updates: formData })
+	  ).unwrap();
+
+	  console.log("FormData для розрахунку:", formData);
+  
+	  // Перевірка наявності результату
+	  if (resultAction?.id) {
+		message.success(`Акт виконаних робіт з ID ${resultAction.id} успішно розраховано.`);
+	  } else {
+		message.warning("Розрахунок завершено, але немає підтвердження успішності.");
+	  }
+	} catch (error) {
+	  handleError(error); // Використання загального обробника помилок
+	} finally {
+	  dispatch(fetchCompletionReports());
+	  handleCloseFinancialModal();
+	}
+  };
+
 	  
 	// Видалення Акта виконаних робіт
 	const handleDeleteReport = async (record) => {
@@ -152,6 +197,7 @@ const CompletionReportPage = () => {
 		   onRowSelect={(selectedKeys) => setSelectedReportId(selectedKeys[0])} // Оновлення стану
 		   handleOpenModal={handleOpenModal}
 		   handleDeleteReport={handleDeleteReport}
+		   handleFinancialSettlement={handleFinancialSettlement}
 		/>
   
 		  <Modal
@@ -167,6 +213,21 @@ const CompletionReportPage = () => {
 			  onCancel={handleCloseModal}
 			  isEditing={!!selectedReport}
 			/>
+		  </Modal>
+
+		  <Modal
+				title="Сформувати рахунок"
+				open={isFinancialModalOpen}
+				onCancel={handleCloseFinancialModal}
+				footer={null}
+			>
+				<FinanceCompletionReportForm
+					report={selectedFinancialReport}
+					onCancel={handleCloseFinancialModal}
+					onSubmit={(formData) => {
+						handleFinancialFormSubmit(formData);
+					}}
+				/>
 		  </Modal>
 	  </div>
 	);

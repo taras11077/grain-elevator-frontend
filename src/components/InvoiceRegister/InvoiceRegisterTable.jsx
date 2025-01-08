@@ -64,7 +64,7 @@ const InvoiceRegisterTable = ({
 					</Button>
 					</div>
 				) : (
-					<div>Обчислено в Акті виконаних робіт</div>
+					<div>Включений в Акт виконаних робіт</div>
 				)
 			)
 		),

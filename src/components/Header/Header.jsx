@@ -14,7 +14,7 @@ const Header = () => {
 
 	return (
 		<div className='nav-container'>
-			{/* <NavLink className='nav-link' to="/home">Home</NavLink> */}
+			<NavLink className='nav-link' to="/home">Home</NavLink>
 
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Laboratory') && (
         		<NavLink className="nav-link" to="/input-invoices">Прибуткові накладні</NavLink>
@@ -43,8 +43,14 @@ const Header = () => {
       		)}
 
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Accountant') && (
+        		<NavLink className="nav-link" to="/price-list">Прайс</NavLink>
+      		)}
+
+			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Accountant') && (
         		<NavLink className="nav-link" to="/warehouse">Склад</NavLink>
       		)}
+
+			
 
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Accountant') && (
         		<NavLink className="nav-link" to="/output-invoices">Видаткові накладні</NavLink>
