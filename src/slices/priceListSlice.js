@@ -6,7 +6,6 @@ import {
 	deletePriceList,
 } from '../asyncThunks/priceListThunk';
 
-
 const initialState = {
 	priceLists: [],
 	pagination: { current: 1, pageSize: 10, total: 0 },

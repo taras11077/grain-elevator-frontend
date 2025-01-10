@@ -2,8 +2,8 @@ import { Button, Input, Select } from 'antd'
 import dayjs from 'dayjs'
 import { Field, Form, Formik } from 'formik'
 import React from 'react'
-import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
+import * as Yup from 'yup'
 
 const { Option } = Select;
 

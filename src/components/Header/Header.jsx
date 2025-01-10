@@ -54,6 +54,15 @@ const Header = () => {
         		<NavLink className="nav-link" to="/output-invoices">Видаткові накладні</NavLink>
       		)}
 
+			{(userData.role === 'Admin' ||	userData.role === 'CEO'|| 	userData.role === 'Technologist' ||	userData.role === 'Laboratory' || userData.role === 'Accountant') && (
+        		<NavLink className="nav-link" to="/suppliers">Постачальники</NavLink>
+      		)}
+
+			{(userData.role === 'Admin' || 	userData.role === 'CEO'|| userData.role === 'Technologist' || userData.role === 'Laboratory' ||	userData.role === 'Accountant') && (
+        		<NavLink className="nav-link" to="/products">Продукція</NavLink>
+      		)}
+
+
 			{(userData.role === 'Admin' || userData.role === 'HR'|| userData.role === 'CEO') && (
         		<NavLink id='nav-link' className='nav-link' to="/employee">Співробітники</NavLink>
       		)}

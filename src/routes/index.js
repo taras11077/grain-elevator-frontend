@@ -15,6 +15,8 @@ import OutputInvoice from '../pages/OutputInvoicePage'
 import TechnologicalOperation from '../pages/TechnologicalOperationPage'
 import PriceList from '../pages/PriceListPage'
 import Employee from '../pages/EmployeePage'
+import Product from '../pages/ProductPage'
+import Supplier from '../pages/SupplierPage'
 
 const router = createBrowserRouter([
 	{
@@ -84,11 +86,20 @@ const router = createBrowserRouter([
 					<Warehouse />
 				</PrivateRoute>			  
 		  },
-		   {
-			path: '/output-invoices',
+		
+		  {
+			path: '/suppliers',
 			element:
-			<PrivateRoute allowedRoles={['Accountant', 'Admin', 'CEO']}>
-				<OutputInvoice />
+			<PrivateRoute allowedRoles={['Technologist', 'Laboratory', 'Accountant', 'Admin', 'CEO']}>
+				<Supplier />
+			</PrivateRoute>
+		  },
+
+		  {
+			path: '/products',
+			element:
+			<PrivateRoute allowedRoles={['Technologist', 'Laboratory', 'Accountant', 'Admin', 'CEO']}>
+				<Product />
 			</PrivateRoute>
 		  },
 
