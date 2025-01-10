@@ -43,21 +43,19 @@ const Header = () => {
       		)}
 
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Accountant') && (
-        		<NavLink className="nav-link" to="/price-list">Прайс</NavLink>
+        		<NavLink className="nav-link" to="/price-list">Прайси</NavLink>
       		)}
 
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Accountant') && (
         		<NavLink className="nav-link" to="/warehouse">Склад</NavLink>
       		)}
 
-			
-
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Accountant') && (
         		<NavLink className="nav-link" to="/output-invoices">Видаткові накладні</NavLink>
       		)}
 
-			{(userData.role === 'Admin' || userData.role === 'HR') && (
-        		<NavLink id='login-registration-link' className='nav-link' to="/registration">Співробітники</NavLink>
+			{(userData.role === 'Admin' || userData.role === 'HR'|| userData.role === 'CEO') && (
+        		<NavLink id='nav-link' className='nav-link' to="/employee">Співробітники</NavLink>
       		)}
 
 			{(token) && (

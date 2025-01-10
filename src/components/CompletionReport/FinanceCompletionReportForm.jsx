@@ -38,8 +38,6 @@ const FinanceCompletionReportForm = ({ report, onCancel, onSubmit }) => {
 			id: values.reportId,
 			priceListId: values.priceListId,
 		  };
-  
-		  console.log('Payload для сервера:', payload);
 		  onSubmit(payload);
 		  resetForm();
 		}}

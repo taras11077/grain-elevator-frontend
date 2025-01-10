@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { Form, Input, Button, Select, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { registration } from '../../asyncThunks/authThunk';
-import { fetchRoles } from '../../asyncThunks/roleThunk'; // Асинхронный экшен для получения ролей
-import { useNavigate } from 'react-router-dom'
+import { fetchRoles } from '../../asyncThunks/roleThunk'; 
 
 const { Option } = Select;
 
@@ -14,14 +12,11 @@ const RegistrationForm = ({ closeModal }) => {
   const { roles, rolesLoading } = useSelector((state) => state.roles); // Состояние ролей
 
   useEffect(() => {
-    dispatch(fetchRoles()); // Загружаем роли при загрузке формы
+    dispatch(fetchRoles());
   }, [dispatch]);
 
-  const navigate = useNavigate();
-
   const onFinish = async (values) => {
-    const result = await dispatch(registration(values)); // Отправляем данные регистрации
-	navigate('/home');
+    const result = await dispatch(registration(values));
 	if (registration.fulfilled.match(result)) {
       message.success('Реєстрацію успішно завершено!');
       closeModal();
@@ -119,14 +114,10 @@ const RegistrationForm = ({ closeModal }) => {
 
         <Form.Item>
           <Button htmlType="submit" type="primary" loading={loading}>
-           Створити
+           	Додати
           </Button>
         </Form.Item>
       </Form>
-
-      <NavLink id="login-registration-link" className="nav-link" to="/login">
-        I am already registered
-      </NavLink>
     </div>
   );
 };

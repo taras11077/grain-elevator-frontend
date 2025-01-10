@@ -109,8 +109,6 @@ const CompletionReportPage = () => {
 	  const resultAction = await dispatch(
 		calculateCompletionReport({ id: selectedFinancialReport.id, updates: formData })
 	  ).unwrap();
-
-	  console.log("FormData для розрахунку:", formData);
   
 	  // Перевірка наявності результату
 	  if (resultAction?.id) {

@@ -14,6 +14,7 @@ import Warehouse from '../pages/WarehousePage'
 import OutputInvoice from '../pages/OutputInvoicePage'
 import TechnologicalOperation from '../pages/TechnologicalOperationPage'
 import PriceList from '../pages/PriceListPage'
+import Employee from '../pages/EmployeePage'
 
 const router = createBrowserRouter([
 	{
@@ -90,6 +91,16 @@ const router = createBrowserRouter([
 				<OutputInvoice />
 			</PrivateRoute>
 		  },
+
+		  {
+			path: '/employee',
+			element:
+				<PrivateRoute allowedRoles={['HR', 'Admin', 'CEO']}>
+					<Employee />
+				</PrivateRoute>			  
+		  },
+
+
 		  {
 			path: '/registration',
 			element: <Registration />

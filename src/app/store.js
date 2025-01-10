@@ -12,6 +12,7 @@ import productReducer from '../slices/productSlice';
 import productCategoryReducer from '../slices/productCategorySlice';
 import technologicalOperationReducer from '../slices/technologicalOperationSlice';
 import priceListReducer from '../slices/priceListSlice';
+import employeeReducer from '../slices/employeeSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -28,5 +29,6 @@ export const store = configureStore({
 		productCategories: productCategoryReducer,
 		technologicalOperations: technologicalOperationReducer,
 		priceLists: priceListReducer,
+		employees: employeeReducer,
 	}
 });
