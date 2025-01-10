@@ -1,5 +1,5 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { Button, Modal, Table } from 'antd'
+import { Button, Collapse, Modal, Table } from 'antd'
 import dayjs from 'dayjs'
 import React from 'react'
 
@@ -31,6 +31,68 @@ const InvoiceRegisterTable = ({
 		  },
 		});
 	  };
+
+	const expandedRowRender = (record) => {
+	const items = [
+		{
+		key: '1',
+		label: 'Виробничі партії',
+		children: (
+			<Table
+			dataSource={record.productionBatches}
+			columns={[
+				{ title: '№ накладної', 
+					dataIndex: 'invoiceNumber', 
+					key: 'invoiceNumber'},
+				{ title: '№ лаб.картки', 
+					dataIndex: 'labCardNumber', 
+					key: 'invoiceNumber'},
+				{ title: 'Фізична вага, кг', 
+					dataIndex: 'physicalWeight', 
+					key: 'physicalWeight', 
+					render: (value) => value.toFixed(0)},
+				{ title: 'Сміттєва домішка, %', 
+					dataIndex: 'weedImpurity', 
+					key: 'weedImpurity', 
+					render: (value) => value.toFixed(1)},
+				{ title: 'Базова сміттєва домішка, %', 
+					dataIndex: 'weedImpurityBase', 
+					key: 'weedImpurity', 
+					render: (value) => value.toFixed(1)},
+				{ title: 'Відходи, кг', 
+					dataIndex: 'waste', 
+					key: 'waste', 
+					render: (value) => value.toFixed(0)},
+				{ title: 'Вологість, %', 
+					dataIndex: 'moisture', 
+					key: 'moisture', 
+					render: (value) => value.toFixed(1)},
+				{ title: 'Базова вологість, %', 
+					dataIndex: 'moistureBase', 
+					key: 'moistureBase', 
+					render: (value) => value.toFixed(1)},
+				{ title: 'Усушка, кг.', 
+					dataIndex: 'shrinkage', 
+					key: 'shrinkage', 
+					render: (value) => value.toFixed(0)},
+				{ title: 'Кількість сушки, т*%', 
+					dataIndex: 'quantitiesDrying', 
+					key: 'quantitiesDrying', 
+					render: (value) => value.toFixed(3)},
+				{ title: 'Кондиційна продукція, кг.', 
+					dataIndex: 'accountWeight', 
+					key: 'accountWeight', 
+					render: (value) => value.toFixed(0)},
+			]}
+			rowKey="id"
+			pagination={false}
+			/>
+		),
+		},
+	];
+
+	return <Collapse items={items} />;
+	};
 
 	const columns = [
 	  { title: '№', dataIndex: 'registerNumber', key: 'registerNumber', sorter: true },
@@ -91,8 +153,8 @@ const InvoiceRegisterTable = ({
 			pageSize: pagination.pageSize,
 			total: pagination.total,
 			}}
-
 			onChange={onTableChange}
+			expandable={{ expandedRowRender }}
 	  />
 	);
   };
