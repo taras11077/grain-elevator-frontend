@@ -1,22 +1,22 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from '../App'
+import CompletionReport from '../pages/CompletionReportPage'
+import Employee from '../pages/EmployeePage'
 import Forbidden from '../pages/Forbidden'
 import Home from '../pages/Home'
+import InputInvoice from '../pages/InputInvoicePage'
+import InvoiceRegister from '../pages/InvoiceRegisterPage'
+import LaboratoryCard from '../pages/LaboratoryCardPage'
 import Login from '../pages/LoginPage'
 import NotFoundPage from '../pages/NotFoundPage'
-import Registration from '../pages/RegistrationPage'
-import PrivateRoute from './PrivateRoute'
-import InputInvoice from '../pages/InputInvoicePage'
-import LaboratoryCard from '../pages/LaboratoryCardPage'
-import InvoiceRegister from '../pages/InvoiceRegisterPage'
-import CompletionReport from '../pages/CompletionReportPage'
-import Warehouse from '../pages/WarehousePage'
 import OutputInvoice from '../pages/OutputInvoicePage'
-import TechnologicalOperation from '../pages/TechnologicalOperationPage'
 import PriceList from '../pages/PriceListPage'
-import Employee from '../pages/EmployeePage'
-import Product from '../pages/ProductPage'
-import Supplier from '../pages/SupplierPage'
+import { default as Product, default as Supplier } from '../pages/ProductPage'
+import Registration from '../pages/RegistrationPage'
+import Role from '../pages/RolePage'
+import TechnologicalOperation from '../pages/TechnologicalOperationPage'
+import Warehouse from '../pages/WarehousePage'
+import PrivateRoute from './PrivateRoute'
 
 const router = createBrowserRouter([
 	{
@@ -86,6 +86,14 @@ const router = createBrowserRouter([
 					<Warehouse />
 				</PrivateRoute>			  
 		  },
+
+		  {
+			path: '/output-invoices',
+			element:
+				<PrivateRoute allowedRoles={['Accountant', 'Admin', 'CEO']}>
+					<OutputInvoice />
+				</PrivateRoute>			  
+		  },
 		
 		  {
 			path: '/suppliers',
@@ -108,6 +116,14 @@ const router = createBrowserRouter([
 			element:
 				<PrivateRoute allowedRoles={['HR', 'Admin', 'CEO']}>
 					<Employee />
+				</PrivateRoute>			  
+		  },
+
+		  {
+			path: '/role',
+			element:
+				<PrivateRoute allowedRoles={['HR', 'Admin', 'CEO']}>
+					<Role />
 				</PrivateRoute>			  
 		  },
 

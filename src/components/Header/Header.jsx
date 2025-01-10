@@ -67,6 +67,10 @@ const Header = () => {
         		<NavLink id='nav-link' className='nav-link' to="/employee">Співробітники</NavLink>
       		)}
 
+			{(userData.role === 'Admin' || userData.role === 'HR'|| userData.role === 'CEO') && (
+        		<NavLink id='nav-link' className='nav-link' to="/role">Ролі</NavLink>
+      		)}
+
 			{(token) && (
 				<div>
 					{userData.name}
