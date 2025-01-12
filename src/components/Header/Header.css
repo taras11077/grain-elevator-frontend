@@ -1,30 +1,50 @@
-.nav-container{
-	width: 100%;
-	margin: 0 auto;
+/* Стиль для контейнера навігації */
+.nav-container { 
+	width: 100%; 
+	margin: 0 auto; 
 	padding: 0 20px;
-	background-color:rgba(139, 140, 140, 0.2);
-	border: 1px #dddddd solid;
+	background-color: lightsteelblue;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	border-radius: 5px;
-	align-items: center;
 	display: flex;
 	flex-direction: row;
-	justify-content:space-around;
+	justify-content: space-around;
 	column-gap: 20px;
 	align-items: center;
-}
+	box-sizing: border-box; 
+	overflow: hidden; 
+  }
 
-.nav-link{
+  .nav-container.home-page {
+	background-color: rgb(113, 113, 113);
+	box-shadow: 0 0 10px rgba(25, 25, 25, 0.2);
+  }
+
+  .nav-link.home-page-link {
+	color: white; /* Колір для Home */
+  }
+  .user-name {
+	color:rgb(51, 105, 190);
+	font-weight: bold; 
+  }
+  .user-name.home-page-user-name {
+	color: white; /* Колір для Home */
+  }
+
+  
+  /* Стиль для посилань у навігації */
+  .nav-link {
 	display: flex;
 	flex-direction: row;
-	justify-content:center;
+	justify-content: center;
 	align-items: center;
 	text-decoration: none;
 	padding: 10px;
-	font-size: 1.2rem;
-}
-
-button{
+	font-size: 0.7 rem;
+	color: rgb(0, 78, 142); 
+  }
+  
+  /* Стиль для кнопок */
+  button {
 	width: 130px;
 	max-width: 130px;
 	background-color: rgb(51, 105, 190);
@@ -35,4 +55,32 @@ button{
 	padding: 5px;
 	margin-top: 5px;
 	margin-left: 15px;
-}
+	cursor: pointer;
+  }
+  
+  /* Додатковий hover-ефект для кнопок */
+  button:hover {
+	background-color: rgb(41, 90, 160); /* Трохи темніше під час наведення */
+  }
+  
+  /* Адаптивність для маленьких екранів */
+  @media (max-width: 768px) {
+	.nav-container {
+	  flex-direction: column; /* Вертикальне розташування для вузьких екранів */
+	  justify-content: center;
+	  padding: 10px;
+	}
+  
+	.nav-link {
+	  font-size: 1rem;
+	  margin-bottom: 10px;
+	}
+  
+	button {
+	  width: 100%;
+	  max-width: none;
+	  margin: 5px 0;
+	}
+  }
+  
+  

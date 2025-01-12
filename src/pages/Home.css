@@ -1,0 +1,68 @@
+
+.home-container {
+	background-image: url('../assets/images/elevator3.jpg');
+	background-size: cover;       /* Зображення масштабується для покриття всього екрану */
+	background-position: center;  /* Центрування зображення */
+	background-repeat: no-repeat; /* Заборона повторення зображення */
+	height: 100vh;                /* Висота контейнера дорівнює висоті екрана */
+	width: 100vw;            
+
+	display: flex;
+	justify-content: start;
+	align-items: start;
+	flex-direction: column;
+	text-align: center;   
+	overflow: hidden; 
+  }
+
+  .nav-button {
+	padding: 10px 20px;
+	background-color: #a5a5a5; /* Синій колір */
+	color:white;
+	text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.7);
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+  }
+  
+  .nav-button:hover {
+	background-color: #6a6a6a; /* Темніший синій при наведенні */
+  }
+  
+  .nav-button:active {
+	background-color: #525252; /* Ще темніший синій при натисканні */
+  }
+  
+  .nav-button:focus {
+	outline: none;
+	box-shadow: 0 0 5px #d8d8d9; /* Підсвічування при фокусі */
+  }
+
+
+  .home-container .home-title {
+	font-size: 4rem;
+	color: #fff;
+	border-width:medium;
+	border-color:black;
+	font-weight: bold; 
+	margin: 50px 50px 50px 80px; 
+	text-shadow: 7px 7px 5px rgba(0, 0, 0, 1.0);
+  }
+  
+  .home-container .home-text {
+	font-size: 2rem;
+	color: #fff;
+
+	margin-bottom: 20px; 
+	text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+  }
+  
+  .home-container .home-greeting {
+	font-size: 2rem;
+	color: #fff;
+	text-shadow: 5px 5px 5px rgba(0, 0, 0, 1.0);
+    font-weight: 500; 
+	margin: 50px 50px 50px 50px; 
+  }
