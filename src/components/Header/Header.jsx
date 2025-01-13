@@ -51,7 +51,7 @@ const Header = () => {
 					userData.role === 'Accountant') && (
         		<NavLink 
 				className={`nav-link ${isHomePage ? 'home-page-link' : ''}`}
-				to="/completion-report">Акти виконаних робіт</NavLink>
+				to="/completion-report">Акти</NavLink>
       		)}
 
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Accountant') && (
@@ -95,6 +95,12 @@ const Header = () => {
         		<NavLink id='nav-link' 
 				className={`nav-link ${isHomePage ? 'home-page-link' : ''}`}
 				 to="/role">Ролі</NavLink>
+      		)}
+
+			{(userData.role === 'Admin' || userData.role === 'CEO') && (
+        		<NavLink id='nav-link' 
+				className={`nav-link ${isHomePage ? 'home-page-link' : ''}`}
+				 to="/statistic">Статистика</NavLink>
       		)}
 
 			{(token) && (

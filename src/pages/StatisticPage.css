@@ -1,0 +1,16 @@
+.body{
+	background-color: rgb(224, 224, 224);
+	padding: 70px;
+}
+
+.chart-container{
+	padding: 20px;
+	margin: 20px;
+	background-color:rgb(228, 228, 228);
+	border-radius: 10px;
+}
+
+.Title{
+	margin-top: 70px;
+	font-size: larger;
+}

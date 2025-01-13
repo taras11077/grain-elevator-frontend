@@ -1,0 +1,11 @@
+.body{
+	background-color: rgb(224, 224, 224);
+	border-color: 'rgba(54, 162, 235, 1)';
+	border-Width: 1;
+	padding: 70px;
+}
+
+.title{
+	margin-top: 70px;
+	font-size: larger;
+}

@@ -16,6 +16,7 @@ import Registration from '../pages/RegistrationPage'
 import Role from '../pages/RolePage'
 import TechnologicalOperation from '../pages/TechnologicalOperationPage'
 import Warehouse from '../pages/WarehousePage'
+import Statistic from '../pages/StatisticPage'
 import PrivateRoute from './PrivateRoute'
 
 const router = createBrowserRouter([
@@ -124,6 +125,14 @@ const router = createBrowserRouter([
 			element:
 				<PrivateRoute allowedRoles={['HR', 'Admin', 'CEO']}>
 					<Role />
+				</PrivateRoute>			  
+		  },
+
+		  {
+			path: '/statistic',
+			element:
+				<PrivateRoute allowedRoles={['Admin', 'CEO']}>
+					<Statistic />
 				</PrivateRoute>			  
 		  },
 
