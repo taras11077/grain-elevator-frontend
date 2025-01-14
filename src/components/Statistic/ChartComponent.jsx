@@ -1,12 +1,17 @@
-import { CategoryScale } from 'chart.js'
-import Chart from 'chart.js/auto'
-import React from 'react'
-import { Bar } from 'react-chartjs-2'
+import React from 'react';
+import { Bar } from 'react-chartjs-2';
+import { CategoryScale } from 'chart.js';
+import Chart from 'chart.js/auto';
+
+Chart.register(CategoryScale);
 
 const ChartComponent = ({ data, title }) => {
-	Chart.register(CategoryScale);
+    if (!data || Object.keys(data || {}).length === 0) {
+        return <p style={{ textAlign: 'center' }}>Дані для побудови діаграми відсутні.</p>;
+    }
+
     const chartData = {
-        labels: Object.keys(data), // Назви постачальників або продуктів
+        labels: Object.keys(data), // Назви (ключі) постачальників або продуктів
         datasets: [
             {
                 label: 'Фізична вага',
@@ -26,7 +31,7 @@ const ChartComponent = ({ data, title }) => {
             },
             title: {
                 display: true,
-                text: title,
+				text: title,
                 font: {
                     size: 20, 
                 },
@@ -39,7 +44,7 @@ const ChartComponent = ({ data, title }) => {
         },
     };
 
-    return <Bar data={chartData} options={options} />;
+	return <Bar data={chartData} options={options} />;
 };
 
 export default ChartComponent;
