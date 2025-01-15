@@ -17,7 +17,7 @@
 
   .nav-button {
 	padding: 10px 20px;
-	background-color: #a5a5a5; /* Синій колір */
+	background-color: #666565; /* Синій колір */
 	color:white;
 	text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.7);
 	border: none;
@@ -28,11 +28,11 @@
   }
   
   .nav-button:hover {
-	background-color: #6a6a6a; /* Темніший синій при наведенні */
+	background-color: #939191; /* Темніший  при наведенні */
   }
   
   .nav-button:active {
-	background-color: #525252; /* Ще темніший синій при натисканні */
+	background-color: #333232; /* Ще темніший при натисканні */
   }
   
   .nav-button:focus {
@@ -54,13 +54,12 @@
   .home-container .home-text {
 	font-size: 2rem;
 	color: #fff;
-
-	margin-bottom: 20px; 
+	margin: 90px 50px 50px 50px; 
 	text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
   }
   
   .home-container .home-greeting {
-	font-size: 2rem;
+	font-size: 2.5rem;
 	color: #fff;
 	text-shadow: 5px 5px 5px rgba(0, 0, 0, 1.0);
     font-weight: 500; 
