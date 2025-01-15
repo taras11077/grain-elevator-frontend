@@ -34,7 +34,7 @@ const StatisticPage = () => {
 				Статистичні показники 
 			</Title>
 			<Title level={3} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
-				завантаженості підприємства за різними параметрами.
+				завантаженості підприємства за Постачальниками та Найменуваннями продукції.
 			</Title>
 
 			<div className="chart-container">

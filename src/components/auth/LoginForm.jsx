@@ -6,22 +6,19 @@ import { login } from '../../asyncThunks/authThunk'
 import './Login.css';
 
 const LoginForm = ({closeModal}) => {
-
 	const {loading, error} = useSelector(state => state.auth);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const onFinish = async (values) => {
 		dispatch(login(values));
-		
-		if(error){
-			Modal.error({
-				title: 'Error:',
-				content: `${error}`,
-				centered: true
-			  });
-		}
-
+		// if(error){
+		// 	Modal.error({
+		// 		title: 'Error:',
+		// 		content: `${error}`,
+		// 		centered: true
+		// 	  });
+		// }
 		closeModal();
 		navigate('/home');
 	  };
@@ -49,7 +46,7 @@ const LoginForm = ({closeModal}) => {
 					rules={[
 					{
 						required: true,
-						message: "Please input your email!",
+						message: "Будь ласка, введіть свій email!",
 					},
 					]}
 				>
@@ -62,7 +59,7 @@ const LoginForm = ({closeModal}) => {
 					rules={[
 					{
 						required: true,
-						message: "Please input your password!",
+						message: "Будь ласка, введіть свій пароль!",
 					},
 					]}
 				>
@@ -81,8 +78,6 @@ const LoginForm = ({closeModal}) => {
 										  </Button>}			
 				</Form.Item>	
 			</Form>
-
-			
 	  </div>
 	);
 }
