@@ -135,7 +135,7 @@ const WarehousePage = () => {
 
 	  return (
 		<div className="container">
-		  <Title level={2} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
+		  <Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
 			Склад
 		  </Title>
 	

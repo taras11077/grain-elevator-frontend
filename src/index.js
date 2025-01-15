@@ -8,6 +8,7 @@ import { RouterProvider } from 'react-router-dom';
 import router from './routes'
 import { fetchUserData } from './asyncThunks/authThunk'
 import { getToken } from './utils/tokenHelperFunctions'
+import dayjs from 'dayjs';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

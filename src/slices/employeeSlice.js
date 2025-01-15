@@ -70,6 +70,7 @@ const employeeSlice = createSlice({
 		// Update Employee
 		.addCase(updateEmployee.fulfilled, (state) => {
 			state.isModalOpen = false;
+			state.error = null;
 		})
 		.addCase(updateEmployee.rejected, (state, action) => {
 			state.loading = false;
@@ -82,6 +83,7 @@ const employeeSlice = createSlice({
 			}
 		})
 		
+
 		// Delete Employee
 		.addCase(deleteEmployee.fulfilled, (state, action) => {
 			const deletedId = action.meta.arg; // отримання ID з deleteEmployee

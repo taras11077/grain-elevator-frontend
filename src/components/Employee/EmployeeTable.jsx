@@ -1,8 +1,10 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Button, Modal, Table } from 'antd'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import React from 'react'
 
+dayjs.extend(utc);
 
 const EmployeeTable = ({
   employees,
@@ -40,9 +42,17 @@ const EmployeeTable = ({
 		title: 'Дата народження',
 		dataIndex: 'birthDate',
 		key: 'birthDate',
-		render: (date) => (dayjs(date).isValid() ? dayjs(date).format('DD-MM-YYYY') : 'дату народження не визначено'),
-		sorter: true,
-	  },
+		render: (birthDate) => {
+			return birthDate
+			? dayjs(birthDate, 'YYYY-MM-DD').format('DD-MM-YYYY')
+			: 'дату народження не визначено';
+  		},
+		sorter: (a, b) => {
+			if (!a.birthDate) return 1; // Якщо `birthDate` відсутній, вважаємо, що цей запис більший
+			if (!b.birthDate) return -1; // Аналогічно
+			return dayjs(a.birthDate, 'YYYY-MM-DD').unix() - dayjs(b.birthDate, 'YYYY-MM-DD').unix();
+  		},
+	},
 
 	{ title: 'Пол', dataIndex: 'gender', key: 'gender', sorter: true }, 
     { title: 'Місто', dataIndex: 'city', key: 'city', sorter: true }, 
@@ -51,7 +61,10 @@ const EmployeeTable = ({
 		title: 'Остання активність',
 		dataIndex: 'lastSeenOnline',
 		key: 'lastSeenOnline',
-		render: (date) => (dayjs(date).isValid() ? dayjs(date).format('DD-MM-YYYY') : 'дату останньої активності не визначено'),
+		render: (date) =>
+			dayjs(date).isValid()
+				? dayjs.utc(date).format('HH:mm DD-MM-YYYY')
+				: 'дату останньої активності не визначено',
 		sorter: true,
 	  },
 	  { title: 'HR', dataIndex: 'createdByName', key: 'createdByName', sorter: true },
@@ -74,11 +87,7 @@ const EmployeeTable = ({
   return (
     <Table
       rowSelection={null }
-      dataSource={employees.map((employee) => ({
-        ...employee,
-        birthDate: dayjs(employee.birthDate).format('DD-MM-YYYY'), // форматування дати
-		lastSeenOnline: dayjs(employee.lastSeenOnline).format('DD-MM-YYYY'),
-      }))}
+	  dataSource = {employees}
       columns={columns}
       rowKey="id"
       loading={loading}

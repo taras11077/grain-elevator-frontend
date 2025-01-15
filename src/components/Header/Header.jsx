@@ -1,22 +1,32 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
-import { logout } from '../../asyncThunks/authThunk'
+import { logout, updateLastSeenOnline } from '../../asyncThunks/authThunk'
 import './Header.css'
 
 const Header = () => {
 	const {token, userData} = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
-	const location = useLocation(); // Отримуємо поточний шлях
-	const isHomePage = location.pathname === '/home'; // Перевіряємо, чи це сторінка Home
+	const location = useLocation(); 
+	const isHomePage = location.pathname === '/home'; 
 
-	const logoutHandler = () => {
-		dispatch(logout());
-	}
+	// const logoutHandler = () => {
+	// 	dispatch(logout());
+	// }
+
+	const logoutHandler = async () => {
+		try {
+			await dispatch(logout({ id: userData.id })).unwrap();
+		} catch (error) {
+			console.error('Помилка при виході з системи:', error);
+		}
+	};
 
 	return (
 		<div className={`nav-container ${isHomePage ? 'home-page' : ''}`}>
-			{/* <NavLink className='nav-link' to="/home">Home</NavLink> */}
+			{/* <NavLink 
+			className={`nav-link ${isHomePage ? 'home-page-link' : ''}`}
+			to="/home">На головну</NavLink> */}
 
 			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Laboratory') && (
         		<NavLink

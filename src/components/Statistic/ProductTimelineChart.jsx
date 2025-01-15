@@ -64,7 +64,7 @@ const ProductTimelineChart = ({ data, title }) => {
 const getRandomColor = () =>
     `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(
         Math.random() * 255
-    )}, 0.6)`;
+    )}, 1.0)`;
 
 export default ProductTimelineChart;
 

@@ -15,9 +15,6 @@ const InputInvoiceTable = ({
   onRowSelect,
   selectedRowKeys = [], // Список ключів вибраних рядків
 }) => {
-
-	const dispatch = useDispatch();
-
 	const showDeleteConfirm = (record) => {
 	  Modal.confirm({
 		title: 'Ви впевнені, що хочете видалити цю Прибуткову накладну?',
@@ -39,7 +36,7 @@ const InputInvoiceTable = ({
   const standardColumns = [
     { title: '№', dataIndex: 'invoiceNumber', key: 'invoiceNumber', sorter: true },
     {
-      title: 'Дата прибуття',
+      title: 'Дата надходження',
       dataIndex: 'arrivalDate',
       key: 'arrivalDate',
       sorter: (a, b) => dayjs(a.arrivalDate, 'DD-MM-YYYY').unix() - dayjs(b.arrivalDate, 'DD-MM-YYYY').unix(),

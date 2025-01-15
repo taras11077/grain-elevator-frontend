@@ -1,14 +1,13 @@
-import { Button, Input, Select } from 'antd';
-import { useEffect, useState } from 'react';
+import { Button, Input, Select } from 'antd'
 import dayjs from 'dayjs'
 import { Field, Form, Formik } from 'formik'
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as Yup from 'yup'
 
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchSuppliers } from '../../asyncThunks/supplierThunk';
-import { fetchProducts } from '../../asyncThunks/productThunk';
-import { fetchProductCategories } from '../../asyncThunks/productCategoryThunk';
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProductCategories } from '../../asyncThunks/productCategoryThunk'
+import { fetchProducts } from '../../asyncThunks/productThunk'
+import { fetchSuppliers } from '../../asyncThunks/supplierThunk'
 
 const { Option } = Select;
 
@@ -21,6 +20,7 @@ const OutputInvoiceSchema = (isEditing , isFromWarehouse) => Yup.object().shape(
 	productCategory: isEditing || isFromWarehouse ? Yup.mixed().notRequired() : Yup.string().required('Обов’язкове поле'),
 	productWeight: isEditing || isFromWarehouse ? Yup.mixed().notRequired() : Yup.number().required('Обов’язкове поле').positive('Має бути додатнім'),
 });
+
 
 const OutputInvoiceForm = ({ initialData = {}, onSubmit, onCancel, isEditing, isFromWarehouse  }) => {
 	const dispatch = useDispatch();
@@ -44,6 +44,9 @@ const OutputInvoiceForm = ({ initialData = {}, onSubmit, onCancel, isEditing, is
 		  ? dayjs(initialData.shipmentDate, 'DD-MM-YYYY').format('YYYY-MM-DD') 
 		  : '',
 	  };
+
+	  console.log( "initialData?.shipmentDate: " ,initialData?.shipmentDate);
+	  console.log( "preparedInitialData?.shipmentDate: " ,preparedInitialData?.shipmentDate);
 
     return (
         <Formik

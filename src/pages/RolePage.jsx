@@ -107,11 +107,11 @@ const RolePage = () => {
 	  return (
 		<div className="container">
 		  	<Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
-			  	Ролі
+			  	Ролі співробітників
 			</Title>
 
 			<Title level={4} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
-				присвоєні співробітникам для визначення рівня доступу до інформації.
+				що визначають доступ до інформації.
 			</Title>
 	
 			<RoleFilterFields filters={filters} onFilterChange={handleFilterChange} />

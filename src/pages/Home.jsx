@@ -33,7 +33,7 @@ const AuthRequest = () => (
 	const { token, userData } = useSelector((state) => state.auth);
 	return (
 	  <div className="home-container">
-		{!token ? <AuthRequest /> : <UserGreeting name={userData?.name} />}
+			{!token ? <AuthRequest /> : <UserGreeting name={userData?.name} />}
 	  </div>
 	);
   };

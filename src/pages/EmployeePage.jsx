@@ -32,7 +32,6 @@ const EmployeePage = () => {
     selectedEmployee,
   } = useSelector((state) => state.employees);
 
-  // Стан для модального вікна реєстрації
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
 
   useEffect(() => {
@@ -70,6 +69,7 @@ const EmployeePage = () => {
     dispatch(setSelectedEmployee(null));
   };
 
+  
   const handleFormSubmit = async (formData) => {
     try {
         const resultAction = await dispatch(updateEmployee({ id: selectedEmployee.id, updates: formData }));
@@ -89,7 +89,7 @@ const EmployeePage = () => {
 
   const handleDeleteEmployee = async (record) => {
     try {
-      await dispatch(deleteEmployee(record.id));
+      dispatch(deleteEmployee(record.id));
       message.success('Дані співробітника успішно видалено!');
       dispatch(fetchEmployees());
     } catch (error) {
@@ -141,7 +141,7 @@ const EmployeePage = () => {
       >
         <EmployeeForm
 			key={selectedEmployee ? selectedEmployee.id : 'new'}
-			initialData={selectedEmployee || {}}
+			initialData={selectedEmployee}
 			onSubmit={handleFormSubmit}
 			onCancel={handleCloseEditModal}
 		/>

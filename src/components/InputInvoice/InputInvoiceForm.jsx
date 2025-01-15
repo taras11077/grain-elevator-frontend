@@ -43,7 +43,7 @@ const InputInvoiceForm = ({ initialData, onSubmit, onCancel }) => {
                         {errors.invoiceNumber && touched.invoiceNumber && <div>{errors.invoiceNumber}</div>}
                     </div>
                     <div>
-                        <label>Дата:</label>
+                        <label>Дата надходження:</label>
                         <Field 
 							name="arrivalDate" 
 							type="date"

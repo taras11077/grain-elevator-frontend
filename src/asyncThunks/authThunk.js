@@ -25,8 +25,38 @@ export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (paylo
 	}	
 });
 
-export const logout = createAsyncThunk('auth/logout', async () => {
-	removeToken();
+// export const logout = createAsyncThunk('auth/logout', async () => {
+// 	removeToken();
+// });
+
+export const logout = createAsyncThunk('auth/logout', async ({ id }, { dispatch, rejectWithValue }) => {
+    try {
+        await dispatch(updateLastSeenOnline({ id })).unwrap();
+        removeToken();
+    } catch (error) {
+        console.error('Failed to update last seen online during logout:', error);
+        return rejectWithValue(error);
+    }
 });
+
+
+
+ // UpdateLastSeenOnline employee
+ export const updateLastSeenOnline = createAsyncThunk(
+    'auth/updateLastSeenOnline',
+    async ({ id }, { rejectWithValue }) => {
+        try {
+            const response = await api.put(`/employee/${id}/last-seen-online`);
+            return response.data;
+        } catch (error) {
+            console.error('Failed to update last seen online:', error);
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            }
+            return rejectWithValue('Unknown error occurred');
+        }
+    }
+);
+
 
 

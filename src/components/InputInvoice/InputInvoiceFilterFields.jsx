@@ -17,7 +17,7 @@ const InputInvoiceFilterFields = ({ filters, onFilterChange }) => {
                 </Col>
 				<Col span={8}>
                     <DatePicker
-                        placeholder="Дата прибуття"
+                        placeholder="Дата надходження"
                         name="arrivalDate"
                         style={{ width: '100%' }}
 						value={filters.arrivalDate ? dayjs(filters.arrivalDate, 'YYYY-MM-DD') : null} // збереження внутрішнього формату для фільтрації

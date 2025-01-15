@@ -1,52 +1,47 @@
 import { Button, Input, Select } from 'antd'
 import dayjs from 'dayjs'
 import { Field, Form, Formik } from 'formik'
-import React from 'react'
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
+import { fetchRoles } from '../../asyncThunks/roleThunk'; 
 import * as Yup from 'yup'
 
 const { Option } = Select;
 
-const EmployeeForm = ({ initialData = {}, onSubmit, onCancel }) => {
+const EmployeeSchema = Yup.object().shape({
+	firstName: Yup.string().notRequired(),
+	lastName: Yup.string().notRequired(),
+	roleTitle: Yup.string().notRequired(),
+	email: Yup.string().email('Некоректний Email').notRequired(),
+	phone: Yup.string().notRequired(),
+	birthDate: Yup.date().notRequired(),
+	gender: Yup.string().notRequired(),
+	city: Yup.string().notRequired(),
+	country: Yup.string().notRequired(),
+	passwordHash: Yup.string()
+		.nullable()
+		.min(6, 'Пароль має містити мінімум 6 символів')
+		.notRequired(),
+	confirmPassword: Yup.string()
+		.nullable()
+		.oneOf([Yup.ref('passwordHash'), null], 'Паролі повинні співпадати')
+		.notRequired(),
+});
 
+const EmployeeForm = ({ initialData, onSubmit, onCancel }) => {
 	const dispatch = useDispatch();
 	const { roles, loading: rolesLoading } = useSelector((state) => state.roles);
+	useEffect(() => {
+		dispatch(fetchRoles());
+	  }, [dispatch]);
 
 	const preparedInitialData = {
 	  ...initialData,
 	  birthDate: initialData?.birthDate 
 		? dayjs(initialData.birthDate, 'DD-MM-YYYY').format('YYYY-MM-DD') 
 		: '',
-	  lastSeenOnline: initialData?.lastSeenOnline 
-		? dayjs(initialData.lastSeenOnline, 'DD-MM-YYYY').format('YYYY-MM-DD') 
-		: '',
 	};
-  
-	const EmployeeSchema = Yup.object().shape({
-	  firstName: Yup.string().notRequired(),
-	  lastName: Yup.string().notRequired(),
-	  roleTitle: Yup.string().notRequired(),
-	  email: Yup.string().email('Некоректний Email').notRequired(),
-	  phone: Yup.string().notRequired(),
-	  birthDate: Yup.date().notRequired()
-			.nullable()
-			.transform((value, originalValue) =>
-				originalValue === "" ? null : value
-	  )
-	  .typeError("Введіть дійсну дату"),
-	  gender: Yup.string().notRequired(),
-	  city: Yup.string().notRequired(),
-	  country: Yup.string().notRequired(),
-	  passwordHash: Yup.string().when('confirmPassword', {
-		is: (value) => !!value,
-		then: Yup.string().required('Пароль обов’язковий, якщо вводиться підтвердження').notRequired(),
-	  }),
-	  confirmPassword: Yup.string().oneOf(
-		[Yup.ref('passwordHash'), null],
-		'Паролі повинні співпадати'
-	  ),
-	});
-  
+
 	return (
 	  <Formik
 		initialValues={{

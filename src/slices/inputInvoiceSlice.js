@@ -63,6 +63,7 @@ const inputInvoiceSlice = createSlice({
       // Fetch Invoices
       .addCase(fetchInvoices.pending, (state) => {
         state.loading = true;
+		state.error = null;
       })
       .addCase(fetchInvoices.fulfilled, (state, action) => {
         state.invoices = action.payload.data;

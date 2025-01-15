@@ -29,20 +29,20 @@ const StatisticPage = () => {
     if (error) return <p>Помилка: {error}</p>;
 
     return (
-		<>
+		<div className="container">
 			<Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
 				Статистичні показники 
 			</Title>
-			<Title level={4} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
-				завантаженності підприємства.
+			<Title level={3} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
+				завантаженості підприємства за різними параметрами.
 			</Title>
 
 			<div className="chart-container">
-				<h2 className="chart-title">Загальна вага по Постачальникам</h2>
+				<h2 className="chart-title">Загальна вага надходжень по Постачальникам</h2>
 				<SupplierBarChart data={bySupplier} />
 			</div>
 			<div className="chart-container">
-				<h2 className="chart-title">Загальна вага по Найменуванню продукції</h2>
+				<h2 className="chart-title">Загальна вага надходжень по Найменуванню продукції</h2>
 				<ProductBarChart data={byProduct} />
 			</div>
 
@@ -55,7 +55,7 @@ const StatisticPage = () => {
 				<ProductTimelineChart data={byProductTimeline} />
 			</div>
 
-		</>
+		</div>
     );
 };
 

@@ -36,8 +36,7 @@ const OutputInvoiceTable = ({
       title: 'Дата відвантаження',
       dataIndex: 'shipmentDate',
       key: 'shipmentDate',
-      render: (date) => (dayjs(date).isValid() ? dayjs(date).format('DD-MM-YYYY') : 'дату не визначено'),
-	  sorter: true,
+      sorter: (a, b) => dayjs(a.shipmentDate, 'DD-MM-YYYY').unix() - dayjs(b.shipmentDate, 'DD-MM-YYYY').unix(),
     },
     { title: 'Номер транспортного засобу', dataIndex: 'vehicleNumber', key: 'vehicleNumber', sorter: true },
 	{ title: 'Продукція', dataIndex: 'productTitle', key: 'productTitle', sorter: true },
@@ -69,7 +68,7 @@ const OutputInvoiceTable = ({
       rowSelection={null }
       dataSource={outputInvoices.map((invoice) => ({
         ...invoice,
-        arrivalDate: dayjs(invoice.arrivalDate).format('DD-MM-YYYY'), // форматування дати
+        shipmentDate: dayjs(invoice.shipmentDate).format('DD-MM-YYYY'), // форматування дати
       }))}
       columns={columns}
       rowKey="id"
