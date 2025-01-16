@@ -38,15 +38,6 @@ const StatisticPage = () => {
 			</Title>
 
 			<div className="chart-container">
-				<h2 className="chart-title">Загальна вага надходжень по Постачальникам</h2>
-				<SupplierBarChart data={bySupplier} />
-			</div>
-			<div className="chart-container">
-				<h2 className="chart-title">Загальна вага надходжень по Найменуванню продукції</h2>
-				<ProductBarChart data={byProduct} />
-			</div>
-
-			<div className="chart-container">
 				<h2 className="chart-title">Графік надходження по Постачальникам</h2>
 				<SupplierTimelineChart data={bySupplierTimeline} />
 			</div>
@@ -55,6 +46,14 @@ const StatisticPage = () => {
 				<ProductTimelineChart data={byProductTimeline} />
 			</div>
 
+			<div className="chart-container">
+				<h2 className="chart-title">Загальна вага надходжень по Постачальникам</h2>
+				<SupplierBarChart data={bySupplier} />
+			</div>
+			<div className="chart-container">
+				<h2 className="chart-title">Загальна вага надходжень по Найменуванню продукції</h2>
+				<ProductBarChart data={byProduct} />
+			</div>
 		</div>
     );
 };

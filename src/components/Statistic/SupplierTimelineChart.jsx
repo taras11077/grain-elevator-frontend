@@ -23,7 +23,7 @@ const SupplierTimelineChart = ({ data, title }) => {
 		data: Object.values(timelineData), // Значення ваги
 		backgroundColor: getRandomColor(),
 		borderColor: getRandomColor(),
-		borderWidth: 2,
+		borderWidth: 3,
 		fill: false,
 	}));
 

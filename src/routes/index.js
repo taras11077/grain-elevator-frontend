@@ -7,7 +7,6 @@ import Home from '../pages/Home'
 import InputInvoice from '../pages/InputInvoicePage'
 import InvoiceRegister from '../pages/InvoiceRegisterPage'
 import LaboratoryCard from '../pages/LaboratoryCardPage'
-import Login from '../pages/LoginPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import OutputInvoice from '../pages/OutputInvoicePage'
 import PriceList from '../pages/PriceListPage'
@@ -140,10 +139,6 @@ const router = createBrowserRouter([
 		  {
 			path: '/registration',
 			element: <Registration />
-		  },
-		  {
-			path: '/login',
-			element: <Login />
 		  },
 		   {
 			path: "*",

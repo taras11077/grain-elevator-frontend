@@ -1,8 +1,9 @@
-import { Typography } from 'antd'
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
-import './Home.css'
+import React, { useState, useEffect } from 'react';
+import { Typography, Modal } from 'antd';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import LoginForm from '../components/Auth/LoginForm';
+import './Home.css';
 
 const motivationalQuotes = [
   'Ваші зусилля сьогодні стануть результатами завтра!',
@@ -20,38 +21,63 @@ const getRandomMotivation = () => {
   return motivationalQuotes[randomIndex];
 };
 
-const AuthRequest = () => (
+const AuthRequest = ({ showLoginModal }) => (
   <div>
     <Typography.Title className="home-title">
-      Ласкаво просимо до Grain Elevator System
+      	Ласкаво просимо до Grain Elevator System
     </Typography.Title>
     <Typography.Text className="home-text">
-      Для початку роботи авторізуйтесь в системі.
+      	Для початку роботи авторізуйтесь в системі.
     </Typography.Text>
-    <NavLink className="nav-link" to="/login">
-      <button className="nav-button">Вхід</button>
-    </NavLink>
+	<div>
+		<button className="nav-button" onClick={showLoginModal}>
+			Вхід
+		</button>
+	</div>
   </div>
 );
 
 const UserGreeting = ({ name }) => (
   <div>
-    <Typography.Title className="home-greeting">
-      Вітаю, {name}!
-    </Typography.Title>
-    <Typography.Title className="home-text">
-      {getRandomMotivation()}
-    </Typography.Title>
+    <Typography.Title className="home-greeting">Вітаю, {name}!</Typography.Title>
+    <Typography.Title className="home-text">{getRandomMotivation()}</Typography.Title>
   </div>
 );
 
 const Home = () => {
   const { token, userData } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const [isLoginModalVisible, setLoginModalVisible] = useState(false);
+
+  const closeModal = () => {
+    setLoginModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setLoginModalVisible(false);
+    navigate('/');
+  };
+
   return (
     <div className="home-container">
-      {!token ? <AuthRequest /> : <UserGreeting name={userData?.name} />}
+      {!token ? (
+        <>
+          <AuthRequest showLoginModal={() => setLoginModalVisible(true)} />
+          <Modal
+            title="Авторизація"
+            open={isLoginModalVisible}
+            onCancel={handleCancel}
+            footer={null}
+          >
+            <LoginForm closeModal={closeModal} />
+          </Modal>
+        </>
+      ) : (
+        <UserGreeting name={userData?.name} />
+      )}
     </div>
   );
 };
 
 export default Home;
+

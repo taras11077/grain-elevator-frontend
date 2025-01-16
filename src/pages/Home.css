@@ -1,12 +1,10 @@
-
 .home-container {
-	background-image: url('../assets/images/elevator3.jpg');
-	background-size: cover;       /* Зображення масштабується для покриття всього екрану */
-	background-position: center;  /* Центрування зображення */
-	background-repeat: no-repeat; /* Заборона повторення зображення */
-	height: 100vh;                /* Висота контейнера дорівнює висоті екрана */
+	background-image: url('../assets/images/elevator4.jpg');
+	background-size: cover;
+	background-position: center;  
+	background-repeat: no-repeat; 
+	height: 100vh;
 	width: 100vw;            
-
 	display: flex;
 	justify-content: start;
 	align-items: start;
@@ -15,53 +13,89 @@
 	overflow: hidden; 
   }
 
-  .nav-button {
-	padding: 10px 20px;
-	background-color: #666565; /* Синій колір */
-	color:white;
-	text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.7);
-	border: none;
-	border-radius: 5px;
-	font-size: 16px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-  }
+.nav-button {
+padding: 10px 20px;
+background-color: #8e8d8d;
+color:white;
+text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.7);
+box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+border: none;
+margin-top: 30px;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+background-color: #b1b0b0; 
+}
+
+.nav-button:active {
+background-color: #333232; 
+}
+
+.nav-button:focus {
+outline: none;
+box-shadow: 0 0 5px #d8d8d9;
+}
+
+.home-container .home-title {
+font-size: 4rem;
+font-weight: bold; 
+color: #fff;
+border-width:medium;
+border-color:black;
+margin: 50px 50px 50px 80px; 
+text-shadow: 7px 7px 5px rgba(0, 0, 0, 1.0);
+}
+
+.home-container .home-text {
+font-size: 2rem;
+color: #fff;
+margin: 120px 50px 50px 50px; 
+text-shadow: 7px 7px 5px rgba(0, 0, 0, 1.0);
+}
+
+.home-container .home-greeting {
+font-size: 2.5rem;
+color: #fff;
+text-shadow: 5px 5px 5px rgba(0, 0, 0, 1.0);
+font-weight: 500; 
+margin: 120px 50px 50px 80px; 
+}
+
+.ant-modal-content {
+margin-top: 100px;
+background: lightsteelblue !important;
+border-radius: 10px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+padding: 30px 50px 10px 50px !important;
+}
   
-  .nav-button:hover {
-	background-color: #939191; /* Темніший  при наведенні */
-  }
-  
-  .nav-button:active {
-	background-color: #333232; /* Ще темніший при натисканні */
-  }
-  
-  .nav-button:focus {
-	outline: none;
-	box-shadow: 0 0 5px #d8d8d9; /* Підсвічування при фокусі */
+.ant-modal-title {
+	display: none; 
   }
 
+.ant-form-item {
+	margin-top: 10px;
+  }
+ 
+.ant-modal-body {
+	padding: 10px; 
+  }
 
-  .home-container .home-title {
-	font-size: 4rem;
-	color: #fff;
-	border-width:medium;
-	border-color:black;
-	font-weight: bold; 
-	margin: 50px 50px 50px 80px; 
-	text-shadow: 7px 7px 5px rgba(0, 0, 0, 1.0);
-  }
-  
-  .home-container .home-text {
-	font-size: 2rem;
-	color: #fff;
-	margin: 90px 50px 50px 50px; 
-	text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
-  }
-  
-  .home-container .home-greeting {
-	font-size: 2.5rem;
-	color: #fff;
-	text-shadow: 5px 5px 5px rgba(0, 0, 0, 1.0);
-    font-weight: 500; 
-	margin: 90px 50px 50px 50px; 
-  }
+.modal-container .ant-form-item-label > label {
+font-size: 18px;
+}
+.modal-container .ant-input {
+border-radius: 4px;
+}
+.modal-container .ant-btn {
+width: 100%;
+border-radius: 4px;
+}
+
+.ant-modal-content .ant-input{
+	margin-bottom: 10px;
+}
