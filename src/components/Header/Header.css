@@ -1,13 +1,12 @@
-/* Стиль для контейнера навігації */
 .nav-container { 
-	position: fixed; /* Фіксуємо на сторінці */
-	top: 0; /* Розташовуємо у верхній частині */
+	position: fixed; 
+	top: 0; 
 	left: 0;
 	right: 0;
 	width: 100%; 
 	margin: 0 auto; 
 	padding: 0 20px;
-	background-color: lightsteelblue;
+	background-color: rgb(185, 185, 185);
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 	display: flex;
 	flex-direction: row;
@@ -24,15 +23,29 @@
 	box-shadow: 0 0 10px rgba(25, 25, 25, 0.2);
   }
 
+  .nav-container.home-page button {
+	background-color: rgb(137, 137, 137);
+  }
+
+  .nav-container.home-page button:hover {
+	background-color: rgb(90, 90, 90);
+  }
+
   .nav-link.home-page-link {
 	color: white;
   }
+
+  .nav-link.home-page-link:hover {
+	color: rgb(17, 17, 17);
+  }
+
   .user-name {
-	color:rgb(51, 105, 190);
+	color:rgb(0, 131, 59);
+	font-size: 1.1rem;
 	font-weight: bold; 
   }
   .user-name.home-page-user-name {
-	color: white;
+	color:rgb(0, 224, 101);
   }
 
   .nav-link {
@@ -42,14 +55,14 @@
 	align-items: center;
 	text-decoration: none;
 	padding: 10px;
-	font-size: 1rem;
-	color: rgb(0, 78, 142); 
+	font-size: 1.05rem;
+	color: rgb(37, 37, 37); 
   }
   
   button {
 	width: 130px;
 	max-width: 130px;
-	background-color: rgb(51, 105, 190);
+	background-color: rgb(120, 120, 120);
 	color: white;
 	font-size: 0.9em;
 	border: none;
@@ -59,9 +72,13 @@
 	margin: 7px 15px;
 	cursor: pointer;
   }
+
+  .nav-link:hover {
+	color: rgb(255, 255, 255);
+  }
   
   button:hover {
-	background-color: rgb(41, 90, 160);
+	background-color: rgb(70, 70, 70);
   }
   
   /* Адаптивність для маленьких екранів */
@@ -82,6 +99,12 @@
 	  max-width: none;
 	  margin: 5px 0;
 	}
+  }
+
+  .center-container {
+	align-items: center;    
+	flex-direction: column; 
+	text-align: center;     
   }
   
   

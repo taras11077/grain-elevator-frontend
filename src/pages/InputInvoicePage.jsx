@@ -13,6 +13,7 @@ import InputInvoiceForm from '../components/InputInvoice/InputInvoiceForm'
 import InputInvoiceTable from '../components/InputInvoice/InputInvoiceTable'
 import { setFilters, setPagination, setSelectedInvoice, setSort, toggleModal } from '../slices/inputInvoiceSlice'
 import './InputInvoicePage.css'
+import { color } from 'chart.js/helpers'
 
 const InputInvoicePage = () => {
   const { Title } = Typography;
@@ -74,7 +75,6 @@ const InputInvoicePage = () => {
         const resultAction = await dispatch(updateInvoice({ id: selectedInvoice.id, updates: formData }));
         if (updateInvoice.fulfilled.match(resultAction)) {
           message.success('Прибуткову накладну оновлено.');
-          dispatch(fetchInvoices());
         } else {
           const errorMessage = resultAction.payload?.message || 'Не вдалося оновити накладну.';
           message.error(errorMessage);
@@ -83,6 +83,7 @@ const InputInvoicePage = () => {
         await dispatch(createInvoice(formData));
         message.success('Накладну створено.');
       }
+	  dispatch(fetchInvoices());
       handleCloseModal();
     } catch (error) {
       console.error('Помилка збереження:', error);
@@ -113,14 +114,13 @@ const InputInvoicePage = () => {
 	  }
 };
 
-
   return (
     <div className="container">
-	  <Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
+	   <Title level={1} className="page-title">
 	  		Прибуткові накладні 
 		</Title>
 
-		<Title level={4} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
+		<Title level={4} className="page-subtitle">
 			на однорідну партію продукції, поставлену окремим транспортним засобом.
 		</Title>
 
@@ -129,35 +129,18 @@ const InputInvoicePage = () => {
       {/* Кнопка дії залежно від контексту */}
       {isForLabCard ? (
         <Button
-          type="primary"
           disabled={!selectedInvoiceId}
           onClick={handleAddToLabCard}
-          style={{
-			margin: 30,
-			width: '25%',
-			maxWidth: '250px',
-			overflow: 'hidden',
-			textOverflow: 'ellipsis',
-			whiteSpace: 'nowrap',
-		  }}
-
+          className="action-button"
         >
-          Додати в лабораторну карточку
+           Додати в лабораторну картку
         </Button>
       ) : (
         <Button
-          type="primary"
           onClick={() => handleOpenModal(null)}
-			style={{
-				margin: 30,
-				width: '20%',
-				maxWidth: '250px',
-				overflow: 'hidden',
-				textOverflow: 'ellipsis',
-				whiteSpace: 'nowrap',
-			  }}
+		  className="action-button"
         >
-          Створити прибуткову накладну
+          	Створити прибуткову накладну
         </Button>
       )}
 

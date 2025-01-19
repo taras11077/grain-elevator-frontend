@@ -10,10 +10,6 @@ const Header = () => {
 	const location = useLocation(); 
 	const isHomePage = location.pathname === '/home'; 
 
-	// const logoutHandler = () => {
-	// 	dispatch(logout());
-	// }
-
 	const logoutHandler = async () => {
 		try {
 			await dispatch(logout({ id: userData.id })).unwrap();
@@ -28,13 +24,16 @@ const Header = () => {
 			className={`nav-link ${isHomePage ? 'home-page-link' : ''}`}
 			to="/home">На головну</NavLink> */}
 
-			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Laboratory') && (
+			{(userData.role === 'Admin' ||
+					 userData.role === 'CEO' || 
+					 userData.role === 'Laboratory') && (
         		<NavLink
 				className={`nav-link ${isHomePage ? 'home-page-link' : ''}`}
 				 to="/input-invoices">Прибуткові накладні</NavLink>
       		)}
 
-			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Laboratory') && (
+			{(userData.role === 'Admin' || userData.role === 'CEO' || userData.role === 'Laboratory' || 
+					 userData.role === 'Technologist') && (
         		<NavLink 
 				className={`nav-link ${isHomePage ? 'home-page-link' : ''}`}
 				to="/laboratory-cards">Лабораторні картки</NavLink>
@@ -48,8 +47,7 @@ const Header = () => {
 
 			{(userData.role === 'Admin' || 
 					userData.role === 'CEO' || 
-					userData.role === 'Technologist' || 
-					userData.role === 'Accountant') && (
+					userData.role === 'Technologist') && (
         		<NavLink 
 				className={`nav-link ${isHomePage ? 'home-page-link' : ''}`}
 				to="/technological-operation">Технологичні операції</NavLink>
@@ -114,7 +112,7 @@ const Header = () => {
       		)}
 
 			{(token) && (
-				<div>
+				<div className="center-container">
 					<div
 					className={`user-name ${isHomePage ? 'home-page-user-name' : ''}`}
 					>

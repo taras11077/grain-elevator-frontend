@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import { Field, Form, Formik } from 'formik'
 import React from 'react'
 import * as Yup from 'yup'
+import '../../pages/InputInvoicePage.css'
 
 const InputInvoiceSchema = Yup.object().shape({
     invoiceNumber: Yup.string().required('Обов’язкове поле'),
@@ -13,7 +14,7 @@ const InputInvoiceSchema = Yup.object().shape({
     productTitle: Yup.string().required('Обов’язкове поле'),
 });
 
-const InputInvoiceForm = ({ initialData, onSubmit, onCancel }) => {
+const InputInvoiceForm = ({ initialData, onSubmit, onCancel, title }) => {
 	const preparedInitialData = {
 		...initialData,
 		arrivalDate: initialData?.arrivalDate 
@@ -73,7 +74,12 @@ const InputInvoiceForm = ({ initialData, onSubmit, onCancel }) => {
                         {errors.product && touched.product && <div>{errors.productTitle}</div>}
                     </div>
                     <div style={{ marginTop: '16px' }}>
-                        <Button type="primary" htmlType="submit" style={{ marginRight: '8px' }}>
+                        <Button 
+							htmlType="submit"
+							className="action-button"
+							 style={{ marginRight: '8px'
+							  }}
+						>
                             Зберегти
                         </Button>
                         <Button onClick={onCancel}>Скасувати</Button>

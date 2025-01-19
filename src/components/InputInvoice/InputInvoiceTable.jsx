@@ -60,7 +60,7 @@ const InputInvoiceTable = ({
             </Button>
           </div>
         ) : (
-          <div>Створено лабораторну карточку</div>
+          <div>Створено лабораторну картку</div>
         ),
     },
   ];

@@ -98,26 +98,35 @@ const OutputInvoicePage = () => {
 
   // Додавання чи оновлення накладної
   const handleFormSubmit = async (formData) => {
-    try {
-      if (isEditing) {
-        const resultAction = await dispatch(updateInvoice({ id: selectedInvoice.id, updates: formData }));
-        if (updateInvoice.fulfilled.match(resultAction)) {
-          message.success('Видаткову накладну оновлено.');
-          dispatch(fetchInvoices());
-        } else {
-          const errorMessage = resultAction.payload?.message || 'Не вдалося оновити Видаткову накладну.';
-          message.error(errorMessage);
-        }
-      } else {
-        await dispatch(createInvoice(formData));
-        message.success('Видаткову накладну створено.');
-		dispatch(fetchInvoices());
-      }
-      handleCloseModal();
-    } catch (error) {
-      console.error('Помилка збереження:', error);
-      message.error('Помилка збереження.');
-    }
+	try {
+	  if (isEditing) {
+		const resultAction = await dispatch(updateInvoice({ id: selectedInvoice.id, updates: formData }));
+		if (updateInvoice.fulfilled.match(resultAction)) {
+		  message.success('Видаткову накладну оновлено.');
+		  dispatch(fetchInvoices());
+		} else {
+		  const errorMessage = resultAction.payload?.message || 'Не вдалося оновити Видаткову накладну.';
+		  message.error(errorMessage);
+		}
+	  } else {
+		const resultAction = await dispatch(createInvoice(formData));
+		if (createInvoice.fulfilled.match(resultAction)) {
+		  message.success('Видаткову накладну створено.');
+		  dispatch(fetchInvoices());
+		} else {
+		  const errorMessage = resultAction.payload?.message || 'Не вдалося створити Видаткову накладну.';
+		  message.error(errorMessage);
+		}
+	  }
+	  handleCloseModal();
+	} catch (error) {
+	  if (error.response?.data?.message) {
+		message.error(error.response.data.message); // Виведення повідомлення з сервера
+	  } else {
+		message.error('Сталася помилка при збереженні.');
+	  }
+	  console.error('Помилка збереження:', error);
+	}
   };
 
   // Видалення накладної
@@ -135,23 +144,15 @@ const OutputInvoicePage = () => {
 
   return (
     <div className="container">
-      <Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
+      <Title level={1} className="page-title">
         Видаткові накладні
       </Title>
 
       <OutputInvoiceFilterFields filters={filters} onFilterChange={handleFilterChange} />
 
 		<Button
-			type="primary"
+			className="action-button"
 			onClick={() => handleOpenModal(null)}
-			style={{
-				margin: 30,
-				width: '20%',
-				maxWidth: '250px',
-				overflow: 'hidden',
-				textOverflow: 'ellipsis',
-				whiteSpace: 'nowrap',
-			}}
 		>
 			Створити Видаткову накладну
 		</Button>

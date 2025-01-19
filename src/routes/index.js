@@ -10,7 +10,8 @@ import LaboratoryCard from '../pages/LaboratoryCardPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import OutputInvoice from '../pages/OutputInvoicePage'
 import PriceList from '../pages/PriceListPage'
-import { default as Product, default as Supplier } from '../pages/ProductPage'
+import Supplier from '../pages/SupplierPage'
+import Product from '../pages/ProductPage'
 import Registration from '../pages/RegistrationPage'
 import Role from '../pages/RolePage'
 import TechnologicalOperation from '../pages/TechnologicalOperationPage'
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
 		  {
 			path: '/input-invoices',
 			element:
-				<PrivateRoute allowedRoles={['Laboratory', 'Admin', 'CEO']}>
+				<PrivateRoute allowedRoles={['Laboratory', 'Admin', 'CEO','Technologist']}>
 					<InputInvoice />
 				</PrivateRoute>
 			  

@@ -6,7 +6,8 @@ import { fetchRoles } from '../../asyncThunks/roleThunk';
 
 const { Option } = Select;
 
-const RegistrationForm = ({ closeModal }) => {
+const RegistrationForm = ({ closeModal, onRegistrationSuccess }) => {
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.auth); // Состояние авторизации
   const { roles, rolesLoading } = useSelector((state) => state.roles); // Состояние ролей
@@ -19,6 +20,8 @@ const RegistrationForm = ({ closeModal }) => {
     const result = await dispatch(registration(values));
 	if (registration.fulfilled.match(result)) {
       message.success('Реєстрацію успішно завершено!');
+	  form.resetFields();
+      onRegistrationSuccess();
       closeModal();
     } else {
       message.error(result.payload || 'Реєстрація не вдалася.');
@@ -27,7 +30,7 @@ const RegistrationForm = ({ closeModal }) => {
 
   return (
     <div className="modal-container">
-      <Form name="registration" onFinish={onFinish} labelAlign="left" layout="vertical">
+      <Form form={form} name="registration" onFinish={onFinish} labelAlign="left" layout="vertical">
         {/* Им'я */}
         <Form.Item
           name="firstName"

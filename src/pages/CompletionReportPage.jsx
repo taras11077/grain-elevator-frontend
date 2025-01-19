@@ -155,33 +155,19 @@ const CompletionReportPage = () => {
 
 	return (
 	  <div className="container">
-		<Title 
-			level={1} 
-			style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}
-			>
+		 <Title level={1} className="page-title">
 		  	Акти виконаних робіт
 		</Title>
 
-		<Title 
-			level={4} 
-			style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}
-			>
+		<Title level={4} className="page-subtitle">
 			на послуги з доробки продукції з розрахунком вартості робіт згідно з Договором на доробку.
 		</Title>
   
 		<CompletionReportFilterFields filters={filters} onFilterChange={handleFilterChange} />
   
 		<Button
-		type="primary"
+		className="action-button"
 		onClick={() => handleOpenModal(null)}
-		style={{
-			margin: 30,
-			width: '20%',
-			maxWidth: '250px',
-			overflow: 'hidden',
-			textOverflow: 'ellipsis',
-			whiteSpace: 'nowrap',
-		}}
 		>
 			Створити Акт виконаних робіт
 		</Button>

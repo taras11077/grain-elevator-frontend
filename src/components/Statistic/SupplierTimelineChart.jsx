@@ -15,23 +15,51 @@ const SupplierTimelineChart = ({ data, title }) => {
         }); // Формат DD.MM
     };
 
-	const labels = Object.keys(Object.values(data)[0]).map(formatDate);
+	const uniqueDates = [
+        ...new Set(
+            Object.values(data).flatMap((timelineData) => Object.keys(timelineData))
+        ),
+    ].sort((a, b) => new Date(a) - new Date(b)); // Сортування дат
 
-	// Створення datasets для кожного продукту
-	const datasets = Object.entries(data).map(([supplierName, timelineData]) => ({
-		label: supplierName, // Назва Постачальника
-		data: Object.values(timelineData), // Значення ваги
-		backgroundColor: getRandomColor(),
-		borderColor: getRandomColor(),
-		borderWidth: 3,
-		fill: false,
-	}));
+    const labels = uniqueDates.map(formatDate);
+
+	// Створення datasets для кожного Постачальника
+    const datasets = Object.entries(data).map(([supplierName, timelineData]) => {
+        const supplierData = [];
+        let previousValue = 0; // Початкове значення, якщо немає даних на першу дату
+
+		uniqueDates.forEach((date, index) => {
+            const currentValue = timelineData[date] !== undefined ? timelineData[date] : previousValue;
+            const nextValue = timelineData[uniqueDates[index + 1]] || 0;
+
+            // Додавання значення, якщо воно не нульове або якщо наступне значення не дорівнює 0
+            if (currentValue !== 0 || nextValue !== 0 || previousValue !== 0) {
+                supplierData.push(currentValue);
+            } else {
+                supplierData.push(null); // Використання `null`, щоб розривати лінію
+            }
+
+            // Оновлення попереднього значення
+            if (timelineData[date] !== undefined) {
+                previousValue = timelineData[date];
+            }
+        });
+
+        return {
+            label: supplierName, // Назва Постачальника
+            data: supplierData, // Значення ваги для всіх дат
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            borderWidth: 3,
+            fill: false,
+        };
+    });
 
 	const chartData = {
 		labels,
 		datasets,
 	};
-
+	
     const options = {
         responsive: true,
         plugins: {

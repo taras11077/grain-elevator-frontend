@@ -7,7 +7,7 @@ export const fetchProductCategories = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.get('/warehouse-product-category');
-      return response.data; // Повертаємо масив категорій продукції
+      return response.data;
     } catch (error) {
       if (error.response) {
         return rejectWithValue(error.response.data);

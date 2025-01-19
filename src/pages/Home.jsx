@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Typography, Modal } from 'antd';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import LoginForm from '../components/Auth/LoginForm';
-import './Home.css';
+import { Modal, Typography } from 'antd'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import LoginForm from '../components/Auth/LoginForm'
+import './Home.css'
 
 const motivationalQuotes = [
   'Ваші зусилля сьогодні стануть результатами завтра!',

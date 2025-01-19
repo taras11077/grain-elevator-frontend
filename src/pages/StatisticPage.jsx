@@ -29,11 +29,11 @@ const StatisticPage = () => {
     if (error) return <p>Помилка: {error}</p>;
 
     return (
-		<div className="container">
-			<Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
+		<div className="container-statistic">
+			<Title level={1} className="page-title" >
 				Статистичні показники 
 			</Title>
-			<Title level={3} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
+			<Title level={4} className="page-subtitle">
 				завантаженості підприємства за Постачальниками та Найменуваннями продукції.
 			</Title>
 

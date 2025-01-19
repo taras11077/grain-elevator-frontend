@@ -1,7 +1,7 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 
-const ProductTimelineChart = ({ data, title }) => {
+const ProductTimelineChart = ({ data }) => {
     if (!data || Object.keys(data || {}).length === 0) {
         return <p style={{ textAlign: 'center' }}>Дані для побудови графіка відсутні.</p>;
     }
@@ -14,17 +14,45 @@ const ProductTimelineChart = ({ data, title }) => {
         }); // Формат DD.MM
     };
 
-    const labels = Object.keys(Object.values(data)[0]).map(formatDate);
+	const uniqueDates = [
+        ...new Set(
+            Object.values(data).flatMap((timelineData) => Object.keys(timelineData))
+        ),
+    ].sort((a, b) => new Date(a) - new Date(b)); // Сортування дат
 
-    // Створення datasets для кожного продукту
-    const datasets = Object.entries(data).map(([productName, timelineData]) => ({
-        label: productName, // Назва продукту
-        data: Object.values(timelineData), // Значення ваги
-        backgroundColor: getRandomColor(),
-        borderColor: getRandomColor(),
-        borderWidth: 3,
-        fill: false,
-    }));
+    const labels = uniqueDates.map(formatDate);
+
+    // Створення datasets для кожного Продукту
+    const datasets = Object.entries(data).map(([productName, timelineData]) => {
+		const productData = [];
+        let previousValue = 0; // Початкове значення, якщо немає даних на першу дату
+
+		uniqueDates.forEach((date, index) => {
+            const currentValue = timelineData[date] !== undefined ? timelineData[date] : previousValue;
+            const nextValue = timelineData[uniqueDates[index + 1]] || 0;
+
+            // Додавання значення, якщо воно не нульове або якщо наступне значення не дорівнює 0
+            if (currentValue !== 0 || nextValue !== 0 || previousValue !== 0) {
+                productData.push(currentValue);
+            } else {
+                productData.push(null); // Використання `null`, щоб розривати лінію
+            }
+
+            // Оновлення попереднього значення
+            if (timelineData[date] !== undefined) {
+                previousValue = timelineData[date];
+            }
+        });
+
+        return {
+            label: productName, // Назва Продукту
+            data: productData, // Значення ваги для всіх дат
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            borderWidth: 3,
+            fill: false,
+        };
+    });
 
     const chartData = {
         labels,

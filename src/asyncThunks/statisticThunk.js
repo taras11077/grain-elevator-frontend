@@ -23,7 +23,7 @@ export const fetchTimelineStatistic = createAsyncThunk(
             const response = await api.get('/input-invoice/timeline-statistic');
             return response.data;
         } catch (error) {
-            return rejectWithValue(error.response?.data || 'Не вдалося отримати статистику по часі.');
+            return rejectWithValue(error.response?.data || 'Не вдалося отримати статистику по часу.');
         }
     }
 );

@@ -74,7 +74,6 @@ const InputInvoicePage = () => {
         const resultAction = await dispatch(updatePriceList({ id: selectedPriceList.id, updates: formData }));
         if (updatePriceList.fulfilled.match(resultAction)) {
           message.success('Прайс-лист оновлено.');
-          dispatch(fetchPriceLists());
         } else {
           const errorMessage = resultAction.payload?.message || 'Не вдалося оновити Прайс-лист.';
           message.error(errorMessage);
@@ -83,6 +82,7 @@ const InputInvoicePage = () => {
         await dispatch(createPriceList(formData));
         message.success('Прайс-лист створено.');
       }
+	  dispatch(fetchPriceLists());
       handleCloseModal();
     } catch (error) {
       console.error('Помилка збереження:', error);
@@ -113,14 +113,13 @@ const InputInvoicePage = () => {
 	  }
 };
 
-
   return (
     <div className="container">
-	  	<Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
+	   <Title level={1} className="page-title">
 			Прайс-листи 
 		</Title>
 
-		<Title level={4} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
+		<Title level={4} className="page-subtitle">
 			на послуги підприємства з доробки сільскогосподарскої продукції.
 		</Title>
 
@@ -129,32 +128,16 @@ const InputInvoicePage = () => {
       {/* Кнопка дії залежно від контексту */}
       {isForCompletionReport ? (
         <Button
-          type="primary"
+          className="action-button"
           disabled={!selectedPriceListId}
           onClick={handleAddToCompletionReport}
-          style={{
-			margin: 30,
-			width: '25%',
-			maxWidth: '250px',
-			overflow: 'hidden',
-			textOverflow: 'ellipsis',
-			whiteSpace: 'nowrap',
-		  }}
         >
           Додати до Акта виконаних робіт
         </Button>
       ) : (
         <Button
-          type="primary"
-          onClick={() => handleOpenModal(null)}
-			style={{
-				margin: 30,
-				width: '20%',
-				maxWidth: '250px',
-				overflow: 'hidden',
-				textOverflow: 'ellipsis',
-				whiteSpace: 'nowrap',
-			  }}
+            className="action-button"
+          	onClick={() => handleOpenModal(null)}
         >
           Створити прайс-лист
         </Button>

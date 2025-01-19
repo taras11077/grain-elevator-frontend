@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { message } from 'antd'
 import api from '../api/axios'
 import { getToken, removeToken, setToken } from '../utils/tokenHelperFunctions'
-import { message } from 'antd';
 
 // Login
 export const login = createAsyncThunk('auth/login', async (payload, { rejectWithValue }) => {
@@ -83,7 +83,7 @@ export const login = createAsyncThunk('auth/login', async (payload, { rejectWith
 		return response.data;
 	  } catch (error) {
 		console.error('Failed to update last seen online:', error);
-		const errorMessage = error.response?.data?.message || 'Помилка оновлення статусу.';
+		const errorMessage = error.response?.data?.message || 'Помилка оновлення статусу відвідуваності.';
 		message.error(errorMessage);
 		return rejectWithValue(errorMessage);
 	  }

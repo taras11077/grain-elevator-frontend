@@ -1,16 +1,81 @@
-.body{
-	background-color: steelblue;
-	padding: 70px;
-}
+body {
+	margin: 0;
+	padding: 0;
+	background-image: url('../assets/images/elevator3.jpg');
+	background-position: top center;  
+	background-repeat: no-repeat; 
+	background-color: darkgray;
+	height: 100vh; 
+	width: 100;
+  }
+
+  @media (max-width: 768px) {
+	body {
+	  background-size: contain;
+	  background-position: center;
+	}
+  }
+  
+  @media (min-width: 769px) {
+	body {
+	  background-size: cover;
+	}
+  }
 
 .container{
-	padding: 20px;
-	margin-top: 80px !important;
-	margin: 20px;
-	background-color:lightsteelblue;
+	padding: 100px 60px;
+	margin-top: 100px !important;
+	margin: 40px;
+	background-color:rgb(185, 185, 185, 0.9);
 	border-radius: 10px;
 }
 
-.Title{
-	margin-top: 70px;
+.container-statistic{
+	padding: 100px;
+	margin-top: 100px !important;
+	margin: 50px;
+	background-color:rgb(185, 185, 185, 0.9);
+	border-radius: 10px;
+	text-align: center;
 }
+
+.container-statistic .page-title {
+	color: rgb(90, 90, 90);
+	margin: 20px 0;
+  }
+  
+  .container-statistic .page-subtitle {
+	color: rgb(89, 89, 89);
+	margin: 30px 0;
+  }
+
+.container .page-title {
+	color: rgb(90, 90, 90);
+	margin: 30px 0;
+  }
+  
+  .container .page-subtitle {
+	color: rgb(89, 89, 89);
+	margin-bottom: 30px ;
+  }
+  
+  .action-button {
+	margin: 40px 0;
+	width: 25%;
+	max-width: 250px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	background-color: rgb(120, 120, 120) !important;
+	color: white !important;
+	font-size: 0.9em;
+	border: none;
+	border-radius: 5px;
+  }
+  
+
+  .action-button:hover {
+	background-color: rgb(71, 71, 71) !important;
+	color: whitesmoke !important;
+  }
+

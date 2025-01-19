@@ -44,10 +44,7 @@ const OutputInvoiceForm = ({ initialData = {}, onSubmit, onCancel, isEditing, is
 		  ? dayjs(initialData.shipmentDate, 'DD-MM-YYYY').format('YYYY-MM-DD') 
 		  : '',
 	  };
-
-	  console.log( "initialData?.shipmentDate: " ,initialData?.shipmentDate);
-	  console.log( "preparedInitialData?.shipmentDate: " ,preparedInitialData?.shipmentDate);
-
+	  
     return (
         <Formik
             initialValues={{
@@ -149,7 +146,7 @@ const OutputInvoiceForm = ({ initialData = {}, onSubmit, onCancel, isEditing, is
 					</div>
 					
                     <div style={{ marginTop: '16px' }}>
-                        <Button type="primary" htmlType="submit" style={{ marginRight: '8px' }}>
+                        <Button className="action-button" htmlType="submit" style={{ marginRight: '8px' }}>
                             Зберегти
                         </Button>
                         <Button onClick={onCancel}>Скасувати</Button>

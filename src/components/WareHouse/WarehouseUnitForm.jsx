@@ -52,7 +52,7 @@ const WarehouseUnitForm = ({ initialData = {}, onSubmit, onCancel }) => {
             ))}
           </div>
           <div style={{ marginTop: '16px' }}>
-            <Button type="primary" htmlType="submit" style={{ marginRight: '8px' }}>
+            <Button className="action-button" htmlType="submit" style={{ marginRight: '8px' }}>
               Зберегти
             </Button>
             <Button onClick={onCancel}>Скасувати</Button>

@@ -55,6 +55,11 @@ const EmployeePage = () => {
     setRegistrationModalOpen(true);
   };
 
+  
+  const handleRegistrationSuccess = () => {
+	dispatch(fetchEmployees());
+  }
+
   const handleCloseRegistrationModal = () => {
     setRegistrationModalOpen(false);
   };
@@ -100,26 +105,18 @@ const EmployeePage = () => {
 
   return (
     <div className="container">
-      <Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
+       <Title level={1} className="page-title">
         Список співробітників
       </Title>
-      <Title level={4} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
+	  <Title level={4} className="page-subtitle">
         із визначенням рівня допуску до інформації.
       </Title>
 
       <EmployeeFilterFields filters={filters} onFilterChange={handleFilterChange} />
 
       <Button
-        type="primary"
+         className="action-button"
         onClick={handleOpenRegistrationModal}
-        style={{
-          margin: 30,
-          width: '20%',
-          maxWidth: '250px',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-        }}
       >
         Додати співробітника
       </Button>
@@ -153,7 +150,10 @@ const EmployeePage = () => {
         onCancel={handleCloseRegistrationModal}
         footer={null}
       >
-        <RegistrationForm closeModal={handleCloseRegistrationModal} />
+        <RegistrationForm
+			closeModal={handleCloseRegistrationModal}
+			onRegistrationSuccess={handleRegistrationSuccess}
+		 />
       </Modal>
     </div>
   );

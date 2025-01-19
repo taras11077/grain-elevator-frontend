@@ -138,10 +138,10 @@ const InvoiceRegisterPage = () => {
 
 	return (
 	  <div className="container">
-		<Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 20 }}>
+		<Title level={1} className="page-title">
 		  	Добові реєстри 
 		</Title>
-		<Title level={4} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
+		<Title level={4} className="page-subtitle">
 		  	прибуткових накладних з визначенням якості вхідної продукції за кожною накладною.
 		</Title>
   
@@ -150,32 +150,16 @@ const InvoiceRegisterPage = () => {
 		{/* Кнопка дії залежно від контексту */}
 		{isForCompletionReport ? (
 		  <Button
-			type="primary"
+			className="action-button"
 			disabled={selectedRegisterIds.length === 0}
 			onClick={handleAddToCompletionReport}
-			style={{
-				margin: 30,
-				width: '20%',
-				maxWidth: '250px',
-				overflow: 'hidden',
-				textOverflow: 'ellipsis',
-				whiteSpace: 'nowrap',
-			}}
 		  >
 			Додати до Акту виконаних робіт
 		  </Button>
 		) : (
 		  <Button
-			type="primary"
+			className="action-button"
 			onClick={() => handleOpenModal(null)}
-			style={{
-				margin: 30,
-				width: '20%',
-				maxWidth: '250px',
-				overflow: 'hidden',
-				textOverflow: 'ellipsis',
-				whiteSpace: 'nowrap',
-			}}
 		  >
 			Створити Реєстр
 		  </Button>

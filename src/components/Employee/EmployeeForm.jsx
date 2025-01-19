@@ -134,7 +134,7 @@ const EmployeeForm = ({ initialData, onSubmit, onCancel }) => {
 			  {errors.confirmPassword && touched.confirmPassword && <div>{errors.confirmPassword}</div>}
 			</div>
 			<div style={{ marginTop: '16px' }}>
-			  <Button type="primary" htmlType="submit" style={{ marginRight: '8px' }}>
+			  <Button className="action-button" htmlType="submit" style={{ marginRight: '8px' }}>
 				Зберегти
 			  </Button>
 			  <Button onClick={onCancel}>Скасувати</Button>
@@ -146,4 +146,3 @@ const EmployeeForm = ({ initialData, onSubmit, onCancel }) => {
   };
   
   export default EmployeeForm;
-  

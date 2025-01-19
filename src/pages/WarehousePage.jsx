@@ -43,7 +43,6 @@ const WarehousePage = () => {
 		dispatch(setFilters({ [name]: value }));
 	};
 
-
 	// Обробка змін у таблиці (пагінація, сортування)
 	const handleTableChange = (pagination, _, sorter) => {
 		const sortField = sorter?.field || null;
@@ -135,23 +134,15 @@ const WarehousePage = () => {
 
 	  return (
 		<div className="container">
-		  <Title level={1} style={{ textAlign: 'center', color: 'steelblue', margin: 30 }}>
+		 <Title level={1} className="page-title">
 			Склад
 		  </Title>
 	
 		  <WarehouseFilterFields filters={filters} onFilterChange={handleFilterChange} />
 	
 		  <Button 
-			type="primary" 
+			className="action-button"
 			onClick={() => handleOpenModal(null)} 
-			style={{
-			  margin: 30,
-			  width: '20%',
-			  maxWidth: '250px',
-			  overflow: 'hidden',
-			  textOverflow: 'ellipsis',
-			  whiteSpace: 'nowrap',
-			}}
 		  >
 			Створити Складський юніт
 		  </Button>

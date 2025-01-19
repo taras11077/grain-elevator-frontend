@@ -5,7 +5,7 @@ import React from 'react'
 import * as Yup from 'yup'
 
 const PriceListSchema = Yup.object().shape({
-    title: Yup.string().required('Обов’язкове поле'),
+    productTitle: Yup.string().required('Обов’язкове поле'),
 });
 
 const PriceListForm = ({ initialData, onSubmit, onCancel }) => {
@@ -13,7 +13,7 @@ const PriceListForm = ({ initialData, onSubmit, onCancel }) => {
     return (
         <Formik
             initialValues={{
-                title: initialData?.title || '',
+                productTitle: initialData?.productTitle || '',
             }}
             validationSchema={PriceListSchema}
             onSubmit={onSubmit}
@@ -22,12 +22,12 @@ const PriceListForm = ({ initialData, onSubmit, onCancel }) => {
                 <Form>
                     <div>
                         <label>Назва прайс-листа:</label>
-                        <Field name="title" as={Input} />
+                        <Field name="productTitle" as={Input} />
                         {errors.title && touched.title && <div>{errors.title}</div>}
                     </div>
                 
                     <div style={{ marginTop: '16px' }}>
-                        <Button type="primary" htmlType="submit" style={{ marginRight: '8px' }}>
+                        <Button className="action-button" htmlType="submit" style={{ marginRight: '8px' }}>
                             Зберегти
                         </Button>
                         <Button onClick={onCancel}>Скасувати</Button>
