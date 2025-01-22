@@ -13,20 +13,25 @@ const EmployeeSchema = Yup.object().shape({
 	lastName: Yup.string().notRequired(),
 	roleTitle: Yup.string().notRequired(),
 	email: Yup.string().email('Некоректний Email').notRequired(),
-	phone: Yup.string().notRequired(),
+	phone: Yup.string()
+	  .matches(
+		/^\+?38(0\d{9})$/,
+		'Некоректний номер телефону. Формат має бути: +380XXXXXXXXX або 380XXXXXXXXX.'
+	  )
+	  .notRequired(),
 	birthDate: Yup.date().notRequired(),
 	gender: Yup.string().notRequired(),
 	city: Yup.string().notRequired(),
 	country: Yup.string().notRequired(),
 	passwordHash: Yup.string()
-		.nullable()
-		.min(6, 'Пароль має містити мінімум 6 символів')
-		.notRequired(),
+	  .nullable()
+	  .min(6, 'Пароль має містити мінімум 6 символів')
+	  .notRequired(),
 	confirmPassword: Yup.string()
-		.nullable()
-		.oneOf([Yup.ref('passwordHash'), null], 'Паролі повинні співпадати')
-		.notRequired(),
-});
+	  .nullable()
+	  .oneOf([Yup.ref('passwordHash'), null], 'Паролі повинні співпадати')
+	  .notRequired(),
+  });
 
 const EmployeeForm = ({ initialData, onSubmit, onCancel }) => {
 	const dispatch = useDispatch();

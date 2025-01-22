@@ -45,7 +45,7 @@
 	font-weight: bold; 
   }
   .user-name.home-page-user-name {
-	color:rgb(0, 224, 101);
+	color:rgb(0, 105, 47);
   }
 
   .nav-link {
@@ -55,7 +55,7 @@
 	align-items: center;
 	text-decoration: none;
 	padding: 10px;
-	font-size: 1.05rem;
+	font-size: 1rem;
 	color: rgb(37, 37, 37); 
   }
   

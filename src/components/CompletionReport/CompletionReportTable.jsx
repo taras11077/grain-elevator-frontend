@@ -1,4 +1,5 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { render } from '@testing-library/react'
 import { Button, Collapse, Modal, Table } from 'antd'
 import dayjs from 'dayjs'
 import React from 'react'
@@ -92,7 +93,7 @@ const CompletionReportTable = ({
 			dataIndex: 'totalCost', 
 			key: 'totalCost', 
 			sorter: true , 
-			ender: (value) => value.toFixed(2)},
+			render: (value) => value.toFixed(2)},
     { title: 'Автор документу', dataIndex: 'createdByName', key: 'createdByName', sorter: true },
     {
       title: 'Дії',

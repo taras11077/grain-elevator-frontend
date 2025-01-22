@@ -36,7 +36,7 @@ const router = createBrowserRouter([
 		  {
 			path: '/input-invoices',
 			element:
-				<PrivateRoute allowedRoles={['Laboratory', 'Admin', 'CEO','Technologist']}>
+				<PrivateRoute allowedRoles={['Laboratory', 'Admin', 'CEO']}>
 					<InputInvoice />
 				</PrivateRoute>
 			  
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
 		  {
 			path: '/laboratory-cards',
 			element:
-				<PrivateRoute allowedRoles={['Laboratory', 'Admin', 'CEO']}>
+				<PrivateRoute allowedRoles={['Laboratory', 'Admin', 'CEO','Technologist']}>
 					<LaboratoryCard />
 				</PrivateRoute>		  
 		  },

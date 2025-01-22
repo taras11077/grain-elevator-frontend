@@ -116,7 +116,7 @@ const RegistrationForm = ({ closeModal, onRegistrationSuccess }) => {
         </Form.Item>
 
         <Form.Item>
-          <Button htmlType="submit" type="primary" loading={loading}>
+          <Button className="action-button" htmlType="submit" loading={loading}>
            	Додати
           </Button>
         </Form.Item>

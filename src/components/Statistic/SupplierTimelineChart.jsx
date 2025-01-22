@@ -50,7 +50,7 @@ const SupplierTimelineChart = ({ data, title }) => {
             data: supplierData, // Значення ваги для всіх дат
             backgroundColor: getRandomColor(),
             borderColor: getRandomColor(),
-            borderWidth: 3,
+            borderWidth: 4,
             fill: false,
         };
     });
