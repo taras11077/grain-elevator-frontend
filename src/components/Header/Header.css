@@ -19,33 +19,35 @@
   }
 
   .nav-container.home-page {
-	background-color: rgba(113, 113, 113, 0.5);
+	background-color: rgba(158, 157, 157, 0.5);
 	box-shadow: 0 0 10px rgba(25, 25, 25, 0.2);
   }
 
   .nav-container.home-page button {
+	width: 50px;
+	margin: 5px 50px;
 	background-color: rgb(137, 137, 137);
+	color: rgb(64, 64, 64);
   }
 
   .nav-container.home-page button:hover {
 	background-color: rgb(90, 90, 90);
   }
 
-  .nav-link.home-page-link {
+  /* .nav-link.home-page-link {
 	color: white;
-  }
+  } */
 
   .nav-link.home-page-link:hover {
-	color: rgb(17, 17, 17);
+	color: rgb(255, 255, 255);
   }
 
   .user-name {
-	color:rgb(0, 131, 59);
+	color:rgb(1, 141, 64);
 	font-size: 1.1rem;
-	font-weight: bold; 
   }
   .user-name.home-page-user-name {
-	color:rgb(0, 105, 47);
+	color:rgb(23, 210, 13);
   }
 
   .nav-link {
@@ -56,7 +58,7 @@
 	text-decoration: none;
 	padding: 10px;
 	font-size: 1rem;
-	color: rgb(37, 37, 37); 
+	color: #202020;
   }
   
   button {

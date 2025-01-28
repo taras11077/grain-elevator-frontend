@@ -41,6 +41,12 @@ const InputInvoicePage = () => {
     dispatch(fetchInvoices());
   }, [filters, pagination.current, pagination.pageSize]);
 
+  useEffect(() => {
+    if (selectedInvoice) {
+        dispatch(setSelectedInvoice(selectedInvoice));
+    }
+}, [selectedInvoice, dispatch]);
+
   // Обробка фільтрів
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -68,6 +74,7 @@ const InputInvoicePage = () => {
     dispatch(setSelectedInvoice(null));
   };
 
+
   // Додавання чи оновлення накладної
   const handleFormSubmit = async (formData) => {
     try {
@@ -83,8 +90,11 @@ const InputInvoicePage = () => {
         await dispatch(createInvoice(formData));
         message.success('Накладну створено.');
       }
-	  dispatch(fetchInvoices());
-      handleCloseModal();
+	  // Затримка перед оновленням стану
+        setTimeout(() => {
+            dispatch(fetchInvoices());
+            handleCloseModal();
+        }, 0);
     } catch (error) {
       console.error('Помилка збереження:', error);
       message.error('Помилка збереження.');
@@ -115,7 +125,7 @@ const InputInvoicePage = () => {
 };
 
   return (
-    <div className="container">
+	<div className="container container-slim">
 	   <Title level={1} className="page-title">
 	  		Прибуткові накладні 
 		</Title>
@@ -143,6 +153,7 @@ const InputInvoicePage = () => {
           	Створити прибуткову накладну
         </Button>
       )}
+
 
       <InputInvoiceTable
          invoices={invoices}

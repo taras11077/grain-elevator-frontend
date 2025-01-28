@@ -12,6 +12,7 @@ import ProductForm from '../components/Product/ProductForm'
 import ProductTable from '../components/Product/ProductTable'
 import { setFilters, setPagination, setSelectedProduct, setSort, toggleModal } from '../slices/productSlice'
 import './InputInvoicePage.css'
+import './ProductPage.css'
 
 const ProductPage = () => {
 	const { Title } = Typography;
@@ -105,7 +106,7 @@ const ProductPage = () => {
 		};
 
 	  return (
-		<div className="container">
+		<div className="container container-slim">
 		  	 <Title level={1} className="page-title">
 			  	Перелік найменувань продукції
 			</Title>

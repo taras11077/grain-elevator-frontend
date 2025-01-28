@@ -114,7 +114,7 @@ const InputInvoicePage = () => {
 };
 
   return (
-    <div className="container">
+<div className="container container-slim">
 	   <Title level={1} className="page-title">
 			Прайс-листи 
 		</Title>

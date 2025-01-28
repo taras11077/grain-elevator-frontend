@@ -22,7 +22,6 @@ const InputInvoiceForm = ({ initialData, onSubmit, onCancel, title }) => {
 		  : '',
 	  };
 
-
     return (
         <Formik
             initialValues={{

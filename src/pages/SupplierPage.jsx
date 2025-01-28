@@ -106,7 +106,7 @@ const SupplierPage = () => {
 		};
 
 	  return (
-		<div className="container">
+		<div className="container container-slim">
 		   <Title level={1} className="page-title">
 			  	Перелік Постачальників
 			</Title>
