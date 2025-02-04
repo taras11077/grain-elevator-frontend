@@ -3,13 +3,26 @@ import axios from 'axios'
 import { store } from '../app/store'
 import { logout } from '../asyncThunks/authThunk'
 
+
+const apiBaseUrl =
+  window.location.hostname === "localhost"
+    ? "https://localhost:7187/api"
+    : "http://grainelevator.cloud/api";
+
+
+//console.log("API URL:", process.env.REACT_APP_API_URL);
+console.log("API URL:", apiBaseUrl);
+
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    //baseURL: process.env.REACT_APP_API_URL,
+	baseURL: apiBaseUrl,
 	withCredentials: true,
     headers: {
         'Content-Type': 'application/json'
     }
 });
+
+console.log("Axios API URL:", api.defaults.baseURL);
 
 // Додавання токена перед кожним запитом
 api.interceptors.request.use(config => {

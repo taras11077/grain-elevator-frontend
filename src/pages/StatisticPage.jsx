@@ -38,20 +38,20 @@ const StatisticPage = () => {
 			</Title>
 
 			<div className="chart-container">
-				<h2 className="chart-title">Графік надходження по Постачальникам</h2>
+				<h2 className="chart-title">Графік надходження за Постачальниками</h2>
 				<SupplierTimelineChart data={bySupplierTimeline} />
 			</div>
 			<div className="chart-container">
-				<h2 className="chart-title">Графік надходження по Найменуванню продукції</h2>
+				<h2 className="chart-title">Графік надходження за Найменуванням продукції</h2>
 				<ProductTimelineChart data={byProductTimeline} />
 			</div>
 
 			<div className="chart-container">
-				<h2 className="chart-title">Загальна вага надходжень по Постачальникам</h2>
+				<h2 className="chart-title">Загальна вага надходжень за Постачальниками</h2>
 				<SupplierBarChart data={bySupplier} />
 			</div>
 			<div className="chart-container">
-				<h2 className="chart-title">Загальна вага надходжень по Найменуванню продукції</h2>
+				<h2 className="chart-title">Загальна вага надходжень за Найменуванням продукції</h2>
 				<ProductBarChart data={byProduct} />
 			</div>
 		</div>
