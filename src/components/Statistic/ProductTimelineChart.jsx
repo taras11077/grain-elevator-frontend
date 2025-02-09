@@ -49,7 +49,7 @@ const ProductTimelineChart = ({ data }) => {
             data: productData, // Значення ваги для всіх дат
             backgroundColor: getRandomColor(),
             borderColor: getRandomColor(),
-            borderWidth: 4,
+            borderWidth: 2,
             fill: false,
         };
     });

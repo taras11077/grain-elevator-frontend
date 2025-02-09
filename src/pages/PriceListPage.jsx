@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
-	fetchPriceLists,
 	createPriceList,
-	updatePriceList,
 	deletePriceList,
-} from '../asyncThunks/priceListThunk';
+	fetchPriceLists,
+	updatePriceList,
+} from '../asyncThunks/priceListThunk'
 import PriceListFilterFields from '../components/PriceList/PriceListFilterFields'
 import PriceListForm from '../components/PriceList/PriceListForm'
 import PriceListTable from '../components/PriceList/PriceListTable'
@@ -139,7 +139,7 @@ const InputInvoicePage = () => {
             className="action-button"
           	onClick={() => handleOpenModal(null)}
         >
-          Створити прайс-лист
+          Створити Прайс-лист
         </Button>
       )}
 

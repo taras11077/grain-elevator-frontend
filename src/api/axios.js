@@ -7,7 +7,7 @@ import { logout } from '../asyncThunks/authThunk'
 const apiBaseUrl =
   window.location.hostname === "localhost"
     ? "https://localhost:7187/api"
-    : "http://grainelevator.cloud/api";
+    : "https://grainelevator.cloud/api";
 
 
 //console.log("API URL:", process.env.REACT_APP_API_URL);

@@ -114,6 +114,7 @@ const OutputInvoicePage = () => {
 		  message.success('Видаткову накладну створено.');
 		  dispatch(fetchInvoices());
 		} else {
+			
 		  const errorMessage = resultAction.payload?.message || 'Не вдалося створити Видаткову накладну.';
 		  message.error(errorMessage);
 		}

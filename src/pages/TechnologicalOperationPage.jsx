@@ -1,5 +1,5 @@
 import { Button, Modal, Typography, message } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
@@ -11,8 +11,8 @@ import {
 import TechnologicalOperationFilterFields from '../components/TechnologicalOperation/TechnologicalOperationFilterFields'
 import TechnologicalOperationForm from '../components/TechnologicalOperation/TechnologicalOperationForm'
 import TechnologicalOperationTable from '../components/TechnologicalOperation/TechnologicalOperationTable'
+import { setSelectedOperationIds } from "../slices/completionReportSlice"
 import { setFilters, setPagination, setSelectedOperation, setSort, toggleModal } from '../slices/technologicalOperationSlice'
-import { setSelectedOperationIds } from "../slices/completionReportSlice";
 import './InputInvoicePage.css'
 
 const TechnologicalOperationPage = () => {
@@ -149,7 +149,7 @@ const TechnologicalOperationPage = () => {
 			className="action-button"
 			onClick={() => handleOpenModal(null)} 
 			>
-			Створити технологичну операцію
+			Створити Технологичну операцію
 			</Button>
 		)}
 			<TechnologicalOperationTable

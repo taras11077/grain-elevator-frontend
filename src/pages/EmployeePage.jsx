@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Typography, Button, Modal, message } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Modal, Typography, message } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
-  fetchEmployees,
-  createEmployee,
-  updateEmployee,
-  deleteEmployee,
-} from '../asyncThunks/employeeThunk';
+	deleteEmployee,
+	fetchEmployees,
+	updateEmployee
+} from '../asyncThunks/employeeThunk'
+import RegistrationForm from '../components/Auth/RegistrationForm'
+import EmployeeFilterFields from '../components/Employee/EmployeeFilterFields'
+import EmployeeForm from '../components/Employee/EmployeeForm'
+import EmployeeTable from '../components/Employee/EmployeeTable'
 import {
-  setFilters,
-  setSort,
-  setPagination,
-  setSelectedEmployee,
-  toggleModal,
-} from '../slices/employeeSlice';
-import EmployeeFilterFields from '../components/Employee/EmployeeFilterFields';
-import EmployeeTable from '../components/Employee/EmployeeTable';
-import EmployeeForm from '../components/Employee/EmployeeForm';
-import RegistrationForm from '../components/Auth/RegistrationForm';
+	setFilters,
+	setPagination,
+	setSelectedEmployee,
+	setSort,
+	toggleModal,
+} from '../slices/employeeSlice'
 
 const EmployeePage = () => {
   const { Title } = Typography;
@@ -118,7 +117,7 @@ const EmployeePage = () => {
          className="action-button"
         onClick={handleOpenRegistrationModal}
       >
-        Додати співробітника
+        Додати Співробітника
       </Button>
 
       <EmployeeTable
