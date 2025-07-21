@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { handleApiError } from '../utils/handleApiError';
 import api from '../api/axios'
 
 
@@ -26,7 +27,7 @@ export const fetchInvoices = createAsyncThunk(
 		  };
 		} catch (error) {
 		  if (error.response && error.response.data) {
-			return rejectWithValue(error.response.data);
+			return rejectWithValue(error.response?.data || { message: 'Помилка запиту до сервера' });
 		  }
 		  return rejectWithValue(error.message || 'Невідома помилка');
 		}
@@ -34,21 +35,35 @@ export const fetchInvoices = createAsyncThunk(
 	);
 
   // Create Input invoice
-  export const createInvoice = createAsyncThunk(
-	'inputInvoice/createInvoice',
-	async (formData, { rejectWithValue }) => {
-	  try {
-		const response = await api.post('/input-invoice', formData);
-		return response.data; // успішний результат
-	  } catch (error) {
-		if (error.response && error.response.data) {
-		  //повернення помилки для обробки в catch або rejected case
-		  return rejectWithValue(error.response.data);
-		}
-		throw error; // для інших випадків
-	  }
-	}
-  );
+export const createInvoice = createAsyncThunk(
+  'inputInvoice/createInvoice',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/input-invoice', formData);
+      return response.data;
+    } catch (error) {
+      return handleApiError(error, rejectWithValue);
+    }
+  }
+);
+
+
+
+//   export const createInvoice = createAsyncThunk(
+// 	'inputInvoice/createInvoice',
+// 	async (formData, { rejectWithValue }) => {
+// 	  try {
+// 		const response = await api.post('/input-invoice', formData);
+// 		return response.data; // успішний результат
+// 	  } catch (error) {
+// 		if (error.response && error.response.data) {
+// 		  //повернення помилки для обробки в catch або rejected case
+// 		  return rejectWithValue(error.response?.data || { message: 'Помилка запиту до сервера' });
+// 		}
+// 		throw error; // для інших випадків
+// 	  }
+// 	}
+//   );
   
   // Update Input invoice
   export const updateInvoice = createAsyncThunk(
@@ -60,7 +75,7 @@ export const fetchInvoices = createAsyncThunk(
 		  return response.data;
 		} catch (error) {
 		  if (error.response && error.response.data) {
-			return rejectWithValue(error.response.data);
+			return rejectWithValue(error.response?.data || { message: 'Помилка запиту до сервера' });
 		  }
 		  throw error;
 		}

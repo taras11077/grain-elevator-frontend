@@ -1,5 +1,5 @@
 import { Button, Modal, Typography, message } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
@@ -13,7 +13,6 @@ import InputInvoiceForm from '../components/InputInvoice/InputInvoiceForm'
 import InputInvoiceTable from '../components/InputInvoice/InputInvoiceTable'
 import { setFilters, setPagination, setSelectedInvoice, setSort, toggleModal } from '../slices/inputInvoiceSlice'
 import './InputInvoicePage.css'
-import { color } from 'chart.js/helpers'
 
 const InputInvoicePage = () => {
   const { Title } = Typography;
@@ -76,30 +75,91 @@ const InputInvoicePage = () => {
 
 
   // Додавання чи оновлення накладної
-  const handleFormSubmit = async (formData) => {
-    try {
-      if (selectedInvoice) {
-        const resultAction = await dispatch(updateInvoice({ id: selectedInvoice.id, updates: formData }));
-        if (updateInvoice.fulfilled.match(resultAction)) {
-          message.success('Прибуткову накладну оновлено.');
-        } else {
-          const errorMessage = resultAction.payload?.message || 'Не вдалося оновити накладну.';
-          message.error(errorMessage);
-        }
+
+const handleFormSubmit = async (formData) => {
+  try {
+    if (selectedInvoice) {
+      const resultAction = await dispatch(updateInvoice({ id: selectedInvoice.id, updates: formData }));
+      if (updateInvoice.fulfilled.match(resultAction)) {
+        message.success('Прибуткову накладну оновлено.');
       } else {
-        await dispatch(createInvoice(formData));
-        message.success('Накладну створено.');
+        const errorMessage = extractErrorMessage(resultAction.payload, 'Не вдалося оновити накладну.');
+        message.error(errorMessage);
       }
-	  // Затримка перед оновленням стану
-        setTimeout(() => {
-            dispatch(fetchInvoices());
-            handleCloseModal();
-        }, 0);
-    } catch (error) {
-      console.error('Помилка збереження:', error);
-      message.error('Помилка збереження.');
+    } else {
+      const resultAction = await dispatch(createInvoice(formData));
+      if (createInvoice.fulfilled.match(resultAction)) {
+        message.success('Накладну створено.');
+      } else {
+        const errorMessage = extractErrorMessage(resultAction.payload, 'Не вдалося створити накладну.');
+        message.error(errorMessage);
+      }
     }
-  };
+	setTimeout(() => {
+		dispatch(fetchInvoices());
+		handleCloseModal();
+		}, 0);
+  } catch (error) {
+    console.error('Помилка збереження:', error);
+    message.error('Сталася неочікувана помилка.');
+  }
+};
+
+//   const handleFormSubmit = async (formData) => {
+//   try {
+//     if (selectedInvoice) {
+//       const resultAction = await dispatch(updateInvoice({ id: selectedInvoice.id, updates: formData }));
+//       if (updateInvoice.fulfilled.match(resultAction)) {
+//         message.success('Прибуткову накладну оновлено.');
+//       } else {
+//         const errorMessage = resultAction.payload?.message || 'Не вдалося оновити накладну.';
+//         message.error(errorMessage);
+//       }
+//     } else {
+//       const resultAction = await dispatch(createInvoice(formData));
+//       if (createInvoice.fulfilled.match(resultAction)) {
+//         message.success('Накладну створено.');
+//       } else {
+//         let errorMessage = 'Не вдалося створити накладну.';
+//         if (resultAction.payload) {
+//           if (typeof resultAction.payload === 'object') {
+//             const firstError = Object.values(resultAction.payload)[0];
+//             if (Array.isArray(firstError)) {
+//               errorMessage = firstError[0];
+//             } else {
+//               errorMessage = firstError;
+//             }
+//           } else if (typeof resultAction.payload === 'string') {
+//             errorMessage = resultAction.payload;
+//           }
+//         }
+//         message.error(errorMessage);
+//       }
+//     }
+//     // Затримка перед оновленням стану
+//     setTimeout(() => {
+//       dispatch(fetchInvoices());
+//       handleCloseModal();
+//     }, 0);
+
+//   } catch (error) {
+//     console.error('Помилка збереження:', error);
+//     message.error('Помилка збереження.');
+//   }
+// };
+
+
+function extractErrorMessage(payload, defaultMsg) {
+  if (!payload) return defaultMsg;
+  if (typeof payload === 'string') return payload;
+  if (payload.message) return payload.message;
+  // якщо це об'єкт ModelState з помилками
+  const firstError = Object.values(payload)[0];
+  if (Array.isArray(firstError)) return firstError[0];
+  if (typeof firstError === 'string') return firstError;
+  return defaultMsg;
+}
+
 
   // Видалення накладної
   const handleDeleteInvoice = async (record) => {

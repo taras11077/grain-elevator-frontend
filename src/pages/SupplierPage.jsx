@@ -1,7 +1,6 @@
 import { Button, Modal, Typography, message } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
 import {
 	createSupplier,
 	deleteSupplier,
@@ -108,7 +107,7 @@ const SupplierPage = () => {
 	  return (
 		<div className="container container-slim">
 		   <Title level={1} className="page-title">
-			  	Перелік Постачальників
+			  	Постачальники
 			</Title>
 
 			<Title level={4} className="page-subtitle">

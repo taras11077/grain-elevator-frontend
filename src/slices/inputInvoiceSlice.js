@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 import {
-  fetchInvoices,
-  createInvoice,
-  updateInvoice,
-  deleteInvoice,
-} from '../asyncThunks/inputInvoiceThunk';
+	createInvoice,
+	deleteInvoice,
+	fetchInvoices,
+	updateInvoice,
+} from '../asyncThunks/inputInvoiceThunk'
 
 const initialState = {
   invoices: [],
@@ -78,6 +78,10 @@ const inputInvoiceSlice = createSlice({
       .addCase(createInvoice.fulfilled, (state) => {
         state.isModalOpen = false;
       })
+	  .addCase(createInvoice.rejected, (state, action) => {
+		state.error = action.payload || 'Помилка створення накладної';
+	  })
+
       // Update Invoice
       .addCase(updateInvoice.fulfilled, (state) => {
         state.isModalOpen = false;
@@ -101,4 +105,5 @@ export const {
 } = inputInvoiceSlice.actions;
 
 export default inputInvoiceSlice.reducer;
+
 

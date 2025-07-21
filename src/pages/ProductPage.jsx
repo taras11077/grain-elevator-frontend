@@ -1,5 +1,5 @@
 import { Button, Modal, Typography, message } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
 	createProduct,
@@ -108,7 +108,7 @@ const ProductPage = () => {
 	  return (
 		<div className="container container-slim">
 		  	 <Title level={1} className="page-title">
-			  	Перелік найменувань продукції
+			  	Найменування продукції
 			</Title>
 
 			<Title level={4} className="page-subtitle">
